@@ -4,7 +4,6 @@
 #include <fstream>
 #include <set>
 
-#include <time.h>
 #include <benchmark.h>
 
 extern "C" {
@@ -20,74 +19,46 @@ extern "C" {
 class HashBenchmark : public Benchmark
 {
   protected:
-    cycles cbegin, cend, cdiff, ctotal = 0, cmax = 0, cmin = -1;
-    size_t tbegin, tend, tdiff, ttotal = 0;
-    size_t toverall;
-
     uint8_t *src, *dst;
     size_t src_sz;
 
   public:
     static constexpr auto header = "Algorithm, Size [b], CPU Time (incl) [sec], CPU Time (excl) [sec], Avg Cycles/Hash, Min Cycles/Hash, Max Cycles/Hash, Avg Cycles/Byte";
 
-    HashBenchmark(size_t src_sz, int type, int N, std::string const & prefix) : Benchmark(), src(0), src_sz(src_sz)
+    HashBenchmark(size_t src_sz, int type, int N, const std::string & prefix) : Benchmark(), src(0), src_sz(src_sz)
     {
       if (src_sz == 0)
         throw std::logic_error("Need src_sz > 0");
 
       src = new uint8_t[src_sz];
-      b_randomize((char*)src, src_sz);
-
       dst = new uint8_t[N/8];
 
-      std::stringstream s;
-      s << prefix << " ";
-      s << (type==0 ? "MD5" : (type==1 ? "SHA1" : (type == 2 ? "SHA2\\_" : "Unknown")));
-      if (type==2) s << N;
-      set_name(s.str());
+      // std::stringstream s;
+      // s << prefix << " ";
+      // s << (type==0 ? "MD5" : (type==1 ? "SHA1" : (type == 2 ? "SHA2\\_" : "Unknown")));
+      // if (type==2) s << N;
+      set_name(prefix);
     }
 
     virtual ~HashBenchmark()
     {
       delete(src);
+      delete(dst);
       src_sz = 0;
     }
 
-    virtual void b_func() = 0;
+    virtual void bench_setup(const BenchmarkSettings & s) { randomize((char*)src, src_sz); }
 
-    virtual void run()
-    {
-      srand(seed);
-      toverall = clock();
-
-      for (int i = 0; i < samples; i++)
-      {
-        tbegin = clock();
-        cbegin = b_cpucycles_begin();
-        b_func();
-        cend = b_cpucycles_end();
-        tend = clock();
-        cdiff = cend-cbegin;
-        tdiff = difftime(tend, tbegin);
-        ctotal += cdiff;
-        ttotal += tdiff;
-        if (cdiff < cmin) cmin = cdiff;
-        if (cdiff > cmax) cmax = cdiff;
-      }
-
-      toverall = clock() - toverall;
-    }
-
-    virtual void report(std::ostream & rs)
+    virtual void report(std::ostream & rs, const BenchmarkSettings & s)
     {
       rs << "\"" << name.c_str() << "\""
         << "," << src_sz
         << "," << toverall/(double)CLOCKS_PER_SEC
         << "," << ttotal/(double)CLOCKS_PER_SEC
-        << "," << ctotal/(double)samples
+        << "," << ctotal/(double)s.samples
         << "," << cmin
         << "," << cmax
-        << "," << (ctotal/(double)src_sz)/(double)samples
+        << "," << (ctotal/(double)src_sz)/(double)s.samples
         << "\n";
     }
 };
@@ -99,7 +70,7 @@ class HaclHash : public HashBenchmark
   public:
     HaclHash(size_t src_sz) : HashBenchmark(src_sz, type, N, "HaCl") {}
     virtual ~HaclHash() {}
-    virtual void b_func() { fun(src, src_sz, dst); }
+    virtual void bench_func() { fun(src, src_sz, dst); }
 };
 
 template<> void (*HaclHash<0, 128>::fun)(uint8_t *input, uint32_t input_len, uint8_t *dst) = Hacl_Hash_MD5_hash;
@@ -118,7 +89,7 @@ class EverCryptHash : public HashBenchmark
   public:
     EverCryptHash(size_t src_sz) : HashBenchmark(src_sz, type, N, "EverCrypt") {}
     virtual ~EverCryptHash() {}
-    virtual void b_func() { EverCrypt_Hash_hash(id, dst, src, src_sz); }
+    virtual void bench_func() { EverCrypt_Hash_hash(id, dst, src, src_sz); }
 };
 
 template<> const int EverCryptHash<0, 128>::id = Spec_Hash_Definitions_MD5;
@@ -139,7 +110,7 @@ class OpenSSLHash : public HashBenchmark
   public:
     OpenSSLHash(size_t src_sz) : HashBenchmark(src_sz, type, N, "OpenSSL") {}
     virtual ~OpenSSLHash() {}
-    virtual void b_func() { fun((unsigned char*)src, src_sz, (unsigned char*)dst); }
+    virtual void bench_func() { fun((unsigned char*)src, src_sz, (unsigned char*)dst); }
 };
 
 template<> unsigned char* (*OpenSSLHash<0, 128>::fun)(const unsigned char *d, size_t n, unsigned char *md) = MD5;
@@ -152,73 +123,242 @@ typedef OpenSSLHash<0, 128> OpenSSLMD5;
 typedef OpenSSLHash<1, 160> OpenSSLSHA1;
 #endif
 
-int bench_hash(unsigned int seed, size_t num_samples)
+void bench_hash_plots(const BenchmarkSettings & s, const std::string & alg, const std::string & num_benchmarks, const std::string & data_filename)
 {
-  size_t data_sizes[] = { 1024, 2048, 4096, 8192 };
+  std::stringstream title;
+  title << alg << " performance";
+
+  std::stringstream plot_filename;
+  plot_filename << "bench_hash_" << alg << ".svg";
+
+  Benchmark::make_plot(s,
+                       "svg",
+                       title.str(),
+                       "avg cycles/hash",
+                       data_filename,
+                       plot_filename.str(),
+                       "set xrange[-1:" + num_benchmarks + "]",
+                       "using 5:xticlabels(1) with boxes title columnheader, '' using ($0-1):5:xticlabels(1):(sprintf(\"%0.0f\", $5)) with labels font \"Courier,8\" offset char 0,.5");
+
+  plot_filename.str("");
+  plot_filename << "bench_hash_" << alg << "_candlesticks.svg";
+
+  Benchmark::make_plot(s,
+                       "svg",
+                       title.str(),
+                       "cycles/hash",
+                       data_filename,
+                       plot_filename.str(),
+                       "set xrange[0:" + num_benchmarks + "+1]",
+                       "using 0:5:6:7:5:xticlabels(1) with candlesticks whiskerbars .25");
+
+  plot_filename.str("");
+  plot_filename << "bench_hash_" << alg << "_per_byte.svg";
+
+  Benchmark::make_plot(s,
+                       "svg",
+                       title.str(),
+                       "avg cycles/hash",
+                       data_filename,
+                       plot_filename.str(),
+                       "set xrange[-1:" + num_benchmarks + "]",
+                       "using 8:xticlabels(1) with boxes title columnheader, '' using ($0-1):8:xticlabels(1):(sprintf(\"%0.2f\", $5)) with labels font \"Courier,8\" offset char 0,.5");
+}
+
+int bench_hash_alg(const BenchmarkSettings & s, const std::string & alg, std::set<Benchmark*> & todo)
+{
+  std::stringstream data_filename;
+  data_filename << "bench_hash_" << alg << ".csv";
+
+  std::stringstream num_benchmarks;
+  num_benchmarks << todo.size();
+
+  Benchmark::run_all(s, HashBenchmark::header, data_filename.str(), todo);
+
+  bench_hash_plots(s, alg, num_benchmarks.str(), data_filename.str());
+}
+
+int bench_hash_md5(const BenchmarkSettings & s)
+{
+  std::set<unsigned int> data_sizes = { 1024, 2048, 4096, 8192, 16384, 32768, 65536 };
+
+  std::set<Benchmark*> todo;
 
   for (size_t ds: data_sizes)
   {
-    std::set<Benchmark*> todo = {
-      #ifdef HAVE_HACL
-      new HaclMD5(ds),
-      new HaclSHA1(ds),
-      new HaclHash<2, 224>(ds),
-      new HaclHash<2, 256>(ds),
-      new HaclHash<2, 384>(ds),
-      new HaclHash<2, 512>(ds),
-      #endif
+     todo.insert(new EverCryptMD5(ds));
+     #ifdef HAVE_HACL
+     todo.insert(new HaclMD5(ds));
+     #endif
+     #ifdef HAVE_OPENSSL
+     todo.insert(new OpenSSLMD5(ds));
+     #endif
+  }
 
-      new EverCryptMD5(ds),
-      new EverCryptSHA1(ds),
-      new EverCryptHash<2, 224>(ds),
-      new EverCryptHash<2, 256>(ds),
-      new EverCryptHash<2, 384>(ds),
-      new EverCryptHash<2, 512>(ds),
+  bench_hash_alg(s, "MD5", todo);
+}
 
-      #ifdef HAVE_OPENSSL
-      new OpenSSLMD5(ds),
-      new OpenSSLSHA1(ds),
-      new OpenSSLHash<2, 224>(ds),
-      new OpenSSLHash<2, 256>(ds),
-      new OpenSSLHash<2, 384>(ds),
-      new OpenSSLHash<2, 512>(ds),
-      #endif
+int bench_hash_sha1(const BenchmarkSettings & s)
+{
+  std::set<unsigned int> data_sizes = { 1024, 2048, 4096, 8192, 16384, 32768, 65536 };
+
+  std::set<Benchmark*> todo;
+
+  for (size_t ds: data_sizes)
+  {
+     todo.insert(new EverCryptSHA1(ds));
+     #ifdef HAVE_HACL
+     todo.insert(new HaclSHA1(ds));
+     #endif
+     #ifdef HAVE_OPENSSL
+     todo.insert(new OpenSSLSHA1(ds));
+     #endif
+  }
+
+  bench_hash_alg(s, "SHA1", todo);
+}
+
+int bench_hash_sha2_224(const BenchmarkSettings & s)
+{
+  std::set<unsigned int> data_sizes = { 1024, 2048, 4096, 8192, 16384, 32768, 65536 };
+
+  std::set<Benchmark*> todo;
+
+  for (size_t ds: data_sizes)
+  {
+    todo.insert(new EverCryptHash<2, 224>(ds));
+    #ifdef HAVE_HACL
+    todo.insert(new HaclHash<2, 224>(ds));
+    #endif
+    #ifdef HAVE_OPENSSL
+    todo.insert(new OpenSSLHash<2, 224>(ds));
+    #endif
+  }
+
+  bench_hash_alg(s, "SHA2_224", todo);
+}
+
+int bench_hash_sha2_256(const BenchmarkSettings & s)
+{
+  std::set<unsigned int> data_sizes = { 1024, 2048, 4096, 8192, 16384, 32768, 65536 };
+
+  std::set<Benchmark*> todo;
+
+  for (size_t ds: data_sizes)
+  {
+    todo.insert(new EverCryptHash<2, 256>(ds));
+    #ifdef HAVE_HACL
+    todo.insert(new HaclHash<2, 256>(ds));
+    #endif
+    #ifdef HAVE_OPENSSL
+    todo.insert(new OpenSSLHash<2, 256>(ds));
+    #endif
+  }
+
+  bench_hash_alg(s, "SHA2_256", todo);
+}
+
+int bench_hash_sha2_384(const BenchmarkSettings & s)
+{
+  std::set<unsigned int> data_sizes = { 1024, 2048, 4096, 8192, 16384, 32768, 65536 };
+
+  std::set<Benchmark*> todo;
+
+  for (size_t ds: data_sizes)
+  {
+    todo.insert(new EverCryptHash<2, 384>(ds));
+    #ifdef HAVE_HACL
+    todo.insert(new HaclHash<2, 384>(ds));
+    #endif
+    #ifdef HAVE_OPENSSL
+    todo.insert(new OpenSSLHash<2, 384>(ds));
+    #endif
+  }
+
+  bench_hash_alg(s, "SHA2_384", todo);
+}
+
+int bench_hash_sha2_512(const BenchmarkSettings & s)
+{
+  std::set<unsigned int> data_sizes = { 1024, 2048, 4096, 8192, 16384, 32768, 65536 };
+
+  std::set<Benchmark*> todo;
+
+  for (size_t ds: data_sizes)
+  {
+    todo.insert(new EverCryptHash<2, 512>(ds));
+    #ifdef HAVE_HACL
+    todo.insert(new HaclHash<2, 512>(ds));
+    #endif
+    #ifdef HAVE_OPENSSL
+    todo.insert(new OpenSSLHash<2, 512>(ds));
+    #endif
+  }
+
+  bench_hash_alg(s, "SHA2_512", todo);
+}
+
+int bench_hash_sha2(const BenchmarkSettings & s)
+{
+  bench_hash_sha2_224(s);
+  bench_hash_sha2_256(s);
+  bench_hash_sha2_384(s);
+  bench_hash_sha2_512(s);
+}
+
+int bench_hash_all(const BenchmarkSettings & s)
+{
+  std::set<unsigned int> data_sizes = { 1024, 2048, 4096, 8192, 16384, 32768, 65536 };
+
+  bench_hash_md5(s);
+  bench_hash_sha1(s);
+  bench_hash_sha2(s);
+
+  std::vector<std::string> data_filenames = {
+    "bench_hash_MD5.csv",
+    "bench_hash_SHA1.csv",
+    "bench_hash_SHA2_224.csv",
+    "bench_hash_SHA2_256.csv",
+    "bench_hash_SHA2_384.csv",
+    "bench_hash_SHA2_512.csv"
     };
 
-    std::stringstream num_benchmarks;
-    num_benchmarks << todo.size();
+  std::vector<std::string> plot_specs = {
+    "using 8:xticlabels(1) title \"MD5\"",
+    "using 8 title \"SHA1\"",
+    "using 8 title \"SHA2-224\"",
+    "using 8 title \"SHA2-256\"",
+    "using 8 title \"SHA2-384\"",
+    "using 8 title \"SHA2-512\""
+  };
 
-    std::stringstream filename;
-    filename << "bench_hash_" << ds << ".csv";
 
-    b_run(seed, num_samples, HashBenchmark::header, filename.str(), todo);
-
-
+  int i = 0;
+  for (size_t ds : data_sizes)
+  {
     std::stringstream title;
-    title << "Hash performance on " << ds << " bytes of data";
+    title << "Hash performance (input size " << ds << ")";
 
     std::stringstream plot_filename;
-    plot_filename << "bench_hash_" << ds << ".svg";
+    plot_filename << "bench_hash_all_" << ds << ".svg";
 
-    b_make_plot(seed, num_samples,
-                "svg",
-                title.str(),
-                "avg cycles/hash",
-                filename.str(),
-                plot_filename.str(),
-                "set xrange[-1:" + num_benchmarks.str() + "]",
-                "using 5:xticlabels(1) with boxes title columnheader, '' using ($0-1):5:xticlabels(1):(sprintf(\"%0.0f\", $5)) with labels font \"Courier,8\" offset char 0,.5");
+    std::stringstream extras;
+    extras << "set xtics norotate\n";
+    extras << "set key on\n";
+    extras << "set style histogram clustered gap 3 title\n";
+    extras << "set style data histograms\n";
+    extras << "set xrange [" << i << ".5:" << i+3 << ".5]";
 
-    plot_filename.str("");
-    plot_filename << "bench_hash_" << ds << "_candlesticks.svg";
+    Benchmark::make_meta_plot(s,
+                              "svg",
+                              title.str(),
+                              "avg cycles/hash",
+                              data_filenames,
+                              plot_filename.str(),
+                              extras.str(),
+                              plot_specs,
+                              false);
 
-    b_make_plot(seed, num_samples,
-                "svg",
-                title.str(),
-                "cycles/hash",
-                filename.str(),
-                plot_filename.str(),
-                "set xrange[0:" + num_benchmarks.str() + "+1]",
-                "using 0:5:6:7:5:xticlabels(1) with candlesticks whiskerbars .25");
+    i++;
   }
 }

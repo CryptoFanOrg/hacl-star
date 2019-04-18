@@ -1,0 +1,282 @@
+[
+{
+  "directory": "/mnt/e/everest/latest/hacl-star/tests/benchmark/bld",
+  "command": "/usr/bin/c++   -I/mnt/e/everest/latest/hacl-star/tests/benchmark -I/mnt/e/everest/latest/hacl-star/dist/compact-c89 -I/mnt/e/everest/latest/kremlin/include -I/mnt/e/everest/latest/kremlin/kremlib/dist/generic  -g   -fPIC -fstack-check -o CMakeFiles/benchmark.dir/benchmark.cpp.o -c /mnt/e/everest/latest/hacl-star/tests/benchmark/benchmark.cpp",
+  "file": "/mnt/e/everest/latest/hacl-star/tests/benchmark/benchmark.cpp"
+},
+{
+  "directory": "/mnt/e/everest/latest/hacl-star/tests/benchmark/bld",
+  "command": "/usr/bin/c++  -DHAVE_HACL -DHAVE_OPENSSL -DHAVE_VALE -I/mnt/e/everest/latest/hacl-star/tests/benchmark -I/mnt/e/everest/latest/MLCrypto/openssl/include -I/mnt/e/everest/latest/hacl-star/dist/compact-c89 -I/mnt/e/everest/latest/kremlin/include -I/mnt/e/everest/latest/kremlin/kremlib/dist/generic  -g   -fPIC -fstack-check -o CMakeFiles/runbenchmark.dir/runbenchmark.cpp.o -c /mnt/e/everest/latest/hacl-star/tests/benchmark/runbenchmark.cpp",
+  "file": "/mnt/e/everest/latest/hacl-star/tests/benchmark/runbenchmark.cpp"
+},
+{
+  "directory": "/mnt/e/everest/latest/hacl-star/tests/benchmark/bld",
+  "command": "/usr/bin/c++  -DHAVE_HACL -DHAVE_OPENSSL -DHAVE_VALE -I/mnt/e/everest/latest/hacl-star/tests/benchmark -I/mnt/e/everest/latest/MLCrypto/openssl/include -I/mnt/e/everest/latest/hacl-star/dist/compact-c89 -I/mnt/e/everest/latest/kremlin/include -I/mnt/e/everest/latest/kremlin/kremlib/dist/generic  -g   -fPIC -fstack-check -o CMakeFiles/runbenchmark.dir/bench_hash.cpp.o -c /mnt/e/everest/latest/hacl-star/tests/benchmark/bench_hash.cpp",
+  "file": "/mnt/e/everest/latest/hacl-star/tests/benchmark/bench_hash.cpp"
+},
+{
+  "directory": "/mnt/e/everest/latest/hacl-star/tests/benchmark/bld",
+  "command": "/usr/bin/c++  -DHAVE_HACL -DHAVE_OPENSSL -DHAVE_VALE -I/mnt/e/everest/latest/hacl-star/tests/benchmark -I/mnt/e/everest/latest/MLCrypto/openssl/include -I/mnt/e/everest/latest/hacl-star/dist/compact-c89 -I/mnt/e/everest/latest/kremlin/include -I/mnt/e/everest/latest/kremlin/kremlib/dist/generic  -g   -fPIC -fstack-check -o CMakeFiles/runbenchmark.dir/bench_aead.cpp.o -c /mnt/e/everest/latest/hacl-star/tests/benchmark/bench_aead.cpp",
+  "file": "/mnt/e/everest/latest/hacl-star/tests/benchmark/bench_aead.cpp"
+},
+{
+  "directory": "/mnt/e/everest/latest/hacl-star/tests/benchmark/bld",
+  "command": "/usr/bin/cc -DHAVE_HACL -DHAVE_OPENSSL -DHAVE_VALE -I/mnt/e/everest/latest/hacl-star/tests/benchmark -I/mnt/e/everest/latest/MLCrypto/openssl/include -I/mnt/e/everest/latest/hacl-star/dist/compact-c89 -I/mnt/e/everest/latest/kremlin/include -I/mnt/e/everest/latest/kremlin/kremlib/dist/generic  -g   -fPIC -fstack-check -o CMakeFiles/runbenchmark.dir/my_openssl.c.o   -c /mnt/e/everest/latest/hacl-star/tests/benchmark/my_openssl.c",
+  "file": "/mnt/e/everest/latest/hacl-star/tests/benchmark/my_openssl.c"
+},
+{
+  "directory": "/mnt/e/everest/latest/hacl-star/tests/benchmark/bld/libevercrypt",
+  "command": "/usr/bin/cc -D_BSD_SOURCE -D_DEFAULT_SOURCE -I/mnt/e/everest/latest/kremlin/include -I/mnt/e/everest/latest/kremlin/kremlib/dist/generic  -g   -std=c11 -fwrapv -Wall -Wextra -Werror -Wno-unused-variable -Wno-unused-but-set-variable -Wno-unknown-warning-option -Wno-infinite-recursion -Wno-unused-parameter -fPIC -o CMakeFiles/kremlib.dir/mnt/e/everest/latest/kremlin/kremlib/dist/generic/c.c.o   -c /mnt/e/everest/latest/kremlin/kremlib/dist/generic/c.c",
+  "file": "/mnt/e/everest/latest/kremlin/kremlib/dist/generic/c.c"
+},
+{
+  "directory": "/mnt/e/everest/latest/hacl-star/tests/benchmark/bld/libevercrypt",
+  "command": "/usr/bin/cc -D_BSD_SOURCE -D_DEFAULT_SOURCE -I/mnt/e/everest/latest/kremlin/include -I/mnt/e/everest/latest/kremlin/kremlib/dist/generic  -g   -std=c11 -fwrapv -Wall -Wextra -Werror -Wno-unused-variable -Wno-unused-but-set-variable -Wno-unknown-warning-option -Wno-infinite-recursion -Wno-unused-parameter -fPIC -o CMakeFiles/kremlib.dir/mnt/e/everest/latest/kremlin/kremlib/dist/generic/c_string.c.o   -c /mnt/e/everest/latest/kremlin/kremlib/dist/generic/c_string.c",
+  "file": "/mnt/e/everest/latest/kremlin/kremlib/dist/generic/c_string.c"
+},
+{
+  "directory": "/mnt/e/everest/latest/hacl-star/tests/benchmark/bld/libevercrypt",
+  "command": "/usr/bin/cc -D_BSD_SOURCE -D_DEFAULT_SOURCE -I/mnt/e/everest/latest/kremlin/include -I/mnt/e/everest/latest/kremlin/kremlib/dist/generic  -g   -std=c11 -fwrapv -Wall -Wextra -Werror -Wno-unused-variable -Wno-unused-but-set-variable -Wno-unknown-warning-option -Wno-infinite-recursion -Wno-unused-parameter -fPIC -o CMakeFiles/kremlib.dir/mnt/e/everest/latest/kremlin/kremlib/dist/generic/FStar_BitVector.c.o   -c /mnt/e/everest/latest/kremlin/kremlib/dist/generic/FStar_BitVector.c",
+  "file": "/mnt/e/everest/latest/kremlin/kremlib/dist/generic/FStar_BitVector.c"
+},
+{
+  "directory": "/mnt/e/everest/latest/hacl-star/tests/benchmark/bld/libevercrypt",
+  "command": "/usr/bin/cc -D_BSD_SOURCE -D_DEFAULT_SOURCE -I/mnt/e/everest/latest/kremlin/include -I/mnt/e/everest/latest/kremlin/kremlib/dist/generic  -g   -std=c11 -fwrapv -Wall -Wextra -Werror -Wno-unused-variable -Wno-unused-but-set-variable -Wno-unknown-warning-option -Wno-infinite-recursion -Wno-unused-parameter -fPIC -o CMakeFiles/kremlib.dir/mnt/e/everest/latest/kremlin/kremlib/dist/generic/fstar_bytes.c.o   -c /mnt/e/everest/latest/kremlin/kremlib/dist/generic/fstar_bytes.c",
+  "file": "/mnt/e/everest/latest/kremlin/kremlib/dist/generic/fstar_bytes.c"
+},
+{
+  "directory": "/mnt/e/everest/latest/hacl-star/tests/benchmark/bld/libevercrypt",
+  "command": "/usr/bin/cc -D_BSD_SOURCE -D_DEFAULT_SOURCE -I/mnt/e/everest/latest/kremlin/include -I/mnt/e/everest/latest/kremlin/kremlib/dist/generic  -g   -std=c11 -fwrapv -Wall -Wextra -Werror -Wno-unused-variable -Wno-unused-but-set-variable -Wno-unknown-warning-option -Wno-infinite-recursion -Wno-unused-parameter -fPIC -o CMakeFiles/kremlib.dir/mnt/e/everest/latest/kremlin/kremlib/dist/generic/fstar_char.c.o   -c /mnt/e/everest/latest/kremlin/kremlib/dist/generic/fstar_char.c",
+  "file": "/mnt/e/everest/latest/kremlin/kremlib/dist/generic/fstar_char.c"
+},
+{
+  "directory": "/mnt/e/everest/latest/hacl-star/tests/benchmark/bld/libevercrypt",
+  "command": "/usr/bin/cc -D_BSD_SOURCE -D_DEFAULT_SOURCE -I/mnt/e/everest/latest/kremlin/include -I/mnt/e/everest/latest/kremlin/kremlib/dist/generic  -g   -std=c11 -fwrapv -Wall -Wextra -Werror -Wno-unused-variable -Wno-unused-but-set-variable -Wno-unknown-warning-option -Wno-infinite-recursion -Wno-unused-parameter -fPIC -o CMakeFiles/kremlib.dir/mnt/e/everest/latest/kremlin/kremlib/dist/generic/fstar_date.c.o   -c /mnt/e/everest/latest/kremlin/kremlib/dist/generic/fstar_date.c",
+  "file": "/mnt/e/everest/latest/kremlin/kremlib/dist/generic/fstar_date.c"
+},
+{
+  "directory": "/mnt/e/everest/latest/hacl-star/tests/benchmark/bld/libevercrypt",
+  "command": "/usr/bin/cc -D_BSD_SOURCE -D_DEFAULT_SOURCE -I/mnt/e/everest/latest/kremlin/include -I/mnt/e/everest/latest/kremlin/kremlib/dist/generic  -g   -std=c11 -fwrapv -Wall -Wextra -Werror -Wno-unused-variable -Wno-unused-but-set-variable -Wno-unknown-warning-option -Wno-infinite-recursion -Wno-unused-parameter -fPIC -o CMakeFiles/kremlib.dir/mnt/e/everest/latest/kremlin/kremlib/dist/generic/fstar_dyn.c.o   -c /mnt/e/everest/latest/kremlin/kremlib/dist/generic/fstar_dyn.c",
+  "file": "/mnt/e/everest/latest/kremlin/kremlib/dist/generic/fstar_dyn.c"
+},
+{
+  "directory": "/mnt/e/everest/latest/hacl-star/tests/benchmark/bld/libevercrypt",
+  "command": "/usr/bin/cc -D_BSD_SOURCE -D_DEFAULT_SOURCE -I/mnt/e/everest/latest/kremlin/include -I/mnt/e/everest/latest/kremlin/kremlib/dist/generic  -g   -std=c11 -fwrapv -Wall -Wextra -Werror -Wno-unused-variable -Wno-unused-but-set-variable -Wno-unknown-warning-option -Wno-infinite-recursion -Wno-unused-parameter -fPIC -o CMakeFiles/kremlib.dir/mnt/e/everest/latest/kremlin/kremlib/dist/generic/fstar_hyperstack_io.c.o   -c /mnt/e/everest/latest/kremlin/kremlib/dist/generic/fstar_hyperstack_io.c",
+  "file": "/mnt/e/everest/latest/kremlin/kremlib/dist/generic/fstar_hyperstack_io.c"
+},
+{
+  "directory": "/mnt/e/everest/latest/hacl-star/tests/benchmark/bld/libevercrypt",
+  "command": "/usr/bin/cc -D_BSD_SOURCE -D_DEFAULT_SOURCE -I/mnt/e/everest/latest/kremlin/include -I/mnt/e/everest/latest/kremlin/kremlib/dist/generic  -g   -std=c11 -fwrapv -Wall -Wextra -Werror -Wno-unused-variable -Wno-unused-but-set-variable -Wno-unknown-warning-option -Wno-infinite-recursion -Wno-unused-parameter -fPIC -o CMakeFiles/kremlib.dir/mnt/e/everest/latest/kremlin/kremlib/dist/generic/fstar_int16.c.o   -c /mnt/e/everest/latest/kremlin/kremlib/dist/generic/fstar_int16.c",
+  "file": "/mnt/e/everest/latest/kremlin/kremlib/dist/generic/fstar_int16.c"
+},
+{
+  "directory": "/mnt/e/everest/latest/hacl-star/tests/benchmark/bld/libevercrypt",
+  "command": "/usr/bin/cc -D_BSD_SOURCE -D_DEFAULT_SOURCE -I/mnt/e/everest/latest/kremlin/include -I/mnt/e/everest/latest/kremlin/kremlib/dist/generic  -g   -std=c11 -fwrapv -Wall -Wextra -Werror -Wno-unused-variable -Wno-unused-but-set-variable -Wno-unknown-warning-option -Wno-infinite-recursion -Wno-unused-parameter -fPIC -o CMakeFiles/kremlib.dir/mnt/e/everest/latest/kremlin/kremlib/dist/generic/fstar_int32.c.o   -c /mnt/e/everest/latest/kremlin/kremlib/dist/generic/fstar_int32.c",
+  "file": "/mnt/e/everest/latest/kremlin/kremlib/dist/generic/fstar_int32.c"
+},
+{
+  "directory": "/mnt/e/everest/latest/hacl-star/tests/benchmark/bld/libevercrypt",
+  "command": "/usr/bin/cc -D_BSD_SOURCE -D_DEFAULT_SOURCE -I/mnt/e/everest/latest/kremlin/include -I/mnt/e/everest/latest/kremlin/kremlib/dist/generic  -g   -std=c11 -fwrapv -Wall -Wextra -Werror -Wno-unused-variable -Wno-unused-but-set-variable -Wno-unknown-warning-option -Wno-infinite-recursion -Wno-unused-parameter -fPIC -o CMakeFiles/kremlib.dir/mnt/e/everest/latest/kremlin/kremlib/dist/generic/fstar_int64.c.o   -c /mnt/e/everest/latest/kremlin/kremlib/dist/generic/fstar_int64.c",
+  "file": "/mnt/e/everest/latest/kremlin/kremlib/dist/generic/fstar_int64.c"
+},
+{
+  "directory": "/mnt/e/everest/latest/hacl-star/tests/benchmark/bld/libevercrypt",
+  "command": "/usr/bin/cc -D_BSD_SOURCE -D_DEFAULT_SOURCE -I/mnt/e/everest/latest/kremlin/include -I/mnt/e/everest/latest/kremlin/kremlib/dist/generic  -g   -std=c11 -fwrapv -Wall -Wextra -Werror -Wno-unused-variable -Wno-unused-but-set-variable -Wno-unknown-warning-option -Wno-infinite-recursion -Wno-unused-parameter -fPIC -o CMakeFiles/kremlib.dir/mnt/e/everest/latest/kremlin/kremlib/dist/generic/fstar_int8.c.o   -c /mnt/e/everest/latest/kremlin/kremlib/dist/generic/fstar_int8.c",
+  "file": "/mnt/e/everest/latest/kremlin/kremlib/dist/generic/fstar_int8.c"
+},
+{
+  "directory": "/mnt/e/everest/latest/hacl-star/tests/benchmark/bld/libevercrypt",
+  "command": "/usr/bin/cc -D_BSD_SOURCE -D_DEFAULT_SOURCE -I/mnt/e/everest/latest/kremlin/include -I/mnt/e/everest/latest/kremlin/kremlib/dist/generic  -g   -std=c11 -fwrapv -Wall -Wextra -Werror -Wno-unused-variable -Wno-unused-but-set-variable -Wno-unknown-warning-option -Wno-infinite-recursion -Wno-unused-parameter -fPIC -o CMakeFiles/kremlib.dir/mnt/e/everest/latest/kremlin/kremlib/dist/generic/fstar_io.c.o   -c /mnt/e/everest/latest/kremlin/kremlib/dist/generic/fstar_io.c",
+  "file": "/mnt/e/everest/latest/kremlin/kremlib/dist/generic/fstar_io.c"
+},
+{
+  "directory": "/mnt/e/everest/latest/hacl-star/tests/benchmark/bld/libevercrypt",
+  "command": "/usr/bin/cc -D_BSD_SOURCE -D_DEFAULT_SOURCE -I/mnt/e/everest/latest/kremlin/include -I/mnt/e/everest/latest/kremlin/kremlib/dist/generic  -g   -std=c11 -fwrapv -Wall -Wextra -Werror -Wno-unused-variable -Wno-unused-but-set-variable -Wno-unknown-warning-option -Wno-infinite-recursion -Wno-unused-parameter -fPIC -o CMakeFiles/kremlib.dir/mnt/e/everest/latest/kremlin/kremlib/dist/generic/FStar_ModifiesGen.c.o   -c /mnt/e/everest/latest/kremlin/kremlib/dist/generic/FStar_ModifiesGen.c",
+  "file": "/mnt/e/everest/latest/kremlin/kremlib/dist/generic/FStar_ModifiesGen.c"
+},
+{
+  "directory": "/mnt/e/everest/latest/hacl-star/tests/benchmark/bld/libevercrypt",
+  "command": "/usr/bin/cc -D_BSD_SOURCE -D_DEFAULT_SOURCE -I/mnt/e/everest/latest/kremlin/include -I/mnt/e/everest/latest/kremlin/kremlib/dist/generic  -g   -std=c11 -fwrapv -Wall -Wextra -Werror -Wno-unused-variable -Wno-unused-but-set-variable -Wno-unknown-warning-option -Wno-infinite-recursion -Wno-unused-parameter -fPIC -o CMakeFiles/kremlib.dir/mnt/e/everest/latest/kremlin/kremlib/dist/generic/FStar_Order.c.o   -c /mnt/e/everest/latest/kremlin/kremlib/dist/generic/FStar_Order.c",
+  "file": "/mnt/e/everest/latest/kremlin/kremlib/dist/generic/FStar_Order.c"
+},
+{
+  "directory": "/mnt/e/everest/latest/hacl-star/tests/benchmark/bld/libevercrypt",
+  "command": "/usr/bin/cc -D_BSD_SOURCE -D_DEFAULT_SOURCE -I/mnt/e/everest/latest/kremlin/include -I/mnt/e/everest/latest/kremlin/kremlib/dist/generic  -g   -std=c11 -fwrapv -Wall -Wextra -Werror -Wno-unused-variable -Wno-unused-but-set-variable -Wno-unknown-warning-option -Wno-infinite-recursion -Wno-unused-parameter -fPIC -o CMakeFiles/kremlib.dir/mnt/e/everest/latest/kremlin/kremlib/dist/generic/fstar_string.c.o   -c /mnt/e/everest/latest/kremlin/kremlib/dist/generic/fstar_string.c",
+  "file": "/mnt/e/everest/latest/kremlin/kremlib/dist/generic/fstar_string.c"
+},
+{
+  "directory": "/mnt/e/everest/latest/hacl-star/tests/benchmark/bld/libevercrypt",
+  "command": "/usr/bin/cc -D_BSD_SOURCE -D_DEFAULT_SOURCE -I/mnt/e/everest/latest/kremlin/include -I/mnt/e/everest/latest/kremlin/kremlib/dist/generic  -g   -std=c11 -fwrapv -Wall -Wextra -Werror -Wno-unused-variable -Wno-unused-but-set-variable -Wno-unknown-warning-option -Wno-infinite-recursion -Wno-unused-parameter -fPIC -o CMakeFiles/kremlib.dir/mnt/e/everest/latest/kremlin/kremlib/dist/generic/fstar_uint16.c.o   -c /mnt/e/everest/latest/kremlin/kremlib/dist/generic/fstar_uint16.c",
+  "file": "/mnt/e/everest/latest/kremlin/kremlib/dist/generic/fstar_uint16.c"
+},
+{
+  "directory": "/mnt/e/everest/latest/hacl-star/tests/benchmark/bld/libevercrypt",
+  "command": "/usr/bin/cc -D_BSD_SOURCE -D_DEFAULT_SOURCE -I/mnt/e/everest/latest/kremlin/include -I/mnt/e/everest/latest/kremlin/kremlib/dist/generic  -g   -std=c11 -fwrapv -Wall -Wextra -Werror -Wno-unused-variable -Wno-unused-but-set-variable -Wno-unknown-warning-option -Wno-infinite-recursion -Wno-unused-parameter -fPIC -o CMakeFiles/kremlib.dir/mnt/e/everest/latest/kremlin/kremlib/dist/generic/fstar_uint32.c.o   -c /mnt/e/everest/latest/kremlin/kremlib/dist/generic/fstar_uint32.c",
+  "file": "/mnt/e/everest/latest/kremlin/kremlib/dist/generic/fstar_uint32.c"
+},
+{
+  "directory": "/mnt/e/everest/latest/hacl-star/tests/benchmark/bld/libevercrypt",
+  "command": "/usr/bin/cc -D_BSD_SOURCE -D_DEFAULT_SOURCE -I/mnt/e/everest/latest/kremlin/include -I/mnt/e/everest/latest/kremlin/kremlib/dist/generic  -g   -std=c11 -fwrapv -Wall -Wextra -Werror -Wno-unused-variable -Wno-unused-but-set-variable -Wno-unknown-warning-option -Wno-infinite-recursion -Wno-unused-parameter -fPIC -o CMakeFiles/kremlib.dir/mnt/e/everest/latest/kremlin/kremlib/dist/generic/fstar_uint64.c.o   -c /mnt/e/everest/latest/kremlin/kremlib/dist/generic/fstar_uint64.c",
+  "file": "/mnt/e/everest/latest/kremlin/kremlib/dist/generic/fstar_uint64.c"
+},
+{
+  "directory": "/mnt/e/everest/latest/hacl-star/tests/benchmark/bld/libevercrypt",
+  "command": "/usr/bin/cc -D_BSD_SOURCE -D_DEFAULT_SOURCE -I/mnt/e/everest/latest/kremlin/include -I/mnt/e/everest/latest/kremlin/kremlib/dist/generic  -g   -std=c11 -fwrapv -Wall -Wextra -Werror -Wno-unused-variable -Wno-unused-but-set-variable -Wno-unknown-warning-option -Wno-infinite-recursion -Wno-unused-parameter -fPIC -o CMakeFiles/kremlib.dir/mnt/e/everest/latest/kremlin/kremlib/dist/generic/FStar_UInt_8_16_32_64.c.o   -c /mnt/e/everest/latest/kremlin/kremlib/dist/generic/FStar_UInt_8_16_32_64.c",
+  "file": "/mnt/e/everest/latest/kremlin/kremlib/dist/generic/FStar_UInt_8_16_32_64.c"
+},
+{
+  "directory": "/mnt/e/everest/latest/hacl-star/tests/benchmark/bld/libevercrypt",
+  "command": "/usr/bin/cc -D_BSD_SOURCE -D_DEFAULT_SOURCE -I/mnt/e/everest/latest/kremlin/include -I/mnt/e/everest/latest/kremlin/kremlib/dist/generic  -g   -std=c11 -fwrapv -Wall -Wextra -Werror -Wno-unused-variable -Wno-unused-but-set-variable -Wno-unknown-warning-option -Wno-infinite-recursion -Wno-unused-parameter -fPIC -o CMakeFiles/kremlib.dir/mnt/e/everest/latest/kremlin/kremlib/dist/generic/fstar_uint8.c.o   -c /mnt/e/everest/latest/kremlin/kremlib/dist/generic/fstar_uint8.c",
+  "file": "/mnt/e/everest/latest/kremlin/kremlib/dist/generic/fstar_uint8.c"
+},
+{
+  "directory": "/mnt/e/everest/latest/hacl-star/tests/benchmark/bld/libevercrypt",
+  "command": "/usr/bin/cc -D_BSD_SOURCE -D_DEFAULT_SOURCE -I/mnt/e/everest/latest/kremlin/include -I/mnt/e/everest/latest/kremlin/kremlib/dist/generic  -g   -std=c11 -fwrapv -Wall -Wextra -Werror -Wno-unused-variable -Wno-unused-but-set-variable -Wno-unknown-warning-option -Wno-infinite-recursion -Wno-unused-parameter -fPIC -o CMakeFiles/kremlib.dir/mnt/e/everest/latest/kremlin/kremlib/dist/generic/prims.c.o   -c /mnt/e/everest/latest/kremlin/kremlib/dist/generic/prims.c",
+  "file": "/mnt/e/everest/latest/kremlin/kremlib/dist/generic/prims.c"
+},
+{
+  "directory": "/mnt/e/everest/latest/hacl-star/tests/benchmark/bld/libevercrypt",
+  "command": "/usr/bin/cc -D_BSD_SOURCE -D_DEFAULT_SOURCE -I/mnt/e/everest/latest/kremlin/include -I/mnt/e/everest/latest/kremlin/kremlib/dist/generic  -g   -std=c11 -fwrapv -Wall -Wextra -Werror -Wno-unused-variable -Wno-unused-but-set-variable -Wno-unknown-warning-option -Wno-infinite-recursion -Wno-unused-parameter -fPIC -o CMakeFiles/kremlib.dir/mnt/e/everest/latest/kremlin/kremlib/dist/generic/testlib.c.o   -c /mnt/e/everest/latest/kremlin/kremlib/dist/generic/testlib.c",
+  "file": "/mnt/e/everest/latest/kremlin/kremlib/dist/generic/testlib.c"
+},
+{
+  "directory": "/mnt/e/everest/latest/hacl-star/tests/benchmark/bld/libevercrypt",
+  "command": "/usr/bin/cc -D_BSD_SOURCE -D_DEFAULT_SOURCE -I/mnt/e/everest/latest/kremlin/include -I/mnt/e/everest/latest/kremlin/kremlib/dist/generic  -g   -std=c11 -fwrapv -Wall -Wextra -Werror -Wno-unused-variable -Wno-unused-but-set-variable -Wno-unknown-warning-option -Wno-infinite-recursion -Wno-unused-parameter -fPIC -o CMakeFiles/kremlib.dir/mnt/e/everest/latest/kremlin/kremlib/dist/generic/fstar_uint128.c.o   -c /mnt/e/everest/latest/kremlin/kremlib/dist/generic/fstar_uint128.c",
+  "file": "/mnt/e/everest/latest/kremlin/kremlib/dist/generic/fstar_uint128.c"
+},
+{
+  "directory": "/mnt/e/everest/latest/hacl-star/tests/benchmark/bld/libevercrypt",
+  "command": "/usr/bin/cc -Devercrypt_EXPORTS -I/mnt/e/everest/latest/hacl-star/dist/compact-c89 -I/mnt/e/everest/latest/kremlin/include -I/mnt/e/everest/latest/kremlin/kremlib/dist/generic  -g -fPIC   -Wno-parentheses -std=gnu11 -march=native -mtune=native -fPIC -fstack-check -o CMakeFiles/evercrypt.dir/mnt/e/everest/latest/hacl-star/dist/compact-c89/EverCrypt_AEAD.c.o   -c /mnt/e/everest/latest/hacl-star/dist/compact-c89/EverCrypt_AEAD.c",
+  "file": "/mnt/e/everest/latest/hacl-star/dist/compact-c89/EverCrypt_AEAD.c"
+},
+{
+  "directory": "/mnt/e/everest/latest/hacl-star/tests/benchmark/bld/libevercrypt",
+  "command": "/usr/bin/cc -Devercrypt_EXPORTS -I/mnt/e/everest/latest/hacl-star/dist/compact-c89 -I/mnt/e/everest/latest/kremlin/include -I/mnt/e/everest/latest/kremlin/kremlib/dist/generic  -g -fPIC   -Wno-parentheses -std=gnu11 -march=native -mtune=native -fPIC -fstack-check -o CMakeFiles/evercrypt.dir/mnt/e/everest/latest/hacl-star/dist/compact-c89/EverCrypt_AutoConfig2.c.o   -c /mnt/e/everest/latest/hacl-star/dist/compact-c89/EverCrypt_AutoConfig2.c",
+  "file": "/mnt/e/everest/latest/hacl-star/dist/compact-c89/EverCrypt_AutoConfig2.c"
+},
+{
+  "directory": "/mnt/e/everest/latest/hacl-star/tests/benchmark/bld/libevercrypt",
+  "command": "/usr/bin/cc -Devercrypt_EXPORTS -I/mnt/e/everest/latest/hacl-star/dist/compact-c89 -I/mnt/e/everest/latest/kremlin/include -I/mnt/e/everest/latest/kremlin/kremlib/dist/generic  -g -fPIC   -Wno-parentheses -std=gnu11 -march=native -mtune=native -fPIC -fstack-check -o CMakeFiles/evercrypt.dir/mnt/e/everest/latest/hacl-star/dist/compact-c89/EverCrypt_Chacha20Poly1305.c.o   -c /mnt/e/everest/latest/hacl-star/dist/compact-c89/EverCrypt_Chacha20Poly1305.c",
+  "file": "/mnt/e/everest/latest/hacl-star/dist/compact-c89/EverCrypt_Chacha20Poly1305.c"
+},
+{
+  "directory": "/mnt/e/everest/latest/hacl-star/tests/benchmark/bld/libevercrypt",
+  "command": "/usr/bin/cc -Devercrypt_EXPORTS -I/mnt/e/everest/latest/hacl-star/dist/compact-c89 -I/mnt/e/everest/latest/kremlin/include -I/mnt/e/everest/latest/kremlin/kremlib/dist/generic  -g -fPIC   -Wno-parentheses -std=gnu11 -march=native -mtune=native -fPIC -fstack-check -o CMakeFiles/evercrypt.dir/mnt/e/everest/latest/hacl-star/dist/compact-c89/EverCrypt_Cipher.c.o   -c /mnt/e/everest/latest/hacl-star/dist/compact-c89/EverCrypt_Cipher.c",
+  "file": "/mnt/e/everest/latest/hacl-star/dist/compact-c89/EverCrypt_Cipher.c"
+},
+{
+  "directory": "/mnt/e/everest/latest/hacl-star/tests/benchmark/bld/libevercrypt",
+  "command": "/usr/bin/cc -Devercrypt_EXPORTS -I/mnt/e/everest/latest/hacl-star/dist/compact-c89 -I/mnt/e/everest/latest/kremlin/include -I/mnt/e/everest/latest/kremlin/kremlib/dist/generic  -g -fPIC   -Wno-parentheses -std=gnu11 -march=native -mtune=native -fPIC -fstack-check -o CMakeFiles/evercrypt.dir/mnt/e/everest/latest/hacl-star/dist/compact-c89/EverCrypt_Curve25519.c.o   -c /mnt/e/everest/latest/hacl-star/dist/compact-c89/EverCrypt_Curve25519.c",
+  "file": "/mnt/e/everest/latest/hacl-star/dist/compact-c89/EverCrypt_Curve25519.c"
+},
+{
+  "directory": "/mnt/e/everest/latest/hacl-star/tests/benchmark/bld/libevercrypt",
+  "command": "/usr/bin/cc -Devercrypt_EXPORTS -I/mnt/e/everest/latest/hacl-star/dist/compact-c89 -I/mnt/e/everest/latest/kremlin/include -I/mnt/e/everest/latest/kremlin/kremlib/dist/generic  -g -fPIC   -Wno-parentheses -std=gnu11 -march=native -mtune=native -fPIC -fstack-check -o CMakeFiles/evercrypt.dir/mnt/e/everest/latest/hacl-star/dist/compact-c89/EverCrypt_Error.c.o   -c /mnt/e/everest/latest/hacl-star/dist/compact-c89/EverCrypt_Error.c",
+  "file": "/mnt/e/everest/latest/hacl-star/dist/compact-c89/EverCrypt_Error.c"
+},
+{
+  "directory": "/mnt/e/everest/latest/hacl-star/tests/benchmark/bld/libevercrypt",
+  "command": "/usr/bin/cc -Devercrypt_EXPORTS -I/mnt/e/everest/latest/hacl-star/dist/compact-c89 -I/mnt/e/everest/latest/kremlin/include -I/mnt/e/everest/latest/kremlin/kremlib/dist/generic  -g -fPIC   -Wno-parentheses -std=gnu11 -march=native -mtune=native -fPIC -fstack-check -o CMakeFiles/evercrypt.dir/mnt/e/everest/latest/hacl-star/dist/compact-c89/EverCrypt_Hash.c.o   -c /mnt/e/everest/latest/hacl-star/dist/compact-c89/EverCrypt_Hash.c",
+  "file": "/mnt/e/everest/latest/hacl-star/dist/compact-c89/EverCrypt_Hash.c"
+},
+{
+  "directory": "/mnt/e/everest/latest/hacl-star/tests/benchmark/bld/libevercrypt",
+  "command": "/usr/bin/cc -Devercrypt_EXPORTS -I/mnt/e/everest/latest/hacl-star/dist/compact-c89 -I/mnt/e/everest/latest/kremlin/include -I/mnt/e/everest/latest/kremlin/kremlib/dist/generic  -g -fPIC   -Wno-parentheses -std=gnu11 -march=native -mtune=native -fPIC -fstack-check -o CMakeFiles/evercrypt.dir/mnt/e/everest/latest/hacl-star/dist/compact-c89/EverCrypt_HKDF.c.o   -c /mnt/e/everest/latest/hacl-star/dist/compact-c89/EverCrypt_HKDF.c",
+  "file": "/mnt/e/everest/latest/hacl-star/dist/compact-c89/EverCrypt_HKDF.c"
+},
+{
+  "directory": "/mnt/e/everest/latest/hacl-star/tests/benchmark/bld/libevercrypt",
+  "command": "/usr/bin/cc -Devercrypt_EXPORTS -I/mnt/e/everest/latest/hacl-star/dist/compact-c89 -I/mnt/e/everest/latest/kremlin/include -I/mnt/e/everest/latest/kremlin/kremlib/dist/generic  -g -fPIC   -Wno-parentheses -std=gnu11 -march=native -mtune=native -fPIC -fstack-check -o CMakeFiles/evercrypt.dir/mnt/e/everest/latest/hacl-star/dist/compact-c89/EverCrypt_HMAC.c.o   -c /mnt/e/everest/latest/hacl-star/dist/compact-c89/EverCrypt_HMAC.c",
+  "file": "/mnt/e/everest/latest/hacl-star/dist/compact-c89/EverCrypt_HMAC.c"
+},
+{
+  "directory": "/mnt/e/everest/latest/hacl-star/tests/benchmark/bld/libevercrypt",
+  "command": "/usr/bin/cc -Devercrypt_EXPORTS -I/mnt/e/everest/latest/hacl-star/dist/compact-c89 -I/mnt/e/everest/latest/kremlin/include -I/mnt/e/everest/latest/kremlin/kremlib/dist/generic  -g -fPIC   -Wno-parentheses -std=gnu11 -march=native -mtune=native -fPIC -fstack-check -o CMakeFiles/evercrypt.dir/mnt/e/everest/latest/hacl-star/dist/compact-c89/EverCrypt_Poly1305.c.o   -c /mnt/e/everest/latest/hacl-star/dist/compact-c89/EverCrypt_Poly1305.c",
+  "file": "/mnt/e/everest/latest/hacl-star/dist/compact-c89/EverCrypt_Poly1305.c"
+},
+{
+  "directory": "/mnt/e/everest/latest/hacl-star/tests/benchmark/bld/libevercrypt",
+  "command": "/usr/bin/cc -Devercrypt_EXPORTS -I/mnt/e/everest/latest/hacl-star/dist/compact-c89 -I/mnt/e/everest/latest/kremlin/include -I/mnt/e/everest/latest/kremlin/kremlib/dist/generic  -g -fPIC   -Wno-parentheses -std=gnu11 -march=native -mtune=native -fPIC -fstack-check -o CMakeFiles/evercrypt.dir/mnt/e/everest/latest/hacl-star/dist/compact-c89/EverCrypt_StaticConfig.c.o   -c /mnt/e/everest/latest/hacl-star/dist/compact-c89/EverCrypt_StaticConfig.c",
+  "file": "/mnt/e/everest/latest/hacl-star/dist/compact-c89/EverCrypt_StaticConfig.c"
+},
+{
+  "directory": "/mnt/e/everest/latest/hacl-star/tests/benchmark/bld/libevercrypt",
+  "command": "/usr/bin/cc -Devercrypt_EXPORTS -I/mnt/e/everest/latest/hacl-star/dist/compact-c89 -I/mnt/e/everest/latest/kremlin/include -I/mnt/e/everest/latest/kremlin/kremlib/dist/generic  -g -fPIC   -Wno-parentheses -std=gnu11 -march=native -mtune=native -fPIC -fstack-check -o CMakeFiles/evercrypt.dir/mnt/e/everest/latest/hacl-star/dist/compact-c89/EverCrypt_Vale.c.o   -c /mnt/e/everest/latest/hacl-star/dist/compact-c89/EverCrypt_Vale.c",
+  "file": "/mnt/e/everest/latest/hacl-star/dist/compact-c89/EverCrypt_Vale.c"
+},
+{
+  "directory": "/mnt/e/everest/latest/hacl-star/tests/benchmark/bld/libevercrypt",
+  "command": "/usr/bin/cc -Devercrypt_EXPORTS -I/mnt/e/everest/latest/hacl-star/dist/compact-c89 -I/mnt/e/everest/latest/kremlin/include -I/mnt/e/everest/latest/kremlin/kremlib/dist/generic  -g -fPIC   -Wno-parentheses -std=gnu11 -march=native -mtune=native -fPIC -fstack-check -o CMakeFiles/evercrypt.dir/mnt/e/everest/latest/hacl-star/dist/compact-c89/evercrypt_vale_stubs.c.o   -c /mnt/e/everest/latest/hacl-star/dist/compact-c89/evercrypt_vale_stubs.c",
+  "file": "/mnt/e/everest/latest/hacl-star/dist/compact-c89/evercrypt_vale_stubs.c"
+},
+{
+  "directory": "/mnt/e/everest/latest/hacl-star/tests/benchmark/bld/libevercrypt",
+  "command": "/usr/bin/cc -Devercrypt_EXPORTS -I/mnt/e/everest/latest/hacl-star/dist/compact-c89 -I/mnt/e/everest/latest/kremlin/include -I/mnt/e/everest/latest/kremlin/kremlib/dist/generic  -g -fPIC   -Wno-parentheses -std=gnu11 -march=native -mtune=native -fPIC -fstack-check -o CMakeFiles/evercrypt.dir/mnt/e/everest/latest/hacl-star/dist/compact-c89/Hacl_AES.c.o   -c /mnt/e/everest/latest/hacl-star/dist/compact-c89/Hacl_AES.c",
+  "file": "/mnt/e/everest/latest/hacl-star/dist/compact-c89/Hacl_AES.c"
+},
+{
+  "directory": "/mnt/e/everest/latest/hacl-star/tests/benchmark/bld/libevercrypt",
+  "command": "/usr/bin/cc -Devercrypt_EXPORTS -I/mnt/e/everest/latest/hacl-star/dist/compact-c89 -I/mnt/e/everest/latest/kremlin/include -I/mnt/e/everest/latest/kremlin/kremlib/dist/generic  -g -fPIC   -Wno-parentheses -std=gnu11 -march=native -mtune=native -fPIC -fstack-check -o CMakeFiles/evercrypt.dir/mnt/e/everest/latest/hacl-star/dist/compact-c89/Hacl_Chacha20.c.o   -c /mnt/e/everest/latest/hacl-star/dist/compact-c89/Hacl_Chacha20.c",
+  "file": "/mnt/e/everest/latest/hacl-star/dist/compact-c89/Hacl_Chacha20.c"
+},
+{
+  "directory": "/mnt/e/everest/latest/hacl-star/tests/benchmark/bld/libevercrypt",
+  "command": "/usr/bin/cc -Devercrypt_EXPORTS -I/mnt/e/everest/latest/hacl-star/dist/compact-c89 -I/mnt/e/everest/latest/kremlin/include -I/mnt/e/everest/latest/kremlin/kremlib/dist/generic  -g -fPIC   -Wno-parentheses -std=gnu11 -march=native -mtune=native -fPIC -fstack-check -o CMakeFiles/evercrypt.dir/mnt/e/everest/latest/hacl-star/dist/compact-c89/Hacl_Chacha20Poly1305.c.o   -c /mnt/e/everest/latest/hacl-star/dist/compact-c89/Hacl_Chacha20Poly1305.c",
+  "file": "/mnt/e/everest/latest/hacl-star/dist/compact-c89/Hacl_Chacha20Poly1305.c"
+},
+{
+  "directory": "/mnt/e/everest/latest/hacl-star/tests/benchmark/bld/libevercrypt",
+  "command": "/usr/bin/cc -Devercrypt_EXPORTS -I/mnt/e/everest/latest/hacl-star/dist/compact-c89 -I/mnt/e/everest/latest/kremlin/include -I/mnt/e/everest/latest/kremlin/kremlib/dist/generic  -g -fPIC   -Wno-parentheses -std=gnu11 -march=native -mtune=native -fPIC -fstack-check -o CMakeFiles/evercrypt.dir/mnt/e/everest/latest/hacl-star/dist/compact-c89/Hacl_Curve25519.c.o   -c /mnt/e/everest/latest/hacl-star/dist/compact-c89/Hacl_Curve25519.c",
+  "file": "/mnt/e/everest/latest/hacl-star/dist/compact-c89/Hacl_Curve25519.c"
+},
+{
+  "directory": "/mnt/e/everest/latest/hacl-star/tests/benchmark/bld/libevercrypt",
+  "command": "/usr/bin/cc -Devercrypt_EXPORTS -I/mnt/e/everest/latest/hacl-star/dist/compact-c89 -I/mnt/e/everest/latest/kremlin/include -I/mnt/e/everest/latest/kremlin/kremlib/dist/generic  -g -fPIC   -Wno-parentheses -std=gnu11 -march=native -mtune=native -fPIC -fstack-check -o CMakeFiles/evercrypt.dir/mnt/e/everest/latest/hacl-star/dist/compact-c89/Hacl_Ed25519.c.o   -c /mnt/e/everest/latest/hacl-star/dist/compact-c89/Hacl_Ed25519.c",
+  "file": "/mnt/e/everest/latest/hacl-star/dist/compact-c89/Hacl_Ed25519.c"
+},
+{
+  "directory": "/mnt/e/everest/latest/hacl-star/tests/benchmark/bld/libevercrypt",
+  "command": "/usr/bin/cc -Devercrypt_EXPORTS -I/mnt/e/everest/latest/hacl-star/dist/compact-c89 -I/mnt/e/everest/latest/kremlin/include -I/mnt/e/everest/latest/kremlin/kremlib/dist/generic  -g -fPIC   -Wno-parentheses -std=gnu11 -march=native -mtune=native -fPIC -fstack-check -o CMakeFiles/evercrypt.dir/mnt/e/everest/latest/hacl-star/dist/compact-c89/Hacl_Hash.c.o   -c /mnt/e/everest/latest/hacl-star/dist/compact-c89/Hacl_Hash.c",
+  "file": "/mnt/e/everest/latest/hacl-star/dist/compact-c89/Hacl_Hash.c"
+},
+{
+  "directory": "/mnt/e/everest/latest/hacl-star/tests/benchmark/bld/libevercrypt",
+  "command": "/usr/bin/cc -Devercrypt_EXPORTS -I/mnt/e/everest/latest/hacl-star/dist/compact-c89 -I/mnt/e/everest/latest/kremlin/include -I/mnt/e/everest/latest/kremlin/kremlib/dist/generic  -g -fPIC   -Wno-parentheses -std=gnu11 -march=native -mtune=native -fPIC -fstack-check -o CMakeFiles/evercrypt.dir/mnt/e/everest/latest/hacl-star/dist/compact-c89/Hacl_Kremlib.c.o   -c /mnt/e/everest/latest/hacl-star/dist/compact-c89/Hacl_Kremlib.c",
+  "file": "/mnt/e/everest/latest/hacl-star/dist/compact-c89/Hacl_Kremlib.c"
+},
+{
+  "directory": "/mnt/e/everest/latest/hacl-star/tests/benchmark/bld/libevercrypt",
+  "command": "/usr/bin/cc -Devercrypt_EXPORTS -I/mnt/e/everest/latest/hacl-star/dist/compact-c89 -I/mnt/e/everest/latest/kremlin/include -I/mnt/e/everest/latest/kremlin/kremlib/dist/generic  -g -fPIC   -Wno-parentheses -std=gnu11 -march=native -mtune=native -fPIC -fstack-check -o CMakeFiles/evercrypt.dir/mnt/e/everest/latest/hacl-star/dist/compact-c89/Hacl_Poly1305_32.c.o   -c /mnt/e/everest/latest/hacl-star/dist/compact-c89/Hacl_Poly1305_32.c",
+  "file": "/mnt/e/everest/latest/hacl-star/dist/compact-c89/Hacl_Poly1305_32.c"
+},
+{
+  "directory": "/mnt/e/everest/latest/hacl-star/tests/benchmark/bld/libevercrypt",
+  "command": "/usr/bin/cc -Devercrypt_EXPORTS -I/mnt/e/everest/latest/hacl-star/dist/compact-c89 -I/mnt/e/everest/latest/kremlin/include -I/mnt/e/everest/latest/kremlin/kremlib/dist/generic  -g -fPIC   -Wno-parentheses -std=gnu11 -march=native -mtune=native -fPIC -fstack-check -o CMakeFiles/evercrypt.dir/mnt/e/everest/latest/hacl-star/dist/compact-c89/Hacl_Poly1305_128.c.o   -c /mnt/e/everest/latest/hacl-star/dist/compact-c89/Hacl_Poly1305_128.c",
+  "file": "/mnt/e/everest/latest/hacl-star/dist/compact-c89/Hacl_Poly1305_128.c"
+},
+{
+  "directory": "/mnt/e/everest/latest/hacl-star/tests/benchmark/bld/libevercrypt",
+  "command": "/usr/bin/cc -Devercrypt_EXPORTS -I/mnt/e/everest/latest/hacl-star/dist/compact-c89 -I/mnt/e/everest/latest/kremlin/include -I/mnt/e/everest/latest/kremlin/kremlib/dist/generic  -g -fPIC   -Wno-parentheses -std=gnu11 -march=native -mtune=native -fPIC -fstack-check -o CMakeFiles/evercrypt.dir/mnt/e/everest/latest/hacl-star/dist/compact-c89/Hacl_Poly1305_256.c.o   -c /mnt/e/everest/latest/hacl-star/dist/compact-c89/Hacl_Poly1305_256.c",
+  "file": "/mnt/e/everest/latest/hacl-star/dist/compact-c89/Hacl_Poly1305_256.c"
+},
+{
+  "directory": "/mnt/e/everest/latest/hacl-star/tests/benchmark/bld/libevercrypt",
+  "command": "/usr/bin/cc -Devercrypt_EXPORTS -I/mnt/e/everest/latest/hacl-star/dist/compact-c89 -I/mnt/e/everest/latest/kremlin/include -I/mnt/e/everest/latest/kremlin/kremlib/dist/generic  -g -fPIC   -Wno-parentheses -std=gnu11 -march=native -mtune=native -fPIC -fstack-check -o CMakeFiles/evercrypt.dir/mnt/e/everest/latest/hacl-star/dist/compact-c89/Hacl_SHA3.c.o   -c /mnt/e/everest/latest/hacl-star/dist/compact-c89/Hacl_SHA3.c",
+  "file": "/mnt/e/everest/latest/hacl-star/dist/compact-c89/Hacl_SHA3.c"
+},
+{
+  "directory": "/mnt/e/everest/latest/hacl-star/tests/benchmark/bld/libevercrypt",
+  "command": "/usr/bin/cc -Devercrypt_EXPORTS -I/mnt/e/everest/latest/hacl-star/dist/compact-c89 -I/mnt/e/everest/latest/kremlin/include -I/mnt/e/everest/latest/kremlin/kremlib/dist/generic  -g -fPIC   -Wno-parentheses -std=gnu11 -march=native -mtune=native -fPIC -fstack-check -o CMakeFiles/evercrypt.dir/mnt/e/everest/latest/hacl-star/dist/compact-c89/Lib_PrintBuffer.c.o   -c /mnt/e/everest/latest/hacl-star/dist/compact-c89/Lib_PrintBuffer.c",
+  "file": "/mnt/e/everest/latest/hacl-star/dist/compact-c89/Lib_PrintBuffer.c"
+},
+{
+  "directory": "/mnt/e/everest/latest/hacl-star/tests/benchmark/bld/libevercrypt",
+  "command": "/usr/bin/cc -Devercrypt_EXPORTS -I/mnt/e/everest/latest/hacl-star/dist/compact-c89 -I/mnt/e/everest/latest/kremlin/include -I/mnt/e/everest/latest/kremlin/kremlib/dist/generic  -g -fPIC   -Wno-parentheses -std=gnu11 -march=native -mtune=native -fPIC -fstack-check -o CMakeFiles/evercrypt.dir/mnt/e/everest/latest/hacl-star/dist/compact-c89/Lib_RandomBuffer.c.o   -c /mnt/e/everest/latest/hacl-star/dist/compact-c89/Lib_RandomBuffer.c",
+  "file": "/mnt/e/everest/latest/hacl-star/dist/compact-c89/Lib_RandomBuffer.c"
+},
+{
+  "directory": "/mnt/e/everest/latest/hacl-star/tests/benchmark/bld/libevercrypt",
+  "command": "/usr/bin/cc -Devercrypt_EXPORTS -I/mnt/e/everest/latest/hacl-star/dist/compact-c89 -I/mnt/e/everest/latest/kremlin/include -I/mnt/e/everest/latest/kremlin/kremlib/dist/generic  -g -fPIC   -Wno-parentheses -std=gnu11 -march=native -mtune=native -fPIC -fstack-check -o CMakeFiles/evercrypt.dir/mnt/e/everest/latest/hacl-star/dist/compact-c89/Vale.c.o   -c /mnt/e/everest/latest/hacl-star/dist/compact-c89/Vale.c",
+  "file": "/mnt/e/everest/latest/hacl-star/dist/compact-c89/Vale.c"
+}
+]

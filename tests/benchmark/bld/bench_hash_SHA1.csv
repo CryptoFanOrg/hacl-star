@@ -1,0 +1,26 @@
+// Date: Apr 18 2019 19:38:52
+// Config: -SHAEXT +AESNI +PCLMULQDQ +AVX +AVX2 +BMI2 +ADX +HACL +VALE seed=0 samples=100
+// EverCrypt: /usr/bin/cc -Devercrypt_EXPORTS -I/mnt/e/everest/latest/hacl-star/dist/compact-c89 -I/mnt/e/everest/latest/kremlin/include -I/mnt/e/everest/latest/kremlin/kremlib/dist/generic  -g -fPIC   -Wno-parentheses -std=gnu11 -march=native -mtune=native -fPIC -fstack-check -o CMakeFiles/evercrypt.dir/mnt/e/everest/latest/hacl-star/dist/compact-c89/EverCrypt_Error.c.o   -c /mnt/e/everest/latest/hacl-star/dist/compact-c89/EverCrypt_Error.c
+// KreMLib: /usr/bin/cc -D_BSD_SOURCE -D_DEFAULT_SOURCE -I/mnt/e/everest/latest/kremlin/include -I/mnt/e/everest/latest/kremlin/kremlib/dist/generic  -g   -std=c11 -fwrapv -Wall -Wextra -Werror -Wno-unused-variable -Wno-unused-but-set-variable -Wno-unknown-warning-option -Wno-infinite-recursion -Wno-unused-parameter -fPIC -o CMakeFiles/kremlib.dir/mnt/e/everest/latest/kremlin/kremlib/dist/generic/prims.c.o   -c /mnt/e/everest/latest/kremlin/kremlib/dist/generic/prims.c
+Algorithm, Size [b], CPU Time (incl) [sec], CPU Time (excl) [sec], Avg Cycles/Hash, Min Cycles/Hash, Max Cycles/Hash, Avg Cycles/Byte
+"EverCrypt",4096,0.015625,0.015625,684708,538312,925942,167.165
+"OpenSSL",2048,0.015625,0,9845.74,8800,100510,4.80749
+"HaCl",2048,0,0,163556,160564,276876,79.8615
+"EverCrypt",2048,0,0,119158,103368,176102,58.1825
+"OpenSSL",1024,0,0,3395.24,3288,4188,3.31566
+"HaCl",4096,0.015625,0,225105,212512,314174,54.9572
+"OpenSSL",4096,0,0,12902.1,11706,46572,3.14993
+"EverCrypt",8192,0.015625,0.015625,435310,403068,495778,53.1385
+"HaCl",8192,0.03125,0.015625,435263,421732,540896,53.1327
+"OpenSSL",8192,0,0,23321.7,22400,57488,2.84688
+"EverCrypt",16384,0.03125,0.015625,863109,803400,1000206,52.68
+"HaCl",16384,0.046875,0.03125,865671,803638,1004850,52.8364
+"HaCl",1024,0,0,57969.6,57220,75198,56.611
+"EverCrypt",1024,0,0,59359.4,55974,111004,57.9682
+"OpenSSL",16384,0.015625,0,46859,42508,99024,2.86005
+"EverCrypt",32768,0.0625,0.0625,1.7501e+06,1604102,1907634,53.4089
+"HaCl",32768,0.078125,0.0625,1.7034e+06,1604610,1909332,51.9835
+"OpenSSL",32768,0.015625,0,90962.8,84566,175466,2.77596
+"EverCrypt",65536,0.171875,0.140625,4.01192e+06,3214980,12133196,61.2171
+"HaCl",65536,0.140625,0.078125,3.40458e+06,3207794,3646656,51.9497
+"OpenSSL",65536,0.046875,0.015625,186415,168556,667324,2.84446

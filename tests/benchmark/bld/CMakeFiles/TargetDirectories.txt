@@ -1,0 +1,8 @@
+/mnt/e/everest/latest/hacl-star/tests/benchmark/bld/CMakeFiles/rebuild_cache.dir
+/mnt/e/everest/latest/hacl-star/tests/benchmark/bld/CMakeFiles/edit_cache.dir
+/mnt/e/everest/latest/hacl-star/tests/benchmark/bld/CMakeFiles/benchmark.dir
+/mnt/e/everest/latest/hacl-star/tests/benchmark/bld/CMakeFiles/runbenchmark.dir
+/mnt/e/everest/latest/hacl-star/tests/benchmark/bld/libevercrypt/CMakeFiles/edit_cache.dir
+/mnt/e/everest/latest/hacl-star/tests/benchmark/bld/libevercrypt/CMakeFiles/rebuild_cache.dir
+/mnt/e/everest/latest/hacl-star/tests/benchmark/bld/libevercrypt/CMakeFiles/kremlib.dir
+/mnt/e/everest/latest/hacl-star/tests/benchmark/bld/libevercrypt/CMakeFiles/evercrypt.dir

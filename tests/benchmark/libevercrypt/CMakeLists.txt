@@ -32,7 +32,9 @@ target_sources(evercrypt PRIVATE
   ${EVERCRYPT_SRC_DIR}/Hacl_Ed25519.c
   ${EVERCRYPT_SRC_DIR}/Hacl_Hash.c
   ${EVERCRYPT_SRC_DIR}/Hacl_Kremlib.c
-  ${EVERCRYPT_SRC_DIR}/Hacl_Poly1305.c
+  ${EVERCRYPT_SRC_DIR}/Hacl_Poly1305_32.c
+  ${EVERCRYPT_SRC_DIR}/Hacl_Poly1305_128.c
+  ${EVERCRYPT_SRC_DIR}/Hacl_Poly1305_256.c
   ${EVERCRYPT_SRC_DIR}/Hacl_SHA3.c
   ${EVERCRYPT_SRC_DIR}/Lib_PrintBuffer.c
   ${EVERCRYPT_SRC_DIR}/Lib_RandomBuffer.c

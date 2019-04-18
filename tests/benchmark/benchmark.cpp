@@ -9,20 +9,20 @@ extern "C" {
 #include "benchmark.h"
 #include "benchmark_plot_templates.h"
 
-void b_init()
+void Benchmark::initialize()
 {
   srand(0);
 }
 
-extern void b_randomize(char *buf, size_t buf_sz)
+void Benchmark::randomize(char *buf, size_t buf_sz)
 {
   for (int i = 0; i < buf_sz; i++)
     buf[i] = rand() % 8;
 }
 
-Benchmark::Benchmark() : seed(0), samples(1) {}
+Benchmark::Benchmark() {}
 
-Benchmark::Benchmark(std::string & name) : seed(0), samples(1) { set_name(name); }
+Benchmark::Benchmark(const std::string & name) { set_name(name); }
 
 void Benchmark::escape(char c, std::string & str)
 {
@@ -118,13 +118,36 @@ void Benchmark::set_runtime_config(int shaext, int aesni, int pclmulqdq, int avx
   if (vale == 0) EverCrypt_AutoConfig2_disable_vale();
 }
 
+void Benchmark::run(const BenchmarkSettings & s)
+{
+  pre(s);
+
+  for (int i = 0; i < s.samples; i++)
+  {
+    bench_setup(s);
+
+    tbegin = clock();
+    cbegin = cpucycles_begin();
+    bench_func();
+    cend = cpucycles_end();
+    tend = clock();
+    cdiff = cend-cbegin;
+    tdiff = difftime(tend, tbegin);
+    ctotal += cdiff;
+    ttotal += tdiff;
+    if (cdiff < cmin) cmin = cdiff;
+    if (cdiff > cmax) cmax = cdiff;
+  }
+
+  post(s);
+}
+
 static const char time_fmt[] = "%b %d %Y %H:%M:%S";
 
-void b_run(unsigned int seed,
-           size_t samples,
-           const std::string & data_header,
-           const std::string & data_filename,
-           std::set<Benchmark*> & benchmarks)
+void Benchmark::run_all(const BenchmarkSettings & s,
+                        const std::string & data_header,
+                        const std::string & data_filename,
+                        std::set<Benchmark*> & benchmarks)
 {
   char time_buf[1024];
   time_t rawtime;
@@ -137,7 +160,7 @@ void b_run(unsigned int seed,
   std::ofstream rs(data_filename, std::ios::out | std::ios::trunc);
 
   rs << "// Date: " << time_buf << "\n";
-  rs << "// Config: " << Benchmark::get_runtime_config() << " seed=" << seed << " samples=" << samples << "\n";
+  rs << "// Config: " << Benchmark::get_runtime_config() << " seed=" << s.seed << " samples=" << s.samples << "\n";
   rs << "// " << Benchmark::get_build_config(false).first << "\n";
   rs << "// " << Benchmark::get_build_config(false).second << "\n";
   rs << data_header << "\n";
@@ -148,10 +171,8 @@ void b_run(unsigned int seed,
     Benchmark *b = *fst;
     benchmarks.erase(fst);
 
-    b->set_seed(seed);
-    b->set_samples(samples);
-    b->run();
-    b->report(rs);
+    b->run(s);
+    b->report(rs, s);
     rs.flush();
 
     delete(b);
@@ -161,16 +182,24 @@ void b_run(unsigned int seed,
   benchmarks.clear();
 }
 
-extern void b_make_plot(unsigned int seed,
-                        size_t samples,
-                        const std::string & terminal,
-                        const std::string & title,
-                        const std::string & units,
-                        const std::string & data_filename,
-                        const std::string & plot_filename,
-                        const std::string & plot_extras,
-                        const std::string & plot_spec,
-                        bool add_key)
+
+void make_plot_labels(std::ofstream & of, const BenchmarkSettings & s)
+{
+  of << "set label \"Date: \".strftime(\"" << time_fmt << "\", time(0)) at character .5, 1.1 font \"Courier,8\"\n";
+  of << "set label \"Config: " << Benchmark::get_runtime_config() << " SEED=" << s.seed << " SAMPLES=" << s.samples << "\" at character .5, .65 font \"Courier,8\"\n";
+  of << "set label \"" << Benchmark::get_build_config(true).first << "\" at character .5, .25 font \"Courier,1\"\n";
+  of << "set label \"" << Benchmark::get_build_config(true).second << "\" at character .5, .35 font \"Courier,1\"\n";
+}
+
+void Benchmark::make_plot(const BenchmarkSettings & s,
+                          const std::string & terminal,
+                          const std::string & title,
+                          const std::string & units,
+                          const std::string & data_filename,
+                          const std::string & plot_filename,
+                          const std::string & plot_extras,
+                          const std::string & plot_spec,
+                          bool add_key)
 {
   std::string gnuplot_filename = plot_filename;
   gnuplot_filename.replace(plot_filename.length()-3, 3, "plt");
@@ -179,16 +208,52 @@ extern void b_make_plot(unsigned int seed,
   std::ofstream of(gnuplot_filename, std::ios::out | std::ios::trunc);
   of << "set terminal " << terminal << "\n";
   of << "set title \"" << title << "\"\n";
-  of << "set label \"Date: \".strftime(\"" << time_fmt << "\", time(0)) at character .5, 1.1 font \"Courier,8\"\n";
-  of << "set label \"Config: " << Benchmark::get_runtime_config() << " SEED=" << seed << " SAMPLES=" << samples << "\" at character .5, .65 font \"Courier,8\"\n";
-  of << "set label \"" << Benchmark::get_build_config(true).first << "\" at character .5, .25 font \"Courier,1\"\n";
-  of << "set label \"" << Benchmark::get_build_config(true).second << "\" at character .5, .35 font \"Courier,1\"\n";
+  make_plot_labels(of, s);
   of << GNUPLOT_GLOBALS << "\n";
   of << "set key " << (add_key?"on":"off") << "\n";
   of << "set ylabel \"" << units << "\"" << "\n";
   of << "set output '"<< plot_filename << "'" << "\n";
   of << plot_extras << "\n";
   of << "plot '" << data_filename << "' " << plot_spec << "\n";
+  of.close();
+
+  std::cout << "-- " << plot_filename << "...\n";
+  system((std::string("gnuplot ") + gnuplot_filename).c_str());
+}
+
+void Benchmark::make_meta_plot(const BenchmarkSettings & s,
+                               const std::string & terminal,
+                               const std::string & title,
+                               const std::string & units,
+                               const std::vector<std::string> & data_filenames,
+                               const std::string & plot_filename,
+                               const std::string & plot_extras,
+                               const std::vector<std::string> & plot_specs,
+                               bool add_key)
+{
+  if (data_filenames.size() != plot_specs.size())
+    throw std::logic_error("Need data_filenames.size() == plot_specs.size()");
+
+  std::string gnuplot_filename = plot_filename;
+  gnuplot_filename.replace(plot_filename.length()-3, 3, "plt");
+  std::cout << "-- " << gnuplot_filename << "...\n";
+
+  std::ofstream of(gnuplot_filename, std::ios::out | std::ios::trunc);
+  of << "set terminal " << terminal << "\n";
+  of << "set title \"" << title << "\"\n";
+  make_plot_labels(of, s);
+  of << GNUPLOT_GLOBALS << "\n";
+  of << "set key " << (add_key?"on":"off") << "\n";
+  of << "set ylabel \"" << units << "\"" << "\n";
+  of << "set output '"<< plot_filename << "'" << "\n";
+  of << plot_extras << "\n";
+  of << "plot ";
+  for (size_t i = 0; i < data_filenames.size(); i++)
+  {
+    of << "'" << data_filenames[i] << "'" << plot_specs[i];
+    if (i != data_filenames.size() - 1) of << ", \\";
+    of << "\n";
+  }
   of.close();
 
   std::cout << "-- " << plot_filename << "...\n";

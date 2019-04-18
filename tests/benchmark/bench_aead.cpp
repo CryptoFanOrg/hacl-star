@@ -14,10 +14,6 @@ extern "C" {
 class AEADBenchmark : public Benchmark
 {
   protected:
-    cycles cbegin, cend, cdiff, ctotal = 0, cmax = 0, cmin = -1;
-    size_t tbegin, tend, tdiff, ttotal = 0;
-    size_t toverall;
-
     size_t key_sz, input_sz;
     unsigned char tag[16], iv[12];
     unsigned char *key;
@@ -27,7 +23,7 @@ class AEADBenchmark : public Benchmark
   public:
     static constexpr auto header = "Algorithm, Size [b], CPU Time (incl) [sec], CPU Time (excl) [sec], Avg Cycles/Hash, Min Cycles/Hash, Max Cycles/Hash, Avg Cycles/Byte";
 
-    AEADBenchmark(std::ostream & rs, size_t key_sz_bits, size_t input_sz, std::string const & prefix) : Benchmark()
+    AEADBenchmark(size_t key_sz_bits, size_t input_sz, const std::string & prefix) : Benchmark(prefix)
     {
       if (key_sz_bits != 128 && key_sz_bits != 192 && key_sz_bits != 256)
         throw std::logic_error("Need key_sz in {128, 192, 256}");
@@ -41,14 +37,6 @@ class AEADBenchmark : public Benchmark
       key = new unsigned char[key_sz];
       plain = new unsigned char[input_sz];
       cipher = new unsigned char[input_sz];
-
-      b_randomize((char*)key, key_sz);
-      b_randomize((char*)plain, input_sz);
-
-      std::stringstream s;
-      s << prefix << " ";
-      // s << (type==0 ? "MD5" : (type==1 ? "SHA1" : (type == 2 ? "SHA2\\_" : "Unknown")));
-      name = s.str();
     }
 
     virtual ~AEADBenchmark()
@@ -58,40 +46,21 @@ class AEADBenchmark : public Benchmark
       delete(cipher);
     }
 
-    virtual void b_func() = 0;
-
-    virtual void run()
+    virtual void bench_setup(const BenchmarkSettings & s)
     {
-      srand(seed);
-      toverall = clock();
-
-      for (int i = 0; i < samples; i++)
-      {
-        tbegin = clock();
-        cbegin = b_cpucycles_begin();
-        b_func();
-        cend = b_cpucycles_end();
-        tend = clock();
-        cdiff = cend-cbegin;
-        tdiff = difftime(tend, tbegin);
-        ctotal += cdiff;
-        ttotal += tdiff;
-        if (cdiff < cmin) cmin = cdiff;
-        if (cdiff > cmax) cmax = cdiff;
-      }
-
-      toverall = clock() - toverall;
+      randomize((char*)key, key_sz);
+      randomize((char*)plain, input_sz);
     }
 
-    virtual void report(std::ostream & rs)
+    virtual void report(std::ostream & rs, const BenchmarkSettings & s)
     {
       rs << "\"" << name.c_str() << key_sz << "\""
         << "," << input_sz
         << "," << toverall/(double)CLOCKS_PER_SEC
         << "," << ttotal/(double)CLOCKS_PER_SEC
-        << "," << ctotal/(double)samples
+        << "," << ctotal/(double)s.samples
         << "," << cmin << cmax
-        << "," << (ctotal/(double)input_sz)/(double)samples
+        << "," << (ctotal/(double)input_sz)/(double)s.samples
         << "\n";
     }
 };
@@ -100,17 +69,17 @@ template<int type, int key_sz_bits>
 class EverCryptAEAD : public AEADBenchmark
 {
   public:
-    EverCryptAEAD(std::ostream & rs, size_t input_sz) :
-      AEADBenchmark(rs, type /*EverCrypt_aead_keyLen(type)*/, input_sz, "EverCyrypt") {}
+    EverCryptAEAD(size_t input_sz) :
+      AEADBenchmark(type /*EverCrypt_aead_keyLen(type)*/, input_sz, "EverCyrypt") {}
     virtual ~EverCryptAEAD() {}
-    virtual void b_func() {
+    virtual void bench_func() {
       // EverCrypt_AEAD_state_s *s = EverCrypt_aead_create(type, key);
       // EverCrypt_aead_encrypt(s, iv, "", 0, plain, N, cipher, tag);
       // EverCrypt_aead_free(s);
     }
 };
 
-int bench_aead(unsigned int seed, size_t num_samples)
+int bench_aead(const BenchmarkSettings & s)
 {
   size_t data_sizes[] = { 1024, 2048, 4096, 8192 };
 
@@ -132,6 +101,6 @@ int bench_aead(unsigned int seed, size_t num_samples)
       #endif
       };
 
-    b_run(seed, num_samples, AEADBenchmark::header, filename.str(), todo);
+    Benchmark::run_all(s, AEADBenchmark::header, filename.str(), todo);
   }
 }

@@ -1,0 +1,376 @@
+<?xml version="1.0" encoding="utf-8"  standalone="no"?>
+<svg 
+ width="600" height="480"
+ viewBox="0 0 600 480"
+ xmlns="http://www.w3.org/2000/svg"
+ xmlns:xlink="http://www.w3.org/1999/xlink"
+>
+
+<title>Gnuplot</title>
+<desc>Produced by GNUPLOT 5.2 patchlevel 2 </desc>
+
+<g id="gnuplot_canvas">
+
+<rect x="0" y="0" width="600" height="480" fill="none"/>
+<defs>
+
+	<circle id='gpDot' r='0.5' stroke-width='0.5'/>
+	<path id='gpPt0' stroke-width='0.222' stroke='currentColor' d='M-1,0 h2 M0,-1 v2'/>
+	<path id='gpPt1' stroke-width='0.222' stroke='currentColor' d='M-1,-1 L1,1 M1,-1 L-1,1'/>
+	<path id='gpPt2' stroke-width='0.222' stroke='currentColor' d='M-1,0 L1,0 M0,-1 L0,1 M-1,-1 L1,1 M-1,1 L1,-1'/>
+	<rect id='gpPt3' stroke-width='0.222' stroke='currentColor' x='-1' y='-1' width='2' height='2'/>
+	<rect id='gpPt4' stroke-width='0.222' stroke='currentColor' fill='currentColor' x='-1' y='-1' width='2' height='2'/>
+	<circle id='gpPt5' stroke-width='0.222' stroke='currentColor' cx='0' cy='0' r='1'/>
+	<use xlink:href='#gpPt5' id='gpPt6' fill='currentColor' stroke='none'/>
+	<path id='gpPt7' stroke-width='0.222' stroke='currentColor' d='M0,-1.33 L-1.33,0.67 L1.33,0.67 z'/>
+	<use xlink:href='#gpPt7' id='gpPt8' fill='currentColor' stroke='none'/>
+	<use xlink:href='#gpPt7' id='gpPt9' stroke='currentColor' transform='rotate(180)'/>
+	<use xlink:href='#gpPt9' id='gpPt10' fill='currentColor' stroke='none'/>
+	<use xlink:href='#gpPt3' id='gpPt11' stroke='currentColor' transform='rotate(45)'/>
+	<use xlink:href='#gpPt11' id='gpPt12' fill='currentColor' stroke='none'/>
+	<path id='gpPt13' stroke-width='0.222' stroke='currentColor' d='M0,1.330 L1.265,0.411 L0.782,-1.067 L-0.782,-1.076 L-1.265,0.411 z'/>
+	<use xlink:href='#gpPt13' id='gpPt14' fill='currentColor' stroke='none'/>
+	<filter id='textbox' filterUnits='objectBoundingBox' x='0' y='0' height='1' width='1'>
+	  <feFlood flood-color='white' flood-opacity='1' result='bgnd'/>
+	  <feComposite in='SourceGraphic' in2='bgnd' operator='atop'/>
+	</filter>
+	<filter id='greybox' filterUnits='objectBoundingBox' x='0' y='0' height='1' width='1'>
+	  <feFlood flood-color='lightgrey' flood-opacity='1' result='grey'/>
+	  <feComposite in='SourceGraphic' in2='grey' operator='atop'/>
+	</filter>
+</defs>
+<g fill="none" color="white" stroke="currentColor" stroke-width="1.00" stroke-linecap="butt" stroke-linejoin="miter">
+</g>
+<g fill="none" color="black" stroke="currentColor" stroke-width="1.00" stroke-linecap="butt" stroke-linejoin="miter">
+	<path stroke='black'  d='M71.9,426.0 L80.9,426.0 M575.0,426.0 L566.0,426.0  '/>	<g transform="translate(63.6,429.9)" stroke="none" fill="black" font-family="Arial" font-size="12.00"  text-anchor="end">
+		<text><tspan font-family="Arial" > 0</tspan></text>
+	</g>
+</g>
+<g fill="none" color="black" stroke="currentColor" stroke-width="1.00" stroke-linecap="butt" stroke-linejoin="miter">
+	<path stroke='black'  d='M71.9,388.8 L80.9,388.8 M575.0,388.8 L566.0,388.8  '/>	<g transform="translate(63.6,392.7)" stroke="none" fill="black" font-family="Arial" font-size="12.00"  text-anchor="end">
+		<text><tspan font-family="Arial" > 10</tspan></text>
+	</g>
+</g>
+<g fill="none" color="black" stroke="currentColor" stroke-width="1.00" stroke-linecap="butt" stroke-linejoin="miter">
+	<path stroke='black'  d='M71.9,351.6 L80.9,351.6 M575.0,351.6 L566.0,351.6  '/>	<g transform="translate(63.6,355.5)" stroke="none" fill="black" font-family="Arial" font-size="12.00"  text-anchor="end">
+		<text><tspan font-family="Arial" > 20</tspan></text>
+	</g>
+</g>
+<g fill="none" color="black" stroke="currentColor" stroke-width="1.00" stroke-linecap="butt" stroke-linejoin="miter">
+	<path stroke='black'  d='M71.9,314.4 L80.9,314.4 M575.0,314.4 L566.0,314.4  '/>	<g transform="translate(63.6,318.3)" stroke="none" fill="black" font-family="Arial" font-size="12.00"  text-anchor="end">
+		<text><tspan font-family="Arial" > 30</tspan></text>
+	</g>
+</g>
+<g fill="none" color="black" stroke="currentColor" stroke-width="1.00" stroke-linecap="butt" stroke-linejoin="miter">
+	<path stroke='black'  d='M71.9,277.2 L80.9,277.2 M575.0,277.2 L566.0,277.2  '/>	<g transform="translate(63.6,281.1)" stroke="none" fill="black" font-family="Arial" font-size="12.00"  text-anchor="end">
+		<text><tspan font-family="Arial" > 40</tspan></text>
+	</g>
+</g>
+<g fill="none" color="black" stroke="currentColor" stroke-width="1.00" stroke-linecap="butt" stroke-linejoin="miter">
+	<path stroke='black'  d='M71.9,240.0 L80.9,240.0 M575.0,240.0 L566.0,240.0  '/>	<g transform="translate(63.6,243.9)" stroke="none" fill="black" font-family="Arial" font-size="12.00"  text-anchor="end">
+		<text><tspan font-family="Arial" > 50</tspan></text>
+	</g>
+</g>
+<g fill="none" color="black" stroke="currentColor" stroke-width="1.00" stroke-linecap="butt" stroke-linejoin="miter">
+	<path stroke='black'  d='M71.9,202.9 L80.9,202.9 M575.0,202.9 L566.0,202.9  '/>	<g transform="translate(63.6,206.8)" stroke="none" fill="black" font-family="Arial" font-size="12.00"  text-anchor="end">
+		<text><tspan font-family="Arial" > 60</tspan></text>
+	</g>
+</g>
+<g fill="none" color="black" stroke="currentColor" stroke-width="1.00" stroke-linecap="butt" stroke-linejoin="miter">
+	<path stroke='black'  d='M71.9,165.7 L80.9,165.7 M575.0,165.7 L566.0,165.7  '/>	<g transform="translate(63.6,169.6)" stroke="none" fill="black" font-family="Arial" font-size="12.00"  text-anchor="end">
+		<text><tspan font-family="Arial" > 70</tspan></text>
+	</g>
+</g>
+<g fill="none" color="black" stroke="currentColor" stroke-width="1.00" stroke-linecap="butt" stroke-linejoin="miter">
+	<path stroke='black'  d='M71.9,128.5 L80.9,128.5 M575.0,128.5 L566.0,128.5  '/>	<g transform="translate(63.6,132.4)" stroke="none" fill="black" font-family="Arial" font-size="12.00"  text-anchor="end">
+		<text><tspan font-family="Arial" > 80</tspan></text>
+	</g>
+</g>
+<g fill="none" color="black" stroke="currentColor" stroke-width="1.00" stroke-linecap="butt" stroke-linejoin="miter">
+	<path stroke='black'  d='M71.9,91.3 L80.9,91.3 M575.0,91.3 L566.0,91.3  '/>	<g transform="translate(63.6,95.2)" stroke="none" fill="black" font-family="Arial" font-size="12.00"  text-anchor="end">
+		<text><tspan font-family="Arial" > 90</tspan></text>
+	</g>
+</g>
+<g fill="none" color="black" stroke="currentColor" stroke-width="1.00" stroke-linecap="butt" stroke-linejoin="miter">
+	<path stroke='black'  d='M71.9,54.1 L80.9,54.1 M575.0,54.1 L566.0,54.1  '/>	<g transform="translate(63.6,58.0)" stroke="none" fill="black" font-family="Arial" font-size="12.00"  text-anchor="end">
+		<text><tspan font-family="Arial" > 100</tspan></text>
+	</g>
+</g>
+<g fill="none" color="black" stroke="currentColor" stroke-width="1.00" stroke-linecap="butt" stroke-linejoin="miter">
+	<path stroke='black'  d='M94.8,426.0 L94.8,417.0 M94.8,54.1 L94.8,63.1  '/>	<g transform="translate(98.7,434.3) rotate(270)" stroke="none" fill="black" font-family="Arial" font-size="12.00"  text-anchor="end">
+		<text><tspan font-family="Arial" >EverCrypt</tspan></text>
+	</g>
+</g>
+<g fill="none" color="black" stroke="currentColor" stroke-width="1.00" stroke-linecap="butt" stroke-linejoin="miter">
+	<path stroke='black'  d='M117.6,426.0 L117.6,417.0 M117.6,54.1 L117.6,63.1  '/>	<g transform="translate(121.5,434.3) rotate(270)" stroke="none" fill="black" font-family="Arial" font-size="12.00"  text-anchor="end">
+		<text><tspan font-family="Arial" >HaCl</tspan></text>
+	</g>
+</g>
+<g fill="none" color="black" stroke="currentColor" stroke-width="1.00" stroke-linecap="butt" stroke-linejoin="miter">
+	<path stroke='black'  d='M140.5,426.0 L140.5,417.0 M140.5,54.1 L140.5,63.1  '/>	<g transform="translate(144.4,434.3) rotate(270)" stroke="none" fill="black" font-family="Arial" font-size="12.00"  text-anchor="end">
+		<text><tspan font-family="Arial" >OpenSSL</tspan></text>
+	</g>
+</g>
+<g fill="none" color="black" stroke="currentColor" stroke-width="1.00" stroke-linecap="butt" stroke-linejoin="miter">
+	<path stroke='black'  d='M163.4,426.0 L163.4,417.0 M163.4,54.1 L163.4,63.1  '/>	<g transform="translate(167.3,434.3) rotate(270)" stroke="none" fill="black" font-family="Arial" font-size="12.00"  text-anchor="end">
+		<text><tspan font-family="Arial" >EverCrypt</tspan></text>
+	</g>
+</g>
+<g fill="none" color="black" stroke="currentColor" stroke-width="1.00" stroke-linecap="butt" stroke-linejoin="miter">
+	<path stroke='black'  d='M186.2,426.0 L186.2,417.0 M186.2,54.1 L186.2,63.1  '/>	<g transform="translate(190.1,434.3) rotate(270)" stroke="none" fill="black" font-family="Arial" font-size="12.00"  text-anchor="end">
+		<text><tspan font-family="Arial" >HaCl</tspan></text>
+	</g>
+</g>
+<g fill="none" color="black" stroke="currentColor" stroke-width="1.00" stroke-linecap="butt" stroke-linejoin="miter">
+	<path stroke='black'  d='M209.1,426.0 L209.1,417.0 M209.1,54.1 L209.1,63.1  '/>	<g transform="translate(213.0,434.3) rotate(270)" stroke="none" fill="black" font-family="Arial" font-size="12.00"  text-anchor="end">
+		<text><tspan font-family="Arial" >OpenSSL</tspan></text>
+	</g>
+</g>
+<g fill="none" color="black" stroke="currentColor" stroke-width="1.00" stroke-linecap="butt" stroke-linejoin="miter">
+	<path stroke='black'  d='M232.0,426.0 L232.0,417.0 M232.0,54.1 L232.0,63.1  '/>	<g transform="translate(235.9,434.3) rotate(270)" stroke="none" fill="black" font-family="Arial" font-size="12.00"  text-anchor="end">
+		<text><tspan font-family="Arial" >EverCrypt</tspan></text>
+	</g>
+</g>
+<g fill="none" color="black" stroke="currentColor" stroke-width="1.00" stroke-linecap="butt" stroke-linejoin="miter">
+	<path stroke='black'  d='M254.8,426.0 L254.8,417.0 M254.8,54.1 L254.8,63.1  '/>	<g transform="translate(258.7,434.3) rotate(270)" stroke="none" fill="black" font-family="Arial" font-size="12.00"  text-anchor="end">
+		<text><tspan font-family="Arial" >HaCl</tspan></text>
+	</g>
+</g>
+<g fill="none" color="black" stroke="currentColor" stroke-width="1.00" stroke-linecap="butt" stroke-linejoin="miter">
+	<path stroke='black'  d='M277.7,426.0 L277.7,417.0 M277.7,54.1 L277.7,63.1  '/>	<g transform="translate(281.6,434.3) rotate(270)" stroke="none" fill="black" font-family="Arial" font-size="12.00"  text-anchor="end">
+		<text><tspan font-family="Arial" >OpenSSL</tspan></text>
+	</g>
+</g>
+<g fill="none" color="black" stroke="currentColor" stroke-width="1.00" stroke-linecap="butt" stroke-linejoin="miter">
+	<path stroke='black'  d='M300.6,426.0 L300.6,417.0 M300.6,54.1 L300.6,63.1  '/>	<g transform="translate(304.5,434.3) rotate(270)" stroke="none" fill="black" font-family="Arial" font-size="12.00"  text-anchor="end">
+		<text><tspan font-family="Arial" >EverCrypt</tspan></text>
+	</g>
+</g>
+<g fill="none" color="black" stroke="currentColor" stroke-width="1.00" stroke-linecap="butt" stroke-linejoin="miter">
+	<path stroke='black'  d='M323.5,426.0 L323.5,417.0 M323.5,54.1 L323.5,63.1  '/>	<g transform="translate(327.4,434.3) rotate(270)" stroke="none" fill="black" font-family="Arial" font-size="12.00"  text-anchor="end">
+		<text><tspan font-family="Arial" >HaCl</tspan></text>
+	</g>
+</g>
+<g fill="none" color="black" stroke="currentColor" stroke-width="1.00" stroke-linecap="butt" stroke-linejoin="miter">
+	<path stroke='black'  d='M346.3,426.0 L346.3,417.0 M346.3,54.1 L346.3,63.1  '/>	<g transform="translate(350.2,434.3) rotate(270)" stroke="none" fill="black" font-family="Arial" font-size="12.00"  text-anchor="end">
+		<text><tspan font-family="Arial" >OpenSSL</tspan></text>
+	</g>
+</g>
+<g fill="none" color="black" stroke="currentColor" stroke-width="1.00" stroke-linecap="butt" stroke-linejoin="miter">
+	<path stroke='black'  d='M369.2,426.0 L369.2,417.0 M369.2,54.1 L369.2,63.1  '/>	<g transform="translate(373.1,434.3) rotate(270)" stroke="none" fill="black" font-family="Arial" font-size="12.00"  text-anchor="end">
+		<text><tspan font-family="Arial" >EverCrypt</tspan></text>
+	</g>
+</g>
+<g fill="none" color="black" stroke="currentColor" stroke-width="1.00" stroke-linecap="butt" stroke-linejoin="miter">
+	<path stroke='black'  d='M392.1,426.0 L392.1,417.0 M392.1,54.1 L392.1,63.1  '/>	<g transform="translate(396.0,434.3) rotate(270)" stroke="none" fill="black" font-family="Arial" font-size="12.00"  text-anchor="end">
+		<text><tspan font-family="Arial" >HaCl</tspan></text>
+	</g>
+</g>
+<g fill="none" color="black" stroke="currentColor" stroke-width="1.00" stroke-linecap="butt" stroke-linejoin="miter">
+	<path stroke='black'  d='M414.9,426.0 L414.9,417.0 M414.9,54.1 L414.9,63.1  '/>	<g transform="translate(418.8,434.3) rotate(270)" stroke="none" fill="black" font-family="Arial" font-size="12.00"  text-anchor="end">
+		<text><tspan font-family="Arial" >OpenSSL</tspan></text>
+	</g>
+</g>
+<g fill="none" color="black" stroke="currentColor" stroke-width="1.00" stroke-linecap="butt" stroke-linejoin="miter">
+	<path stroke='black'  d='M437.8,426.0 L437.8,417.0 M437.8,54.1 L437.8,63.1  '/>	<g transform="translate(441.7,434.3) rotate(270)" stroke="none" fill="black" font-family="Arial" font-size="12.00"  text-anchor="end">
+		<text><tspan font-family="Arial" >EverCrypt</tspan></text>
+	</g>
+</g>
+<g fill="none" color="black" stroke="currentColor" stroke-width="1.00" stroke-linecap="butt" stroke-linejoin="miter">
+	<path stroke='black'  d='M460.7,426.0 L460.7,417.0 M460.7,54.1 L460.7,63.1  '/>	<g transform="translate(464.6,434.3) rotate(270)" stroke="none" fill="black" font-family="Arial" font-size="12.00"  text-anchor="end">
+		<text><tspan font-family="Arial" >HaCl</tspan></text>
+	</g>
+</g>
+<g fill="none" color="black" stroke="currentColor" stroke-width="1.00" stroke-linecap="butt" stroke-linejoin="miter">
+	<path stroke='black'  d='M483.5,426.0 L483.5,417.0 M483.5,54.1 L483.5,63.1  '/>	<g transform="translate(487.4,434.3) rotate(270)" stroke="none" fill="black" font-family="Arial" font-size="12.00"  text-anchor="end">
+		<text><tspan font-family="Arial" >OpenSSL</tspan></text>
+	</g>
+</g>
+<g fill="none" color="black" stroke="currentColor" stroke-width="1.00" stroke-linecap="butt" stroke-linejoin="miter">
+	<path stroke='black'  d='M506.4,426.0 L506.4,417.0 M506.4,54.1 L506.4,63.1  '/>	<g transform="translate(510.3,434.3) rotate(270)" stroke="none" fill="black" font-family="Arial" font-size="12.00"  text-anchor="end">
+		<text><tspan font-family="Arial" >EverCrypt</tspan></text>
+	</g>
+</g>
+<g fill="none" color="black" stroke="currentColor" stroke-width="1.00" stroke-linecap="butt" stroke-linejoin="miter">
+	<path stroke='black'  d='M529.3,426.0 L529.3,417.0 M529.3,54.1 L529.3,63.1  '/>	<g transform="translate(533.2,434.3) rotate(270)" stroke="none" fill="black" font-family="Arial" font-size="12.00"  text-anchor="end">
+		<text><tspan font-family="Arial" >HaCl</tspan></text>
+	</g>
+</g>
+<g fill="none" color="black" stroke="currentColor" stroke-width="1.00" stroke-linecap="butt" stroke-linejoin="miter">
+	<path stroke='black'  d='M552.1,426.0 L552.1,417.0 M552.1,54.1 L552.1,63.1  '/>	<g transform="translate(556.0,434.3) rotate(270)" stroke="none" fill="black" font-family="Arial" font-size="12.00"  text-anchor="end">
+		<text><tspan font-family="Arial" >OpenSSL</tspan></text>
+	</g>
+</g>
+<g fill="none" color="black" stroke="currentColor" stroke-width="1.00" stroke-linecap="butt" stroke-linejoin="miter">
+</g>
+<g fill="none" color="black" stroke="currentColor" stroke-width="1.00" stroke-linecap="butt" stroke-linejoin="miter">
+	<path stroke='black'  d='M71.9,54.1 L71.9,426.0 L575.0,426.0 L575.0,54.1 L71.9,54.1 Z  '/>	<g transform="translate(4.2,462.8)" stroke="none" fill="black" font-family="Courier" font-size="8.00"  text-anchor="start">
+		<text><tspan font-family="Courier" >Date: Apr 18 2019 18:38:52</tspan></text>
+	</g>
+	<g transform="translate(4.2,470.9)" stroke="none" fill="black" font-family="Courier" font-size="8.00"  text-anchor="start">
+		<text><tspan font-family="Courier" >Config: -SHAEXT +AESNI +PCLMULQDQ +AVX +AVX2 +BMI2 +ADX +HACL +VALE SEED=0 SAMPLES=100</tspan></text>
+	</g>
+	<g transform="translate(4.2,475.9)" stroke="none" fill="black" font-family="Courier" font-size="1.00"  text-anchor="start">
+		<text xml:space="preserve"><tspan font-family="Courier"  xml:space="preserve">EverCrypt: /usr/bin/cc -Devercrypt_EXPORTS -I/mnt/e/everest/latest/hacl-star/dist/compact-c89 -I/mnt/e/everest/latest/kremlin/include -I/mnt/e/everest/latest/kremlin/kremlib/dist/generic  -g -fPIC   -Wno-parentheses -std=gnu11 -march=native -mtune=native -fPIC -fstack-check -o CMakeFiles/evercrypt.dir/mnt/e/everest/latest/hacl-star/dist/compact-c89/EverCrypt_Error.c.o   -c /mnt/e/everest/latest/hacl-star/dist/compact-c89/EverCrypt_Error.c</tspan></text>
+	</g>
+	<g transform="translate(4.2,474.1)" stroke="none" fill="black" font-family="Courier" font-size="1.00"  text-anchor="start">
+		<text xml:space="preserve"><tspan font-family="Courier"  xml:space="preserve">KreMLib: /usr/bin/cc -D_BSD_SOURCE -D_DEFAULT_SOURCE -I/mnt/e/everest/latest/kremlin/include -I/mnt/e/everest/latest/kremlin/kremlib/dist/generic  -g   -std=c11 -fwrapv -Wall -Wextra -Werror -Wno-unused-variable -Wno-unused-but-set-variable -Wno-unknown-warning-option -Wno-infinite-recursion -Wno-unused-parameter -fPIC -o CMakeFiles/kremlib.dir/mnt/e/everest/latest/kremlin/kremlib/dist/generic/prims.c.o   -c /mnt/e/everest/latest/kremlin/kremlib/dist/generic/prims.c</tspan></text>
+	</g>
+</g>
+<g fill="none" color="black" stroke="currentColor" stroke-width="1.00" stroke-linecap="butt" stroke-linejoin="miter">
+	<g transform="translate(16.3,240.1) rotate(270)" stroke="none" fill="black" font-family="Arial" font-size="12.00"  text-anchor="middle">
+		<text><tspan font-family="Arial" >avg cycles/hash</tspan></text>
+	</g>
+</g>
+<g fill="none" color="black" stroke="currentColor" stroke-width="1.00" stroke-linecap="butt" stroke-linejoin="miter">
+	<g transform="translate(323.4,31.0)" stroke="none" fill="black" font-family="Arial" font-size="12.00"  text-anchor="middle">
+		<text><tspan font-family="Arial" >MD5 performance</tspan></text>
+	</g>
+</g>
+	<g id="gnuplot_plot_1" ><title>Avg Cycles/Byte</title>
+<g fill="none" color="black" stroke="currentColor" stroke-width="1.00" stroke-linecap="butt" stroke-linejoin="miter">
+	<g stroke='none' shape-rendering='crispEdges'>
+		<polygon fill = 'rgb(148,   0, 211)' points = '89.1,426.0 100.6,426.0 100.6,104.1 89.1,104.1 '/>
+	</g>
+	<path stroke='rgb(148,   0, 211)'  d='M89.1,426.0 L89.1,104.2 L100.5,104.2 L100.5,426.0 L89.1,426.0 Z  '/>	<g stroke='none' shape-rendering='crispEdges'>
+		<polygon fill = 'rgb(148,   0, 211)' points = '111.9,426.0 123.5,426.0 123.5,89.1 111.9,89.1 '/>
+	</g>
+	<path stroke='rgb(148,   0, 211)'  d='M111.9,426.0 L111.9,89.2 L123.4,89.2 L123.4,426.0 L111.9,426.0 Z  '/>	<g stroke='none' shape-rendering='crispEdges'>
+		<polygon fill = 'rgb(148,   0, 211)' points = '134.8,426.0 146.3,426.0 146.3,367.2 134.8,367.2 '/>
+	</g>
+	<path stroke='rgb(148,   0, 211)'  d='M134.8,426.0 L134.8,367.3 L146.2,367.3 L146.2,426.0 L134.8,426.0 Z  '/>	<g stroke='none' shape-rendering='crispEdges'>
+		<polygon fill = 'rgb(148,   0, 211)' points = '157.7,426.0 169.2,426.0 169.2,139.5 157.7,139.5 '/>
+	</g>
+	<path stroke='rgb(148,   0, 211)'  d='M157.7,426.0 L157.7,139.6 L169.1,139.6 L169.1,426.0 L157.7,426.0 Z  '/>	<g stroke='none' shape-rendering='crispEdges'>
+		<polygon fill = 'rgb(148,   0, 211)' points = '180.5,426.0 192.1,426.0 192.1,214.1 180.5,214.1 '/>
+	</g>
+	<path stroke='rgb(148,   0, 211)'  d='M180.5,426.0 L180.5,214.2 L192.0,214.2 L192.0,426.0 L180.5,426.0 Z  '/>	<g stroke='none' shape-rendering='crispEdges'>
+		<polygon fill = 'rgb(148,   0, 211)' points = '203.4,426.0 214.9,426.0 214.9,396.6 203.4,396.6 '/>
+	</g>
+	<path stroke='rgb(148,   0, 211)'  d='M203.4,426.0 L203.4,396.7 L214.8,396.7 L214.8,426.0 L203.4,426.0 Z  '/>	<g stroke='none' shape-rendering='crispEdges'>
+		<polygon fill = 'rgb(148,   0, 211)' points = '226.3,426.0 237.8,426.0 237.8,309.0 226.3,309.0 '/>
+	</g>
+	<path stroke='rgb(148,   0, 211)'  d='M226.3,426.0 L226.3,309.1 L237.7,309.1 L237.7,426.0 L226.3,426.0 Z  '/>	<g stroke='none' shape-rendering='crispEdges'>
+		<polygon fill = 'rgb(148,   0, 211)' points = '249.1,426.0 260.7,426.0 260.7,330.6 249.1,330.6 '/>
+	</g>
+	<path stroke='rgb(148,   0, 211)'  d='M249.1,426.0 L249.1,330.7 L260.6,330.7 L260.6,426.0 L249.1,426.0 Z  '/>	<g stroke='none' shape-rendering='crispEdges'>
+		<polygon fill = 'rgb(148,   0, 211)' points = '272.0,426.0 283.5,426.0 283.5,410.9 272.0,410.9 '/>
+	</g>
+	<path stroke='rgb(148,   0, 211)'  d='M272.0,426.0 L272.0,411.0 L283.4,411.0 L283.4,426.0 L272.0,426.0 Z  '/>	<g stroke='none' shape-rendering='crispEdges'>
+		<polygon fill = 'rgb(148,   0, 211)' points = '294.9,426.0 306.4,426.0 306.4,335.4 294.9,335.4 '/>
+	</g>
+	<path stroke='rgb(148,   0, 211)'  d='M294.9,426.0 L294.9,335.5 L306.3,335.5 L306.3,426.0 L294.9,426.0 Z  '/>	<g stroke='none' shape-rendering='crispEdges'>
+		<polygon fill = 'rgb(148,   0, 211)' points = '317.7,426.0 329.3,426.0 329.3,334.3 317.7,334.3 '/>
+	</g>
+	<path stroke='rgb(148,   0, 211)'  d='M317.7,426.0 L317.7,334.4 L329.2,334.4 L329.2,426.0 L317.7,426.0 Z  '/>	<g stroke='none' shape-rendering='crispEdges'>
+		<polygon fill = 'rgb(148,   0, 211)' points = '340.6,426.0 352.1,426.0 352.1,410.3 340.6,410.3 '/>
+	</g>
+	<path stroke='rgb(148,   0, 211)'  d='M340.6,426.0 L340.6,410.4 L352.0,410.4 L352.0,426.0 L340.6,426.0 Z  '/>	<g stroke='none' shape-rendering='crispEdges'>
+		<polygon fill = 'rgb(148,   0, 211)' points = '363.5,426.0 375.0,426.0 375.0,334.1 363.5,334.1 '/>
+	</g>
+	<path stroke='rgb(148,   0, 211)'  d='M363.5,426.0 L363.5,334.2 L374.9,334.2 L374.9,426.0 L363.5,426.0 Z  '/>	<g stroke='none' shape-rendering='crispEdges'>
+		<polygon fill = 'rgb(148,   0, 211)' points = '386.3,426.0 397.9,426.0 397.9,333.9 386.3,333.9 '/>
+	</g>
+	<path stroke='rgb(148,   0, 211)'  d='M386.3,426.0 L386.3,334.0 L397.8,334.0 L397.8,426.0 L386.3,426.0 Z  '/>	<g stroke='none' shape-rendering='crispEdges'>
+		<polygon fill = 'rgb(148,   0, 211)' points = '409.2,426.0 420.7,426.0 420.7,410.2 409.2,410.2 '/>
+	</g>
+	<path stroke='rgb(148,   0, 211)'  d='M409.2,426.0 L409.2,410.3 L420.6,410.3 L420.6,426.0 L409.2,426.0 Z  '/>	<g stroke='none' shape-rendering='crispEdges'>
+		<polygon fill = 'rgb(148,   0, 211)' points = '432.1,426.0 443.6,426.0 443.6,334.1 432.1,334.1 '/>
+	</g>
+	<path stroke='rgb(148,   0, 211)'  d='M432.1,426.0 L432.1,334.2 L443.5,334.2 L443.5,426.0 L432.1,426.0 Z  '/>	<g stroke='none' shape-rendering='crispEdges'>
+		<polygon fill = 'rgb(148,   0, 211)' points = '454.9,426.0 466.5,426.0 466.5,335.3 454.9,335.3 '/>
+	</g>
+	<path stroke='rgb(148,   0, 211)'  d='M454.9,426.0 L454.9,335.4 L466.4,335.4 L466.4,426.0 L454.9,426.0 Z  '/>	<g stroke='none' shape-rendering='crispEdges'>
+		<polygon fill = 'rgb(148,   0, 211)' points = '477.8,426.0 489.3,426.0 489.3,410.9 477.8,410.9 '/>
+	</g>
+	<path stroke='rgb(148,   0, 211)'  d='M477.8,426.0 L477.8,411.0 L489.2,411.0 L489.2,426.0 L477.8,426.0 Z  '/>	<g stroke='none' shape-rendering='crispEdges'>
+		<polygon fill = 'rgb(148,   0, 211)' points = '500.7,426.0 512.2,426.0 512.2,321.7 500.7,321.7 '/>
+	</g>
+	<path stroke='rgb(148,   0, 211)'  d='M500.7,426.0 L500.7,321.8 L512.1,321.8 L512.1,426.0 L500.7,426.0 Z  '/>	<g stroke='none' shape-rendering='crispEdges'>
+		<polygon fill = 'rgb(148,   0, 211)' points = '523.5,426.0 535.1,426.0 535.1,337.2 523.5,337.2 '/>
+	</g>
+	<path stroke='rgb(148,   0, 211)'  d='M523.5,426.0 L523.5,337.3 L535.0,337.3 L535.0,426.0 L523.5,426.0 Z  '/>	<g stroke='none' shape-rendering='crispEdges'>
+		<polygon fill = 'rgb(148,   0, 211)' points = '546.4,426.0 557.9,426.0 557.9,411.1 546.4,411.1 '/>
+	</g>
+	<path stroke='rgb(148,   0, 211)'  d='M546.4,426.0 L546.4,411.2 L557.8,411.2 L557.8,426.0 L546.4,426.0 Z  '/></g>
+	</g>
+	<g id="gnuplot_plot_2" ><title>'' using ($0-1):8:xticlabels(1):(sprintf("%0.2f", $5))</title>
+<g fill="none" color="black" stroke="currentColor" stroke-width="1.00" stroke-linecap="butt" stroke-linejoin="miter">
+	<g transform="translate(94.8,97.8)" stroke="none" fill="black" font-family="Courier" font-size="8.00"  text-anchor="middle">
+		<text><tspan font-family="Courier" >88611.90</tspan></text>
+	</g>
+	<g transform="translate(117.6,82.8)" stroke="none" fill="black" font-family="Courier" font-size="8.00"  text-anchor="middle">
+		<text><tspan font-family="Courier" >92740.90</tspan></text>
+	</g>
+	<g transform="translate(140.5,360.9)" stroke="none" fill="black" font-family="Courier" font-size="8.00"  text-anchor="middle">
+		<text><tspan font-family="Courier" >16170.70</tspan></text>
+	</g>
+	<g transform="translate(163.4,133.2)" stroke="none" fill="black" font-family="Courier" font-size="8.00"  text-anchor="middle">
+		<text><tspan font-family="Courier" >157701.00</tspan></text>
+	</g>
+	<g transform="translate(186.2,207.8)" stroke="none" fill="black" font-family="Courier" font-size="8.00"  text-anchor="middle">
+		<text><tspan font-family="Courier" >116625.00</tspan></text>
+	</g>
+	<g transform="translate(209.1,390.3)" stroke="none" fill="black" font-family="Courier" font-size="8.00"  text-anchor="middle">
+		<text><tspan font-family="Courier" >16109.40</tspan></text>
+	</g>
+	<g transform="translate(232.0,302.7)" stroke="none" fill="black" font-family="Courier" font-size="8.00"  text-anchor="middle">
+		<text><tspan font-family="Courier" >128756.00</tspan></text>
+	</g>
+	<g transform="translate(254.8,324.3)" stroke="none" fill="black" font-family="Courier" font-size="8.00"  text-anchor="middle">
+		<text><tspan font-family="Courier" >105000.00</tspan></text>
+	</g>
+	<g transform="translate(277.7,404.6)" stroke="none" fill="black" font-family="Courier" font-size="8.00"  text-anchor="middle">
+		<text><tspan font-family="Courier" >16565.00</tspan></text>
+	</g>
+	<g transform="translate(300.6,329.1)" stroke="none" fill="black" font-family="Courier" font-size="8.00"  text-anchor="middle">
+		<text><tspan font-family="Courier" >199292.00</tspan></text>
+	</g>
+	<g transform="translate(323.5,328.0)" stroke="none" fill="black" font-family="Courier" font-size="8.00"  text-anchor="middle">
+		<text><tspan font-family="Courier" >201727.00</tspan></text>
+	</g>
+	<g transform="translate(346.3,404.0)" stroke="none" fill="black" font-family="Courier" font-size="8.00"  text-anchor="middle">
+		<text><tspan font-family="Courier" >34408.90</tspan></text>
+	</g>
+	<g transform="translate(369.2,327.8)" stroke="none" fill="black" font-family="Courier" font-size="8.00"  text-anchor="middle">
+		<text><tspan font-family="Courier" >404616.00</tspan></text>
+	</g>
+	<g transform="translate(392.1,327.6)" stroke="none" fill="black" font-family="Courier" font-size="8.00"  text-anchor="middle">
+		<text><tspan font-family="Courier" >405235.00</tspan></text>
+	</g>
+	<g transform="translate(414.9,403.9)" stroke="none" fill="black" font-family="Courier" font-size="8.00"  text-anchor="middle">
+		<text><tspan font-family="Courier" >69017.30</tspan></text>
+	</g>
+	<g transform="translate(437.8,327.8)" stroke="none" fill="black" font-family="Courier" font-size="8.00"  text-anchor="middle">
+		<text><tspan font-family="Courier" >809203.00</tspan></text>
+	</g>
+	<g transform="translate(460.7,329.0)" stroke="none" fill="black" font-family="Courier" font-size="8.00"  text-anchor="middle">
+		<text><tspan font-family="Courier" >798340.00</tspan></text>
+	</g>
+	<g transform="translate(483.5,404.6)" stroke="none" fill="black" font-family="Courier" font-size="8.00"  text-anchor="middle">
+		<text><tspan font-family="Courier" >132599.00</tspan></text>
+	</g>
+	<g transform="translate(506.4,315.4)" stroke="none" fill="black" font-family="Courier" font-size="8.00"  text-anchor="middle">
+		<text><tspan font-family="Courier" >1837080.00</tspan></text>
+	</g>
+	<g transform="translate(529.3,330.9)" stroke="none" fill="black" font-family="Courier" font-size="8.00"  text-anchor="middle">
+		<text><tspan font-family="Courier" >1562210.00</tspan></text>
+	</g>
+	<g transform="translate(552.1,404.8)" stroke="none" fill="black" font-family="Courier" font-size="8.00"  text-anchor="middle">
+		<text><tspan font-family="Courier" >261684.00</tspan></text>
+	</g>
+</g>
+	</g>
+<g fill="none" color="white" stroke="black" stroke-width="2.00" stroke-linecap="butt" stroke-linejoin="miter">
+</g>
+<g fill="none" color="black" stroke="currentColor" stroke-width="2.00" stroke-linecap="butt" stroke-linejoin="miter">
+</g>
+<g fill="none" color="black" stroke="black" stroke-width="1.00" stroke-linecap="butt" stroke-linejoin="miter">
+</g>
+<g fill="none" color="black" stroke="currentColor" stroke-width="1.00" stroke-linecap="butt" stroke-linejoin="miter">
+	<path stroke='black'  d='M71.9,54.1 L71.9,426.0 L575.0,426.0 L575.0,54.1 L71.9,54.1 Z  '/></g>
+<g fill="none" color="black" stroke="currentColor" stroke-width="1.00" stroke-linecap="butt" stroke-linejoin="miter">
+</g>
+</g>
+</svg>
+
