@@ -125,7 +125,6 @@ void bench_hash_plots(const BenchmarkSettings & s, const std::string & alg, cons
   plot_filename << "bench_hash_" << alg << ".svg";
 
   std::stringstream extras;
-
   extras << "set boxwidth 0.8\n";
   extras << "set key top left inside\n";
   extras << "set style histogram clustered gap 3 title\n";
@@ -205,7 +204,7 @@ int bench_hash_alg(const BenchmarkSettings & s, const std::string & alg, std::li
 
 int bench_md5(const BenchmarkSettings & s)
 {
-  unsigned int data_sizes[] = { 1024, 2048, 4096, 8192, 16384, 32768, 65536 };
+  size_t data_sizes[] = { 1024, 2048, 4096, 8192, 16384, 32768, 65536 };
 
   std::list<Benchmark*> todo;
 
@@ -225,7 +224,7 @@ int bench_md5(const BenchmarkSettings & s)
 
 int bench_sha1(const BenchmarkSettings & s)
 {
-  unsigned int data_sizes[] = { 1024, 2048, 4096, 8192, 16384, 32768, 65536 };
+  size_t data_sizes[] = { 1024, 2048, 4096, 8192, 16384, 32768, 65536 };
 
   std::list<Benchmark*> todo;
 
@@ -245,7 +244,7 @@ int bench_sha1(const BenchmarkSettings & s)
 
 int bench_sha2_224(const BenchmarkSettings & s)
 {
-  unsigned int data_sizes[] = { 1024, 2048, 4096, 8192, 16384, 32768, 65536 };
+  size_t data_sizes[] = { 1024, 2048, 4096, 8192, 16384, 32768, 65536 };
 
   std::list<Benchmark*> todo;
 
@@ -265,7 +264,7 @@ int bench_sha2_224(const BenchmarkSettings & s)
 
 int bench_sha2_256(const BenchmarkSettings & s)
 {
-  unsigned int data_sizes[] = { 1024, 2048, 4096, 8192, 16384, 32768, 65536 };
+  size_t data_sizes[] = { 1024, 2048, 4096, 8192, 16384, 32768, 65536 };
 
   std::list<Benchmark*> todo;
 
@@ -285,7 +284,7 @@ int bench_sha2_256(const BenchmarkSettings & s)
 
 int bench_sha2_384(const BenchmarkSettings & s)
 {
-  unsigned int data_sizes[] = { 1024, 2048, 4096, 8192, 16384, 32768, 65536 };
+  size_t data_sizes[] = { 1024, 2048, 4096, 8192, 16384, 32768, 65536 };
 
   std::list<Benchmark*> todo;
 
@@ -305,7 +304,7 @@ int bench_sha2_384(const BenchmarkSettings & s)
 
 int bench_sha2_512(const BenchmarkSettings & s)
 {
-  unsigned int data_sizes[] = { 1024, 2048, 4096, 8192, 16384, 32768, 65536 };
+  size_t data_sizes[] = { 1024, 2048, 4096, 8192, 16384, 32768, 65536 };
 
   std::list<Benchmark*> todo;
 
@@ -333,7 +332,7 @@ int bench_sha2(const BenchmarkSettings & s)
 
 int bench_hash(const BenchmarkSettings & s)
 {
-  unsigned int data_sizes[] = { 1024, 2048, 4096, 8192, 16384, 32768, 65536 };
+  size_t data_sizes[] = { 1024, 2048, 4096, 8192, 16384, 32768, 65536 };
 
   bench_md5(s);
   bench_sha1(s);

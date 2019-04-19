@@ -62,6 +62,7 @@ class DSABenchmark: public Benchmark
     }
 };
 
+#ifdef HAVE_HACL
 class HaclSign: public DSABenchmark
 {
   public:
@@ -110,6 +111,7 @@ class HaclVerify: public DSABenchmark
     }
     virtual ~HaclVerify() {}
 };
+#endif
 
 #ifdef HAVE_OPENSSL
 class OpenSSLSign: public DSABenchmark
@@ -196,9 +198,11 @@ void bench_ed25519(const BenchmarkSettings & s)
     data_filename << "bench_ed25519_" << ds << ".csv";
 
     std::list<Benchmark*> todo = {
+      #ifdef HAVE_HACL
       new HaclSign(ds),
       new HaclSignExpanded(ds),
       new HaclVerify(ds),
+      #endif
 
       #ifdef HAVE_OPENSSL
       new OpenSSLSign(ds),
