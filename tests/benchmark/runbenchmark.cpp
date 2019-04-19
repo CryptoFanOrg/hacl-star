@@ -1,17 +1,21 @@
 #include <cstdlib>
 #include <string>
 #include <cstring>
-#include <set>
+#include <list>
+#include <algorithm>
 
 #include "benchmark.h"
 
 #include "bench_hash.h"
 #include "bench_aead.h"
+#include "bench_curve25519.h"
 
 
 BenchmarkSettings & parse_args(int argc, char const ** argv)
 {
   static BenchmarkSettings r;
+
+  std::list<std::string> arg_fams;
 
   for (int i = 1; i < argc; i++)
   {
@@ -30,40 +34,45 @@ BenchmarkSettings & parse_args(int argc, char const ** argv)
         r.samples = strtoul(argv[++i], NULL, 10);
     }
     else
-      r.families_to_run.insert(argv[i]);
+      arg_fams.push_back(argv[i]);
   }
 
-  if (r.families_to_run.empty())
+  if (arg_fams.empty())
   {
-    // Add default set of benchmarks
-    r.families_to_run.insert("hash_all");
-    r.families_to_run.insert("aead");
-    r.families_to_run.insert("curve25519");
+    // Add default queue of benchmarks
+    r.families_to_run.push_back("hash");
+    r.families_to_run.push_back("aead");
+    r.families_to_run.push_back("curve25519");
   }
-
-  if (r.families_to_run.find("hash_all") != r.families_to_run.end())
+  else
   {
-    r.families_to_run.erase("hash_md5");
-    r.families_to_run.erase("hash_sha1");
-    r.families_to_run.erase("hash_sha2");
-    r.families_to_run.erase("hash_sha2_224");
-    r.families_to_run.erase("hash_sha2_256");
-    r.families_to_run.erase("hash_sha2_384");
-    r.families_to_run.erase("hash_sha2_512");
-  }
+    if (std::find(arg_fams.begin(), arg_fams.end(), "hash") != arg_fams.end())
+    {
+      arg_fams.remove("md5");
+      arg_fams.remove("sha1");
+      arg_fams.remove("sha2");
+      arg_fams.remove("sha2_224");
+      arg_fams.remove("sha2_256");
+      arg_fams.remove("sha2_384");
+      arg_fams.remove("sha2_512");
+    }
 
-  if (r.families_to_run.find("hash_sha2") != r.families_to_run.end())
-  {
-    r.families_to_run.erase("hash_sha2_224");
-    r.families_to_run.erase("hash_sha2_256");
-    r.families_to_run.erase("hash_sha2_384");
-    r.families_to_run.erase("hash_sha2_512");
+    if (std::find(arg_fams.begin(), arg_fams.end(), "sha2") != arg_fams.end())
+    {
+      arg_fams.remove("sha2_224");
+      arg_fams.remove("sha2_256");
+      arg_fams.remove("sha2_384");
+      arg_fams.remove("sha2_512");
+    }
+
+    for (std::string a : arg_fams)
+      r.families_to_run.push_back(a);
   }
 
   return r;
 }
 
-#define BENCH(X) if (b == #X) bench_##X(s)
+#define ADD_BENCH(X) if (b == #X) { bench_##X(s); continue; }
 
 int main(int argc, char const **argv)
 {
@@ -75,17 +84,22 @@ int main(int argc, char const **argv)
 
   while (!s.families_to_run.empty())
   {
-    auto fst = s.families_to_run.begin();
-    std::string b = *fst;
-    s.families_to_run.erase(fst);
+    std::string b = s.families_to_run.front();
+    s.families_to_run.pop_front();
 
-    BENCH(hash_md5);
-    BENCH(hash_sha1);
-    BENCH(hash_sha2_224);
-    BENCH(hash_sha2_256);
-    BENCH(hash_sha2_384);
-    BENCH(hash_sha2_512);
-    BENCH(hash_all);
+    ADD_BENCH(md5);
+    ADD_BENCH(sha1);
+    ADD_BENCH(sha2_224);
+    ADD_BENCH(sha2_256);
+    ADD_BENCH(sha2_384);
+    ADD_BENCH(sha2_512);
+    ADD_BENCH(hash);
+
+    ADD_BENCH(aead);
+
+    ADD_BENCH(curve25519);
+
+    std::cout << "Unsupported benchmark '" << b << "'.\n";
   }
 
   return 0;

@@ -1,6 +1,8 @@
 #include <string>
 #include <fstream>
 #include <sstream>
+#include <list>
+#include <vector>
 
 extern "C" {
 #include <EverCrypt_AutoConfig2.h>
@@ -137,6 +139,8 @@ void Benchmark::run(const BenchmarkSettings & s)
     ttotal += tdiff;
     if (cdiff < cmin) cmin = cdiff;
     if (cdiff > cmax) cmax = cdiff;
+
+    bench_cleanup(s);
   }
 
   post(s);
@@ -144,10 +148,10 @@ void Benchmark::run(const BenchmarkSettings & s)
 
 static const char time_fmt[] = "%b %d %Y %H:%M:%S";
 
-void Benchmark::run_all(const BenchmarkSettings & s,
-                        const std::string & data_header,
-                        const std::string & data_filename,
-                        std::set<Benchmark*> & benchmarks)
+void Benchmark::run_batch(const BenchmarkSettings & s,
+                          const std::string & data_header,
+                          const std::string & data_filename,
+                          std::list<Benchmark*> & benchmarks)
 {
   char time_buf[1024];
   time_t rawtime;
@@ -167,9 +171,8 @@ void Benchmark::run_all(const BenchmarkSettings & s,
 
   while (!benchmarks.empty())
   {
-    auto fst = benchmarks.begin();
-    Benchmark *b = *fst;
-    benchmarks.erase(fst);
+    Benchmark *b = benchmarks.front();
+    benchmarks.pop_front();
 
     b->run(s);
     b->report(rs, s);
@@ -179,7 +182,6 @@ void Benchmark::run_all(const BenchmarkSettings & s,
   }
 
   rs.close();
-  benchmarks.clear();
 }
 
 
@@ -218,7 +220,9 @@ void Benchmark::make_plot(const BenchmarkSettings & s,
   of.close();
 
   std::cout << "-- " << plot_filename << "...\n";
-  system((std::string("gnuplot ") + gnuplot_filename).c_str());
+  int r = system((std::string("gnuplot ") + gnuplot_filename).c_str());
+  if (r != 0)
+    throw std::logic_error("Plot generation failed");
 }
 
 void Benchmark::make_meta_plot(const BenchmarkSettings & s,
@@ -257,5 +261,7 @@ void Benchmark::make_meta_plot(const BenchmarkSettings & s,
   of.close();
 
   std::cout << "-- " << plot_filename << "...\n";
-  system((std::string("gnuplot ") + gnuplot_filename).c_str());
+  int r = system((std::string("gnuplot ") + gnuplot_filename).c_str());
+  if (r != 0)
+    throw std::logic_error("Plot generation failed");
 }

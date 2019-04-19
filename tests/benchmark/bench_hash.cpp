@@ -2,7 +2,6 @@
 #include <sstream>
 #include <iostream>
 #include <fstream>
-#include <set>
 
 #include <benchmark.h>
 
@@ -165,7 +164,7 @@ void bench_hash_plots(const BenchmarkSettings & s, const std::string & alg, cons
                        "using 8:xticlabels(1) with boxes title columnheader, '' using ($0-1):8:xticlabels(1):(sprintf(\"%0.2f\", $5)) with labels font \"Courier,8\" offset char 0,.5");
 }
 
-int bench_hash_alg(const BenchmarkSettings & s, const std::string & alg, std::set<Benchmark*> & todo)
+int bench_hash_alg(const BenchmarkSettings & s, const std::string & alg, std::list<Benchmark*> & todo)
 {
   std::stringstream data_filename;
   data_filename << "bench_hash_" << alg << ".csv";
@@ -173,146 +172,146 @@ int bench_hash_alg(const BenchmarkSettings & s, const std::string & alg, std::se
   std::stringstream num_benchmarks;
   num_benchmarks << todo.size();
 
-  Benchmark::run_all(s, HashBenchmark::header, data_filename.str(), todo);
+  Benchmark::run_batch(s, HashBenchmark::header, data_filename.str(), todo);
 
   bench_hash_plots(s, alg, num_benchmarks.str(), data_filename.str());
 }
 
-int bench_hash_md5(const BenchmarkSettings & s)
+int bench_md5(const BenchmarkSettings & s)
 {
-  std::set<unsigned int> data_sizes = { 1024, 2048, 4096, 8192, 16384, 32768, 65536 };
+  std::list<unsigned int> data_sizes = { 1024, 2048, 4096, 8192, 16384, 32768, 65536 };
 
-  std::set<Benchmark*> todo;
+  std::list<Benchmark*> todo;
 
   for (size_t ds: data_sizes)
   {
-     todo.insert(new EverCryptMD5(ds));
+     todo.push_back(new EverCryptMD5(ds));
      #ifdef HAVE_HACL
-     todo.insert(new HaclMD5(ds));
+     todo.push_back(new HaclMD5(ds));
      #endif
      #ifdef HAVE_OPENSSL
-     todo.insert(new OpenSSLMD5(ds));
+     todo.push_back(new OpenSSLMD5(ds));
      #endif
   }
 
   bench_hash_alg(s, "MD5", todo);
 }
 
-int bench_hash_sha1(const BenchmarkSettings & s)
+int bench_sha1(const BenchmarkSettings & s)
 {
-  std::set<unsigned int> data_sizes = { 1024, 2048, 4096, 8192, 16384, 32768, 65536 };
+  std::list<unsigned int> data_sizes = { 1024, 2048, 4096, 8192, 16384, 32768, 65536 };
 
-  std::set<Benchmark*> todo;
+  std::list<Benchmark*> todo;
 
   for (size_t ds: data_sizes)
   {
-     todo.insert(new EverCryptSHA1(ds));
+     todo.push_back(new EverCryptSHA1(ds));
      #ifdef HAVE_HACL
-     todo.insert(new HaclSHA1(ds));
+     todo.push_back(new HaclSHA1(ds));
      #endif
      #ifdef HAVE_OPENSSL
-     todo.insert(new OpenSSLSHA1(ds));
+     todo.push_back(new OpenSSLSHA1(ds));
      #endif
   }
 
   bench_hash_alg(s, "SHA1", todo);
 }
 
-int bench_hash_sha2_224(const BenchmarkSettings & s)
+int bench_sha2_224(const BenchmarkSettings & s)
 {
-  std::set<unsigned int> data_sizes = { 1024, 2048, 4096, 8192, 16384, 32768, 65536 };
+  std::list<unsigned int> data_sizes = { 1024, 2048, 4096, 8192, 16384, 32768, 65536 };
 
-  std::set<Benchmark*> todo;
+  std::list<Benchmark*> todo;
 
   for (size_t ds: data_sizes)
   {
-    todo.insert(new EverCryptHash<2, 224>(ds));
+    todo.push_back(new EverCryptHash<2, 224>(ds));
     #ifdef HAVE_HACL
-    todo.insert(new HaclHash<2, 224>(ds));
+    todo.push_back(new HaclHash<2, 224>(ds));
     #endif
     #ifdef HAVE_OPENSSL
-    todo.insert(new OpenSSLHash<2, 224>(ds));
+    todo.push_back(new OpenSSLHash<2, 224>(ds));
     #endif
   }
 
   bench_hash_alg(s, "SHA2_224", todo);
 }
 
-int bench_hash_sha2_256(const BenchmarkSettings & s)
+int bench_sha2_256(const BenchmarkSettings & s)
 {
-  std::set<unsigned int> data_sizes = { 1024, 2048, 4096, 8192, 16384, 32768, 65536 };
+  std::list<unsigned int> data_sizes = { 1024, 2048, 4096, 8192, 16384, 32768, 65536 };
 
-  std::set<Benchmark*> todo;
+  std::list<Benchmark*> todo;
 
   for (size_t ds: data_sizes)
   {
-    todo.insert(new EverCryptHash<2, 256>(ds));
+    todo.push_back(new EverCryptHash<2, 256>(ds));
     #ifdef HAVE_HACL
-    todo.insert(new HaclHash<2, 256>(ds));
+    todo.push_back(new HaclHash<2, 256>(ds));
     #endif
     #ifdef HAVE_OPENSSL
-    todo.insert(new OpenSSLHash<2, 256>(ds));
+    todo.push_back(new OpenSSLHash<2, 256>(ds));
     #endif
   }
 
   bench_hash_alg(s, "SHA2_256", todo);
 }
 
-int bench_hash_sha2_384(const BenchmarkSettings & s)
+int bench_sha2_384(const BenchmarkSettings & s)
 {
-  std::set<unsigned int> data_sizes = { 1024, 2048, 4096, 8192, 16384, 32768, 65536 };
+  std::list<unsigned int> data_sizes = { 1024, 2048, 4096, 8192, 16384, 32768, 65536 };
 
-  std::set<Benchmark*> todo;
+  std::list<Benchmark*> todo;
 
   for (size_t ds: data_sizes)
   {
-    todo.insert(new EverCryptHash<2, 384>(ds));
+    todo.push_back(new EverCryptHash<2, 384>(ds));
     #ifdef HAVE_HACL
-    todo.insert(new HaclHash<2, 384>(ds));
+    todo.push_back(new HaclHash<2, 384>(ds));
     #endif
     #ifdef HAVE_OPENSSL
-    todo.insert(new OpenSSLHash<2, 384>(ds));
+    todo.push_back(new OpenSSLHash<2, 384>(ds));
     #endif
   }
 
   bench_hash_alg(s, "SHA2_384", todo);
 }
 
-int bench_hash_sha2_512(const BenchmarkSettings & s)
+int bench_sha2_512(const BenchmarkSettings & s)
 {
-  std::set<unsigned int> data_sizes = { 1024, 2048, 4096, 8192, 16384, 32768, 65536 };
+  std::list<unsigned int> data_sizes = { 1024, 2048, 4096, 8192, 16384, 32768, 65536 };
 
-  std::set<Benchmark*> todo;
+  std::list<Benchmark*> todo;
 
   for (size_t ds: data_sizes)
   {
-    todo.insert(new EverCryptHash<2, 512>(ds));
+    todo.push_back(new EverCryptHash<2, 512>(ds));
     #ifdef HAVE_HACL
-    todo.insert(new HaclHash<2, 512>(ds));
+    todo.push_back(new HaclHash<2, 512>(ds));
     #endif
     #ifdef HAVE_OPENSSL
-    todo.insert(new OpenSSLHash<2, 512>(ds));
+    todo.push_back(new OpenSSLHash<2, 512>(ds));
     #endif
   }
 
   bench_hash_alg(s, "SHA2_512", todo);
 }
 
-int bench_hash_sha2(const BenchmarkSettings & s)
+int bench_sha2(const BenchmarkSettings & s)
 {
-  bench_hash_sha2_224(s);
-  bench_hash_sha2_256(s);
-  bench_hash_sha2_384(s);
-  bench_hash_sha2_512(s);
+  bench_sha2_224(s);
+  bench_sha2_256(s);
+  bench_sha2_384(s);
+  bench_sha2_512(s);
 }
 
-int bench_hash_all(const BenchmarkSettings & s)
+int bench_hash(const BenchmarkSettings & s)
 {
-  std::set<unsigned int> data_sizes = { 1024, 2048, 4096, 8192, 16384, 32768, 65536 };
+  std::list<unsigned int> data_sizes = { 1024, 2048, 4096, 8192, 16384, 32768, 65536 };
 
-  bench_hash_md5(s);
-  bench_hash_sha1(s);
-  bench_hash_sha2(s);
+  bench_md5(s);
+  bench_sha1(s);
+  bench_sha2(s);
 
   std::vector<std::string> data_filenames = {
     "bench_hash_MD5.csv",

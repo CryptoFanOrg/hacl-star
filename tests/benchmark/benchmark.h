@@ -8,7 +8,7 @@
 
 #include <string>
 #include <iostream>
-#include <set>
+#include <list>
 #include <vector>
 
 #define ABORT_BENCHMARK(msg, rv) { printf("\nABORT: %s\n", msg); return rv; }
@@ -20,7 +20,7 @@ class BenchmarkSettings
   public:
     unsigned int seed = 0;
     size_t samples = 10000;
-    std::set<std::string> families_to_run;
+    std::list<std::string> families_to_run;
 };
 
 class Benchmark
@@ -41,8 +41,9 @@ class Benchmark
 
     virtual void pre(const BenchmarkSettings & s) { srand(s.seed); toverall = clock();}
     virtual void run(const BenchmarkSettings & s);
-    virtual void bench_setup(const BenchmarkSettings & s) = 0;
+    virtual void bench_setup(const BenchmarkSettings & s) {};
     virtual void bench_func() = 0;
+    virtual void bench_cleanup(const BenchmarkSettings & s) {};
     virtual void post(const BenchmarkSettings & s) { toverall = clock() - toverall; }
     virtual void report(std::ostream & rs, const BenchmarkSettings & s) = 0;
 
@@ -77,10 +78,10 @@ class Benchmark
       return (rdx << 32) + rax;
     }
 
-    static void run_all(const BenchmarkSettings & s,
-                        const std::string & data_header,
-                        const std::string & data_filename,
-                        std::set<Benchmark*> & benchmarks);
+    static void run_batch(const BenchmarkSettings & s,
+                          const std::string & data_header,
+                          const std::string & data_filename,
+                          std::list<Benchmark*> & benchmarks);
 
     static void make_plot(const BenchmarkSettings & s,
                           const std::string & terminal,

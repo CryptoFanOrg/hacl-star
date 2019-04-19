@@ -2,7 +2,6 @@
 #include <sstream>
 #include <iostream>
 #include <fstream>
-#include <set>
 
 #include <time.h>
 #include <benchmark.h>
@@ -59,7 +58,8 @@ class AEADBenchmark : public Benchmark
         << "," << toverall/(double)CLOCKS_PER_SEC
         << "," << ttotal/(double)CLOCKS_PER_SEC
         << "," << ctotal/(double)s.samples
-        << "," << cmin << cmax
+        << "," << cmin
+        << "," << cmax
         << "," << (ctotal/(double)input_sz)/(double)s.samples
         << "\n";
     }
@@ -88,7 +88,7 @@ int bench_aead(const BenchmarkSettings & s)
     std::stringstream filename;
     filename << "bench_aead_" << ds << ".csv";
 
-    std::set<Benchmark*> todo = {
+    std::list<Benchmark*> todo = {
       // EverCryptAEAD<EverCrypt_AES128_GCM, 128>(ds);
       // EverCryptAEAD<EverCrypt_AES256_GCM, 256>(ds);
       // EverCryptAEAD<EverCrypt_CHACHA20_POLY1305, 128>(ds);
@@ -101,6 +101,6 @@ int bench_aead(const BenchmarkSettings & s)
       #endif
       };
 
-    Benchmark::run_all(s, AEADBenchmark::header, filename.str(), todo);
+    Benchmark::run_batch(s, AEADBenchmark::header, filename.str(), todo);
   }
 }

@@ -7,6 +7,7 @@ option(USE_HACL "Use HaCl." ON)
 option(USE_VALE "Use Vale." ON)
 option(USE_BCRYPT "Use BCrypt." OFF)
 option(USE_OPENSSL "Use OpenSSL." ON)
+option(USE_RFC7748 "Use the RFC 7748 reference implementation" ON)
 
 add_subdirectory(libevercrypt)
 
@@ -17,7 +18,9 @@ target_link_libraries(benchmark PRIVATE evercrypt)
 add_executable(runbenchmark
   runbenchmark.cpp
   bench_hash.cpp
-  bench_aead.cpp)
+  bench_aead.cpp
+  bench_curve25519.cpp
+  bench_ed25519.cpp)
 target_include_directories(runbenchmark PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
 target_link_libraries(runbenchmark PRIVATE benchmark evercrypt)
 
@@ -55,3 +58,10 @@ if(USE_OPENSSL)
     target_link_libraries(runbenchmark PRIVATE dl pthread)
   endif(NOT ${CMAKE_SYSTEM_NAME} STREQUAL "Windows")
 endif(USE_OPENSSL)
+
+if(USE_RFC7748)
+add_subdirectory(librfc7748)
+target_compile_definitions(runbenchmark PRIVATE HAVE_RFC7748)
+target_link_libraries(runbenchmark PRIVATE rfc7748)
+target_include_directories(runbenchmark PRIVATE ${RFC7748_DIR})
+endif(USE_RFC7748)
