@@ -27,7 +27,7 @@ class Curve25519Benchmark: public Benchmark
     X25519_KEY shared_secret, our_secret, their_public;
 
   public:
-    static constexpr auto header = "Algorithm, CPU Time (incl) [sec], CPU Time (excl) [sec], Avg Cycles/Mul, Min Cycles/Mul, Max Cycles/Mul";
+    static constexpr auto header = "Algorithm, CPU Time (incl) [sec], CPU Time (excl) [sec], Avg Cycles/Derivation, Min Cycles/Derivation, Max Cycles/Derivation";
 
     Curve25519Benchmark(std::string const & prefix) : Benchmark(prefix) {}
 
@@ -176,18 +176,20 @@ void bench_curve25519(const BenchmarkSettings & s)
   Benchmark::make_plot(s,
                        "svg",
                        "Curve25519 performance",
-                       "avg cycles/mul",
-                       data_filename.str(),
-                       "bench_curve25519.svg",
+                       "",
+                       "Avg. performance [CPU cycles/derivation]",
+                       { data_filename.str() },
+                       "bench_curve25519_cycles.svg",
                        "set xtics norotate",
-                       "using 4:xticlabels(1) with boxes title columnheader, '' using ($0-1):4:xticlabels(1):(sprintf(\"%0.0f\", $5)) with labels font \"Courier,8\" offset char 0,.5");
+                       { "using 4:xticlabels(1) with boxes title columnheader, '' using ($0-1):4:xticlabels(1):(sprintf(\"%0.0f\", $5)) with labels font \"Courier,8\" offset char 0,.5" });
 
   Benchmark::make_plot(s,
                        "svg",
                        "Curve25519 performance",
-                       "cycles/hash",
-                       data_filename.str(),
+                       "",
+                       "Avg. performance [CPU cycles/derivation]",
+                       { data_filename.str() },
                        "bench_curve25519_candlesticks.svg",
-                       "set xtics norotate\nset xrange[.5:" + num_benchmarks.str() + "+.5]",
-                       "using 0:4:5:6:4:xticlabels(1) with candlesticks whiskerbars .25");
+                       "set xrange[.5:" + num_benchmarks.str() + "+.5]",
+                       { "using 0:4:5:6:4:xticlabels(1) with candlesticks whiskerbars .25" });
 }

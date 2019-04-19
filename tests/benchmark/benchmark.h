@@ -86,22 +86,13 @@ class Benchmark
     static void make_plot(const BenchmarkSettings & s,
                           const std::string & terminal,
                           const std::string & title,
-                          const std::string & units,
-                          const std::string & data_filename,
+                          const std::string & xtitle,
+                          const std::string & ytitle,
+                          const std::vector<std::string> & data_filenames,
                           const std::string & plot_filename,
                           const std::string & plot_extras,
-                          const std::string & plot_spec,
+                          const std::vector<std::string> & plot_specs,
                           bool add_key = false);
-
-    static void make_meta_plot(const BenchmarkSettings & s,
-                               const std::string & terminal,
-                               const std::string & title,
-                               const std::string & units,
-                               const std::vector<std::string> & data_filenames,
-                               const std::string & plot_filename,
-                               const std::string & plot_extras,
-                               const std::vector<std::string> & plot_specs,
-                               bool add_key);
 };
 
 #endif

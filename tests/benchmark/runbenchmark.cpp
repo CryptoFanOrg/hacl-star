@@ -9,7 +9,7 @@
 #include "bench_hash.h"
 #include "bench_aead.h"
 #include "bench_curve25519.h"
-
+#include "bench_ed25519.h"
 
 BenchmarkSettings & parse_args(int argc, char const ** argv)
 {
@@ -98,6 +98,8 @@ int main(int argc, char const **argv)
     ADD_BENCH(aead);
 
     ADD_BENCH(curve25519);
+
+    ADD_BENCH(ed25519);
 
     std::cout << "Unsupported benchmark '" << b << "'.\n";
   }

@@ -24,19 +24,13 @@ class HashBenchmark : public Benchmark
   public:
     static constexpr auto header = "Algorithm, Size [b], CPU Time (incl) [sec], CPU Time (excl) [sec], Avg Cycles/Hash, Min Cycles/Hash, Max Cycles/Hash, Avg Cycles/Byte";
 
-    HashBenchmark(size_t src_sz, int type, int N, const std::string & prefix) : Benchmark(), src(0), src_sz(src_sz)
+    HashBenchmark(size_t src_sz, int type, int N, const std::string & prefix) : Benchmark(prefix), src(0), src_sz(src_sz)
     {
       if (src_sz == 0)
         throw std::logic_error("Need src_sz > 0");
 
       src = new uint8_t[src_sz];
       dst = new uint8_t[N/8];
-
-      // std::stringstream s;
-      // s << prefix << " ";
-      // s << (type==0 ? "MD5" : (type==1 ? "SHA1" : (type == 2 ? "SHA2\\_" : "Unknown")));
-      // if (type==2) s << N;
-      set_name(prefix);
     }
 
     virtual ~HashBenchmark()
@@ -130,14 +124,35 @@ void bench_hash_plots(const BenchmarkSettings & s, const std::string & alg, cons
   std::stringstream plot_filename;
   plot_filename << "bench_hash_" << alg << ".svg";
 
+  std::stringstream extras;
+
+  extras << "set boxwidth 0.8\n";
+  extras << "set key top left inside\n";
+  extras << "set style histogram clustered gap 3 title\n";
+  extras << "set style data histograms\n";
+  extras << "set bmargin 5\n";
+
+  std::vector<std::string> datafiles_by_tool = {
+    "< grep \"HaCl\" bench_hash_MD5.csv", "",
+    "< grep \"EverCrypt\" bench_hash_MD5.csv", "",
+   "< grep \"OpenSSL\" bench_hash_MD5.csv", ""
+   };
+
   Benchmark::make_plot(s,
                        "svg",
                        title.str(),
-                       "avg cycles/hash",
-                       data_filename,
+                       "Message length [bytes]",
+                       "Avg. performance [CPU cycles/hash]",
+                       datafiles_by_tool,
                        plot_filename.str(),
-                       "set xrange[-1:" + num_benchmarks + "]",
-                       "using 5:xticlabels(1) with boxes title columnheader, '' using ($0-1):5:xticlabels(1):(sprintf(\"%0.0f\", $5)) with labels font \"Courier,8\" offset char 0,.5");
+                       extras.str(),
+                       { "using 5:xticlabels(2) title \"HaCl\"",
+                         "using 0:5:xticlabels(2):(sprintf(\"%0.0f\", $5)) with labels font \"Courier,8\" offset char -1.25,1 rotate by 90 notitle",
+                         "using 5 title \"EverCrypt\"",
+                         "using 0:5:xticlabels(2):(sprintf(\"%0.0f\", $5)) with labels font \"Courier,8\" offset char +0.00,1 rotate by 90 notitle",
+                         "using 5 title \"OpenSSL\"",
+                         "using 0:5:xticlabels(2):(sprintf(\"%0.0f\", $5)) with labels font \"Courier,8\" offset char +1.25,1 rotate by 90 notitle" },
+                         true);
 
   plot_filename.str("");
   plot_filename << "bench_hash_" << alg << "_candlesticks.svg";
@@ -145,23 +160,34 @@ void bench_hash_plots(const BenchmarkSettings & s, const std::string & alg, cons
   Benchmark::make_plot(s,
                        "svg",
                        title.str(),
-                       "cycles/hash",
-                       data_filename,
+                       "Message length [bytes]",
+                       "Avg. performance [CPU cycles/hash]",
+                       datafiles_by_tool,
                        plot_filename.str(),
-                       "set xrange[0:" + num_benchmarks + "+1]",
-                       "using 0:5:6:7:5:xticlabels(1) with candlesticks whiskerbars .25");
+                       extras.str(),
+                       { "using 0:5:6:7:5:xticlabels(2) title \"HaCl\" with candlesticks whiskerbars .25", "using 0 notitle",
+                         "using 0:5:6:7:5:xticlabels(2) title \"EverCrypt\" with candlesticks whiskerbars .25", "using 0 notitle",
+                         "using 0:5:6:7:5:xticlabels(2) title \"OpenSSL\" with candlesticks whiskerbars .25", "using 0 notitle" },
+                       true);
 
   plot_filename.str("");
-  plot_filename << "bench_hash_" << alg << "_per_byte.svg";
+  plot_filename << "bench_hash_" << alg << "_bytes.svg";
 
   Benchmark::make_plot(s,
                        "svg",
                        title.str(),
-                       "avg cycles/hash",
-                       data_filename,
+                       "Message length [bytes]",
+                       "Avg. performance [CPU cycles/hash]",
+                       datafiles_by_tool,
                        plot_filename.str(),
-                       "set xrange[-1:" + num_benchmarks + "]",
-                       "using 8:xticlabels(1) with boxes title columnheader, '' using ($0-1):8:xticlabels(1):(sprintf(\"%0.2f\", $5)) with labels font \"Courier,8\" offset char 0,.5");
+                       extras.str(),
+                       { "using 8:xticlabels(2) title \"HaCl\"",
+                         "using 0:8:xticlabels(2):(sprintf(\"%0.0f\", $5)) with labels font \"Courier,8\" offset char -1.25,1 rotate by 90 notitle",
+                         "using 8 title \"EverCrypt\"",
+                         "using 0:8:xticlabels(2):(sprintf(\"%0.0f\", $5)) with labels font \"Courier,8\" offset char +0.00,1 rotate by 90 notitle",
+                         "using 8 title \"OpenSSL\"",
+                         "using 0:8:xticlabels(2):(sprintf(\"%0.0f\", $5)) with labels font \"Courier,8\" offset char +1.25,1 rotate by 90 notitle" },
+                         true);
 }
 
 int bench_hash_alg(const BenchmarkSettings & s, const std::string & alg, std::list<Benchmark*> & todo)
@@ -179,7 +205,7 @@ int bench_hash_alg(const BenchmarkSettings & s, const std::string & alg, std::li
 
 int bench_md5(const BenchmarkSettings & s)
 {
-  std::list<unsigned int> data_sizes = { 1024, 2048, 4096, 8192, 16384, 32768, 65536 };
+  unsigned int data_sizes[] = { 1024, 2048, 4096, 8192, 16384, 32768, 65536 };
 
   std::list<Benchmark*> todo;
 
@@ -199,7 +225,7 @@ int bench_md5(const BenchmarkSettings & s)
 
 int bench_sha1(const BenchmarkSettings & s)
 {
-  std::list<unsigned int> data_sizes = { 1024, 2048, 4096, 8192, 16384, 32768, 65536 };
+  unsigned int data_sizes[] = { 1024, 2048, 4096, 8192, 16384, 32768, 65536 };
 
   std::list<Benchmark*> todo;
 
@@ -219,7 +245,7 @@ int bench_sha1(const BenchmarkSettings & s)
 
 int bench_sha2_224(const BenchmarkSettings & s)
 {
-  std::list<unsigned int> data_sizes = { 1024, 2048, 4096, 8192, 16384, 32768, 65536 };
+  unsigned int data_sizes[] = { 1024, 2048, 4096, 8192, 16384, 32768, 65536 };
 
   std::list<Benchmark*> todo;
 
@@ -239,7 +265,7 @@ int bench_sha2_224(const BenchmarkSettings & s)
 
 int bench_sha2_256(const BenchmarkSettings & s)
 {
-  std::list<unsigned int> data_sizes = { 1024, 2048, 4096, 8192, 16384, 32768, 65536 };
+  unsigned int data_sizes[] = { 1024, 2048, 4096, 8192, 16384, 32768, 65536 };
 
   std::list<Benchmark*> todo;
 
@@ -259,7 +285,7 @@ int bench_sha2_256(const BenchmarkSettings & s)
 
 int bench_sha2_384(const BenchmarkSettings & s)
 {
-  std::list<unsigned int> data_sizes = { 1024, 2048, 4096, 8192, 16384, 32768, 65536 };
+  unsigned int data_sizes[] = { 1024, 2048, 4096, 8192, 16384, 32768, 65536 };
 
   std::list<Benchmark*> todo;
 
@@ -279,7 +305,7 @@ int bench_sha2_384(const BenchmarkSettings & s)
 
 int bench_sha2_512(const BenchmarkSettings & s)
 {
-  std::list<unsigned int> data_sizes = { 1024, 2048, 4096, 8192, 16384, 32768, 65536 };
+  unsigned int data_sizes[] = { 1024, 2048, 4096, 8192, 16384, 32768, 65536 };
 
   std::list<Benchmark*> todo;
 
@@ -307,7 +333,7 @@ int bench_sha2(const BenchmarkSettings & s)
 
 int bench_hash(const BenchmarkSettings & s)
 {
-  std::list<unsigned int> data_sizes = { 1024, 2048, 4096, 8192, 16384, 32768, 65536 };
+  unsigned int data_sizes[] = { 1024, 2048, 4096, 8192, 16384, 32768, 65536 };
 
   bench_md5(s);
   bench_sha1(s);
@@ -322,7 +348,16 @@ int bench_hash(const BenchmarkSettings & s)
     "bench_hash_SHA2_512.csv"
     };
 
-  std::vector<std::string> plot_specs = {
+  std::vector<std::string> plot_specs_cycles = {
+    "using 5:xticlabels(1) title \"MD5\"",
+    "using 5 title \"SHA1\"",
+    "using 5 title \"SHA2-224\"",
+    "using 5 title \"SHA2-256\"",
+    "using 5 title \"SHA2-384\"",
+    "using 5 title \"SHA2-512\""
+  };
+
+  std::vector<std::string> plot_specs_bytes = {
     "using 8:xticlabels(1) title \"MD5\"",
     "using 8 title \"SHA1\"",
     "using 8 title \"SHA2-224\"",
@@ -336,10 +371,10 @@ int bench_hash(const BenchmarkSettings & s)
   for (size_t ds : data_sizes)
   {
     std::stringstream title;
-    title << "Hash performance (input size " << ds << ")";
+    title << "Hash performance (message length " << ds << " bytes)";
 
     std::stringstream plot_filename;
-    plot_filename << "bench_hash_all_" << ds << ".svg";
+    plot_filename << "bench_hash_all_" << ds << "_cycles.svg";
 
     std::stringstream extras;
     extras << "set xtics norotate\n";
@@ -348,15 +383,28 @@ int bench_hash(const BenchmarkSettings & s)
     extras << "set style data histograms\n";
     extras << "set xrange [" << i << ".5:" << i+3 << ".5]";
 
-    Benchmark::make_meta_plot(s,
-                              "svg",
-                              title.str(),
-                              "avg cycles/hash",
-                              data_filenames,
-                              plot_filename.str(),
-                              extras.str(),
-                              plot_specs,
-                              false);
+    Benchmark::make_plot(s,
+                         "svg",
+                         title.str(),
+                         "",
+                         "Avg. performance [CPU cycles/hash]",
+                         data_filenames,
+                         plot_filename.str(),
+                         extras.str(),
+                         plot_specs_cycles);
+
+    plot_filename.str("");
+    plot_filename << "bench_hash_all_" << ds << "_bytes.svg";
+
+    Benchmark::make_plot(s,
+                         "svg",
+                         title.str(),
+                         "",
+                         "Avg. performance [CPU cycles/byte]",
+                         data_filenames,
+                         plot_filename.str(),
+                         extras.str(),
+                         plot_specs_bytes);
 
     i++;
   }

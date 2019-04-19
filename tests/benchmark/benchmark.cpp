@@ -196,44 +196,13 @@ void make_plot_labels(std::ofstream & of, const BenchmarkSettings & s)
 void Benchmark::make_plot(const BenchmarkSettings & s,
                           const std::string & terminal,
                           const std::string & title,
-                          const std::string & units,
-                          const std::string & data_filename,
+                          const std::string & xtitle,
+                          const std::string & ytitle,
+                          const std::vector<std::string> & data_filenames,
                           const std::string & plot_filename,
                           const std::string & plot_extras,
-                          const std::string & plot_spec,
+                          const std::vector<std::string> & plot_specs,
                           bool add_key)
-{
-  std::string gnuplot_filename = plot_filename;
-  gnuplot_filename.replace(plot_filename.length()-3, 3, "plt");
-  std::cout << "-- " << gnuplot_filename << "...\n";
-
-  std::ofstream of(gnuplot_filename, std::ios::out | std::ios::trunc);
-  of << "set terminal " << terminal << "\n";
-  of << "set title \"" << title << "\"\n";
-  make_plot_labels(of, s);
-  of << GNUPLOT_GLOBALS << "\n";
-  of << "set key " << (add_key?"on":"off") << "\n";
-  of << "set ylabel \"" << units << "\"" << "\n";
-  of << "set output '"<< plot_filename << "'" << "\n";
-  of << plot_extras << "\n";
-  of << "plot '" << data_filename << "' " << plot_spec << "\n";
-  of.close();
-
-  std::cout << "-- " << plot_filename << "...\n";
-  int r = system((std::string("gnuplot ") + gnuplot_filename).c_str());
-  if (r != 0)
-    throw std::logic_error("Plot generation failed");
-}
-
-void Benchmark::make_meta_plot(const BenchmarkSettings & s,
-                               const std::string & terminal,
-                               const std::string & title,
-                               const std::string & units,
-                               const std::vector<std::string> & data_filenames,
-                               const std::string & plot_filename,
-                               const std::string & plot_extras,
-                               const std::vector<std::string> & plot_specs,
-                               bool add_key)
 {
   if (data_filenames.size() != plot_specs.size())
     throw std::logic_error("Need data_filenames.size() == plot_specs.size()");
@@ -248,13 +217,14 @@ void Benchmark::make_meta_plot(const BenchmarkSettings & s,
   make_plot_labels(of, s);
   of << GNUPLOT_GLOBALS << "\n";
   of << "set key " << (add_key?"on":"off") << "\n";
-  of << "set ylabel \"" << units << "\"" << "\n";
+  if (xtitle != "") of << "set xlabel \"" << xtitle << "\"" << "\n";
+  if (ytitle != "") of << "set ylabel \"" << ytitle << "\"" << "\n";
   of << "set output '"<< plot_filename << "'" << "\n";
   of << plot_extras << "\n";
   of << "plot ";
   for (size_t i = 0; i < data_filenames.size(); i++)
   {
-    of << "'" << data_filenames[i] << "'" << plot_specs[i];
+    of << "'" << data_filenames[i] << "' " << plot_specs[i];
     if (i != data_filenames.size() - 1) of << ", \\";
     of << "\n";
   }

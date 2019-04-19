@@ -24,14 +24,19 @@ add_executable(runbenchmark
 target_include_directories(runbenchmark PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
 target_link_libraries(runbenchmark PRIVATE benchmark evercrypt)
 
+if(${CMAKE_BUILD_TYPE} STREQUAL "Debug")
+  target_compile_definitions(benchmark PRIVATE _DEBUG)
+  target_compile_definitions(runbenchmark PRIVATE _DEBUG)
+endif()
+
 if(USE_HACL)
-message("-- Using HaCl (via EverCrypt)")
-target_compile_definitions(runbenchmark PRIVATE HAVE_HACL)
+  message("-- Using HaCl (via EverCrypt)")
+  target_compile_definitions(runbenchmark PRIVATE HAVE_HACL)
 endif(USE_HACL)
 
 if(USE_VALE)
-message("-- Using Vale (via EverCrypt)")
-target_compile_definitions(runbenchmark PRIVATE HAVE_VALE)
+  message("-- Using Vale (via EverCrypt)")
+  target_compile_definitions(runbenchmark PRIVATE HAVE_VALE)
 endif(USE_VALE)
 
 if(USE_BCRYPT)
