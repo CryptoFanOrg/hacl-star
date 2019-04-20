@@ -36,11 +36,17 @@ void Benchmark::escape(char c, std::string & str)
   }
 }
 
+std::string Benchmark::escape(const std::string & str)
+{
+  std::string r = str;
+  escape('_', r);
+  escape('"', r);
+  return r;
+}
+
 void Benchmark::set_name(const std::string & n)
 {
-  name = n;
-  escape('_', name);
-  escape('"', name);
+  name = escape(n);
 }
 
 std::string Benchmark::get_runtime_config()
@@ -92,12 +98,8 @@ std::pair<std::string, std::string> & Benchmark::get_build_config(bool escaped)
       }
     }
 
-    r_esc.first = r.first;
-    r_esc.second = r.second;
-    escape('_', r_esc.first);
-    escape('"', r_esc.first);
-    escape('_', r_esc.second);
-    escape('"', r_esc.second);
+    r_esc.first = escape(r.first);
+    r_esc.second = escape(r.second);
   }
 
   return escaped ? r_esc : r;
@@ -198,22 +200,18 @@ void Benchmark::make_plot(const BenchmarkSettings & s,
                           const std::string & title,
                           const std::string & xtitle,
                           const std::string & ytitle,
-                          const std::vector<std::string> & data_filenames,
+                          const std::vector<std::pair<std::string, std::string> > & plot_specs,
                           const std::string & plot_filename,
                           const std::string & plot_extras,
-                          const std::vector<std::string> & plot_specs,
                           bool add_key)
 {
-  if (data_filenames.size() != plot_specs.size())
-    throw std::logic_error("Need data_filenames.size() == plot_specs.size()");
-
   std::string gnuplot_filename = plot_filename;
   gnuplot_filename.replace(plot_filename.length()-3, 3, "plt");
   std::cout << "-- " << gnuplot_filename << "...\n";
 
   std::ofstream of(gnuplot_filename, std::ios::out | std::ios::trunc);
   of << "set terminal " << terminal << "\n";
-  of << "set title \"" << title << "\"\n";
+  of << "set title \"" << escape(title) << "\"\n";
   make_plot_labels(of, s);
   of << GNUPLOT_GLOBALS << "\n";
   of << "set key " << (add_key?"on":"off") << "\n";
@@ -221,12 +219,11 @@ void Benchmark::make_plot(const BenchmarkSettings & s,
   if (ytitle != "") of << "set ylabel \"" << ytitle << "\"" << "\n";
   of << "set output '"<< plot_filename << "'" << "\n";
   of << plot_extras << "\n";
-  of << "plot ";
-  for (size_t i = 0; i < data_filenames.size(); i++)
+  of << "plot \\\n";
+  for (size_t i = 0; i < plot_specs.size(); i++)
   {
-    of << "'" << data_filenames[i] << "' " << plot_specs[i];
-    if (i != data_filenames.size() - 1) of << ", \\";
-    of << "\n";
+    if (i != 0) of << ", \\\n";
+    of << "'" << plot_specs[i].first << "' " << plot_specs[i].second;
   }
   of.close();
 

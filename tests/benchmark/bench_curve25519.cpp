@@ -173,23 +173,27 @@ void bench_curve25519(const BenchmarkSettings & s)
 
   Benchmark::run_batch(s, Curve25519Benchmark::header, data_filename.str(), todo);
 
-  Benchmark::make_plot(s,
-                       "svg",
-                       "Curve25519 performance",
-                       "",
-                       "Avg. performance [CPU cycles/derivation]",
-                       { data_filename.str() },
-                       "bench_curve25519_cycles.svg",
-                       "set xtics norotate",
-                       { "using 4:xticlabels(1) with boxes title columnheader, '' using ($0-1):4:xticlabels(1):(sprintf(\"%0.0f\", $5)) with labels font \"Courier,8\" offset char 0,.5" });
+  Benchmark::plot_spec_t plot_spec_cycles =
+    { std::make_pair(data_filename.str(), "using 4:xticlabels(1) with boxes title columnheader, '' using ($0-1):4:xticlabels(1):(sprintf(\"%0.0f\", $5)) with labels font \"Courier,8\" offset char 0,.5") };
+
+  Benchmark::plot_spec_t plot_spec_candlesticks =
+    { std::make_pair(data_filename.str(), "using 0:4:5:6:4:xticlabels(1) with candlesticks whiskerbars .25") };
 
   Benchmark::make_plot(s,
                        "svg",
                        "Curve25519 performance",
                        "",
                        "Avg. performance [CPU cycles/derivation]",
-                       { data_filename.str() },
+                       plot_spec_cycles,
+                       "bench_curve25519_cycles.svg",
+                       "set xtics norotate");
+
+  Benchmark::make_plot(s,
+                       "svg",
+                       "Curve25519 performance",
+                       "",
+                       "Avg. performance [CPU cycles/derivation]",
+                       plot_spec_candlesticks,
                        "bench_curve25519_candlesticks.svg",
-                       "set xrange[.5:" + num_benchmarks.str() + "+.5]",
-                       { "using 0:4:5:6:4:xticlabels(1) with candlesticks whiskerbars .25" });
+                       "set xrange[.5:" + num_benchmarks.str() + "+.5]");
 }

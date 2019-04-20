@@ -72,37 +72,59 @@ BenchmarkSettings & parse_args(int argc, char const ** argv)
   return r;
 }
 
+void check_prerequisites()
+{
+  #ifndef WIN32
+  if (system("gnuplot --help > /dev/null 2>&1") != 0)
+    throw std::logic_error("gnuplot not found!");
+  if (system("grep --help > /dev/null 2>&1") != 0)
+    throw std::logic_error("grep not found!");
+  #endif
+}
+
 #define ADD_BENCH(X) if (b == #X) { bench_##X(s); continue; }
 
 int main(int argc, char const **argv)
 {
-  Benchmark::initialize();
-
-  BenchmarkSettings & s = parse_args(argc, argv);
-
-  Benchmark::set_runtime_config(1, 1, 1, 1, 1, 1, 1, 1, 1);
-
-  while (!s.families_to_run.empty())
+  try
   {
-    std::string b = s.families_to_run.front();
-    s.families_to_run.pop_front();
+    check_prerequisites();
 
-    ADD_BENCH(md5);
-    ADD_BENCH(sha1);
-    ADD_BENCH(sha2_224);
-    ADD_BENCH(sha2_256);
-    ADD_BENCH(sha2_384);
-    ADD_BENCH(sha2_512);
-    ADD_BENCH(hash);
+    Benchmark::initialize();
+    BenchmarkSettings & s = parse_args(argc, argv);
 
-    ADD_BENCH(aead);
+    Benchmark::set_runtime_config(1, 1, 1, 1, 1, 1, 1, 1, 1);
 
-    ADD_BENCH(curve25519);
+    while (!s.families_to_run.empty())
+    {
+      std::string b = s.families_to_run.front();
+      s.families_to_run.pop_front();
 
-    ADD_BENCH(ed25519);
+      ADD_BENCH(md5);
+      ADD_BENCH(sha1);
+      ADD_BENCH(sha2);
+      ADD_BENCH(sha3);
+      ADD_BENCH(hash);
 
-    std::cout << "Unsupported benchmark '" << b << "'.\n";
+      ADD_BENCH(aead);
+
+      ADD_BENCH(curve25519);
+
+      ADD_BENCH(ed25519);
+
+      std::cout << "Unsupported benchmark '" << b << "'.\n";
+    }
+
+    return 0;
+  }
+  catch (const std::exception & ex)
+  {
+    std::cout << "Exception: " << ex.what() << "\n";
+  }
+  catch (...)
+  {
+    std::cout << "Exception: caught unknown exception" << "\n";
   }
 
-  return 0;
+  return 1;
 }

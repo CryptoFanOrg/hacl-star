@@ -218,15 +218,20 @@ void bench_ed25519(const BenchmarkSettings & s)
     std::stringstream plot_filename;
     plot_filename << "bench_ed25519_" << ds << "_cycles.svg";
 
+    Benchmark::plot_spec_t plot_spec_cycles =
+      { std::make_pair(data_filename.str(), "using 5:xticlabels(1) with boxes title columnheader, '' using ($0-1):5:xticlabels(1):(sprintf(\"%0.0f\", $5)) with labels font \"Courier,8\" offset char 0,.5") };
+
+    Benchmark::plot_spec_t plot_spec_bytes =
+      { std::make_pair(data_filename.str(), "using 8:xticlabels(1) with boxes title columnheader, '' using ($0-1):8:xticlabels(1):(sprintf(\"%0.0f\", $5)) with labels font \"Courier,8\" offset char 0,.5") };
+
     Benchmark::make_plot(s,
                          "svg",
                          title.str(),
                          "",
                          "Avg. performance [CPU cycles/operation]",
-                         { data_filename.str() },
+                         plot_spec_cycles,
                          plot_filename.str(),
-                         "",
-                         { "using 5:xticlabels(1) with boxes title columnheader, '' using ($0-1):5:xticlabels(1):(sprintf(\"%0.0f\", $5)) with labels font \"Courier,8\" offset char 0,.5" });
+                         "");
 
     plot_filename.str("");
     plot_filename << "bench_ed25519_" << ds << "_bytes.svg";
@@ -236,9 +241,8 @@ void bench_ed25519(const BenchmarkSettings & s)
                          title.str(),
                          "",
                          "Avg. performance [CPU cycles/byte]",
-                         { data_filename.str() },
+                         plot_spec_bytes,
                          plot_filename.str(),
-                         "",
-                         { "using 8:xticlabels(1) with boxes title columnheader, '' using ($0-1):8:xticlabels(1):(sprintf(\"%0.0f\", $5)) with labels font \"Courier,8\" offset char 0,.5" });
+                         "");
   }
 }

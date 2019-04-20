@@ -1,7 +1,8 @@
 project(benchmark LANGUAGES C CXX ASM)
-cmake_minimum_required(VERSION 3.12)
+cmake_minimum_required(VERSION 3.6)
 
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+set(CMAKE_LEGACY_CYGWIN_WIN32 0) # Remove when CMake >= 3.8.4 is required
 
 option(USE_HACL "Use HaCl." ON)
 option(USE_VALE "Use Vale." ON)
@@ -24,7 +25,7 @@ add_executable(runbenchmark
 target_include_directories(runbenchmark PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
 target_link_libraries(runbenchmark PRIVATE benchmark evercrypt)
 
-if(${CMAKE_BUILD_TYPE} STREQUAL "Debug")
+if("${CMAKE_BUILD_TYPE}" STREQUAL "Debug")
   target_compile_definitions(benchmark PRIVATE _DEBUG)
   target_compile_definitions(runbenchmark PRIVATE _DEBUG)
 endif()
@@ -65,8 +66,8 @@ if(USE_OPENSSL)
 endif(USE_OPENSSL)
 
 if(USE_RFC7748)
-add_subdirectory(librfc7748)
-target_compile_definitions(runbenchmark PRIVATE HAVE_RFC7748)
-target_link_libraries(runbenchmark PRIVATE rfc7748)
-target_include_directories(runbenchmark PRIVATE ${RFC7748_DIR})
+  add_subdirectory(librfc7748)
+  target_compile_definitions(runbenchmark PRIVATE HAVE_RFC7748)
+  target_link_libraries(runbenchmark PRIVATE rfc7748)
+  target_include_directories(runbenchmark PRIVATE ${RFC7748_DIR})
 endif(USE_RFC7748)

@@ -33,6 +33,7 @@ class Benchmark
     std::string name;
 
     static void escape(char c, std::string & str);
+    static std::string escape(const std::string & str);
 
   public:
     Benchmark();
@@ -83,15 +84,16 @@ class Benchmark
                           const std::string & data_filename,
                           std::list<Benchmark*> & benchmarks);
 
+    typedef std::vector<std::pair<std::string, std::string> > plot_spec_t;
+
     static void make_plot(const BenchmarkSettings & s,
                           const std::string & terminal,
                           const std::string & title,
                           const std::string & xtitle,
                           const std::string & ytitle,
-                          const std::vector<std::string> & data_filenames,
+                          const plot_spec_t & plot_specs,
                           const std::string & plot_filename,
                           const std::string & plot_extras,
-                          const std::vector<std::string> & plot_specs,
                           bool add_key = false);
 };
 

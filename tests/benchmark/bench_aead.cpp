@@ -20,14 +20,13 @@ extern "C" {
 class AEADBenchmark : public Benchmark
 {
   protected:
-    typedef __attribute__((aligned(32))) uint8_t aligned_uint8_t[32];
     size_t key_sz, msg_len, ad_len = 0;
-    aligned_uint8_t *tag;
-    aligned_uint8_t iv[16]; // 12 used
-    aligned_uint8_t *key;
-    aligned_uint8_t *plain;
-    aligned_uint8_t *cipher;
-    aligned_uint8_t *ad = 0;
+    uint8_t *tag;
+    uint8_t iv[16]; // 12 used; old vale likes to have 16 anyways.
+    uint8_t *key;
+    uint8_t *plain;
+    uint8_t *cipher;
+    uint8_t *ad = 0;
 
   public:
     static constexpr auto header = "Algorithm, Size [b], CPU Time (incl) [sec], CPU Time (excl) [sec], Avg Cycles/Op, Min Cycles/Op, Max Cycles/Op, Avg Cycles/Byte";
@@ -43,18 +42,18 @@ class AEADBenchmark : public Benchmark
       this->key_sz = key_sz_bits/8;
       this->msg_len = msg_len;
 
-      key = new aligned_uint8_t[key_sz];
-      plain = new aligned_uint8_t[msg_len];
-      cipher = new aligned_uint8_t[msg_len];
-      tag = new aligned_uint8_t[tag_len];
+      key = new uint8_t[key_sz];
+      plain = new uint8_t[msg_len];
+      cipher = new uint8_t[msg_len];
+      tag = new uint8_t[tag_len];
     }
 
     virtual ~AEADBenchmark()
     {
-      delete(tag);
-      delete(cipher);
-      delete(plain);
-      delete(key);
+      delete[](tag);
+      delete[](cipher);
+      delete[](plain);
+      delete[](key);
     }
 
     virtual void bench_setup(const BenchmarkSettings & s)
@@ -78,13 +77,13 @@ class AEADBenchmark : public Benchmark
 };
 
 template<uint8_t type, size_t key_size_bits, size_t tag_len>
-class EverCryptAEAD : public AEADBenchmark
+class EverCryptAEADEncrypt : public AEADBenchmark
 {
   protected:
     EverCrypt_AEAD_state_s *state;
 
   public:
-    EverCryptAEAD(size_t msg_len) :
+    EverCryptAEADEncrypt(size_t msg_len) :
       AEADBenchmark(key_size_bits, tag_len, msg_len, "EverCrypt")
       {
         switch (type) {
@@ -114,19 +113,62 @@ class EverCryptAEAD : public AEADBenchmark
       #endif
       ;
     }
-    virtual ~EverCryptAEAD()
+    virtual ~EverCryptAEADEncrypt()
+      { EverCrypt_AEAD_free(state); }
+};
+
+template<uint8_t type, size_t key_size_bits, size_t tag_len>
+class EverCryptAEADDecrypt : public AEADBenchmark
+{
+  protected:
+    EverCrypt_AEAD_state_s *state;
+
+  public:
+    EverCryptAEADDecrypt(size_t msg_len) :
+      AEADBenchmark(key_size_bits, tag_len, msg_len, "EverCrypt")
+      {
+        switch (type) {
+          case Spec_AEAD_AES128_GCM: set_name("EverCrypt\\nAES128\\nGCM"); break;
+          case Spec_AEAD_AES256_GCM: set_name("EverCrypt\\nAES256\\nGCM"); break;
+          case Spec_AEAD_CHACHA20_POLY1305: set_name("EverCrypt\\nCHACHA20\\nPOLY1305"); break;
+          case Spec_AEAD_AES128_CCM: set_name("EverCrypt\\nAES128\\nCCM"); break;
+          case Spec_AEAD_AES256_CCM: set_name("EverCrypt\\nAES256\\nCCM"); break;
+          case Spec_AEAD_AES128_CCM8: set_name("EverCrypt\\nAES128\\nCCM8"); break;
+          case Spec_AEAD_AES256_CCM8: set_name("EverCrypt\\nAES256\\nCCM8"); break;
+          default: throw new std::logic_error("Unknown AEAD algorithm");
+        }
+      }
+    virtual void bench_setup(const BenchmarkSettings & s)
+    {
+      if (EverCrypt_AEAD_create_in(type, &state, (uint8_t*)key) != EverCrypt_Error_Success)
+        throw std::logic_error("AEAD context creation failed");
+
+      EverCrypt_AEAD_encrypt(state, (uint8_t*)iv, (uint8_t*)ad, ad_len, (uint8_t*)plain, msg_len, (uint8_t*)cipher, (uint8_t*)tag);
+    }
+    virtual void bench_func()
+    {
+      #ifdef _DEBUG
+      if (
+      #endif
+        EverCrypt_AEAD_decrypt(state, (uint8_t*)iv, (uint8_t*)ad, ad_len, (uint8_t*)cipher, msg_len, (uint8_t*)tag, (uint8_t*)plain)
+      #ifdef _DEBUG
+        != EverCrypt_Error_Success) throw std::logic_error("AEAD decryption failed")
+      #endif
+      ;
+    }
+    virtual ~EverCryptAEADDecrypt()
       { EverCrypt_AEAD_free(state); }
 };
 
 #ifdef HAVE_VALE
 template<size_t key_size_bits, size_t tag_len>
-class Vale : public AEADBenchmark
+class OldValeEncrypt : public AEADBenchmark
 {
   protected:
     gcm_args args;
 
   public:
-    Vale(size_t msg_len) :
+    OldValeEncrypt(size_t msg_len) :
       AEADBenchmark(key_size_bits, tag_len, msg_len, "EverCrypt")
       {
         switch(key_size_bits) {
@@ -137,13 +179,47 @@ class Vale : public AEADBenchmark
       }
     virtual void bench_setup(const BenchmarkSettings & s)
     {
+      args.plain = (uint8_t*)plain;
+      args.plain_len = msg_len;
+      args.aad = (uint8_t*)ad;
+      args.aad_len = ad_len;
+      args.iv = (uint8_t*)iv;
+      args.cipher = (uint8_t*)cipher;
+      args.tag = (uint8_t*)tag;
+
       args.expanded_key = new uint8_t[15 * (128/8)];
       switch(key_size_bits) {
-        case 128: old_aes128_key_expansion((uint8_t*)key, args.expanded_key);
-        case 256: old_aes256_key_expansion((uint8_t*)key, args.expanded_key);
+        case 128: old_aes128_key_expansion((uint8_t*)key, args.expanded_key); break;
+        case 256: old_aes256_key_expansion((uint8_t*)key, args.expanded_key); break;
       }
     }
     virtual void bench_func()
+    {
+      switch(key_size_bits) {
+      case 128: old_gcm128_encrypt(&args);
+      case 256: old_gcm256_encrypt(&args);
+      }
+    }
+    virtual ~OldValeEncrypt() { delete(args.expanded_key); }
+};
+
+template<size_t key_size_bits, size_t tag_len>
+class OldValeDecrypt : public AEADBenchmark
+{
+  protected:
+    gcm_args args;
+
+  public:
+    OldValeDecrypt(size_t msg_len) :
+      AEADBenchmark(key_size_bits, tag_len, msg_len, "EverCrypt")
+      {
+        switch(key_size_bits) {
+          case 128: set_name("Vale (old)\\nAES128\\nGCM"); break;
+          case 256: set_name("Vale (old)\\nAES256\\nGCM"); break;
+          default: throw new std::logic_error("Unknown algorithm");
+        }
+      }
+    virtual void bench_setup(const BenchmarkSettings & s)
     {
       args.plain = (uint8_t*)plain;
       args.plain_len = msg_len;
@@ -152,12 +228,28 @@ class Vale : public AEADBenchmark
       args.iv = (uint8_t*)iv;
       args.cipher = (uint8_t*)cipher;
       args.tag = (uint8_t*)tag;
+      args.expanded_key = new uint8_t[15 * (128/8)];
       switch(key_size_bits) {
-      case 128: old_gcm128_encrypt(&args);
-      case 256: old_gcm256_encrypt(&args);
+        case 128: old_aes128_key_expansion((uint8_t*)key, args.expanded_key); old_gcm128_encrypt(&args); break;
+        case 256: old_aes256_key_expansion((uint8_t*)key, args.expanded_key); old_gcm256_encrypt(&args); break;
       }
+      std::swap(args.cipher, args.plain);
     }
-    virtual ~Vale() { delete(args.expanded_key); }
+    virtual void bench_func()
+    {
+      #ifdef _DEBUG
+      switch(key_size_bits) {
+      case 128: if (old_gcm128_decrypt(&args) != 0) throw std::logic_error("Vale decryption failed"); break;
+      case 256: if (old_gcm256_decrypt(&args) != 0) throw std::logic_error("Vale decryption failed"); break;
+      }
+      #else
+      switch(key_size_bits) {
+      case 128: old_gcm128_decrypt(&args); break;
+      case 256: old_gcm256_decrypt(&args); break;
+      }
+      #endif
+    }
+    virtual ~OldValeDecrypt() { delete(args.expanded_key); }
 };
 #endif
 
@@ -165,13 +257,12 @@ class Vale : public AEADBenchmark
 // See https://github.com/openssl/openssl/blob/master/demos/evp/aesgcm.c
 #endif
 
-int bench_aead(const BenchmarkSettings & s)
+void bench_aead_encrypt(const BenchmarkSettings & s)
 {
   size_t data_sizes[] = { 1024, 2048, 4096, 8192, 16384, 32768, 65536 };
 
-  std::vector<std::string> data_filenames;
-  std::vector<std::string> plot_specs_cycles;
-  std::vector<std::string> plot_specs_bytes;
+  Benchmark::plot_spec_t plot_specs_cycles;
+  Benchmark::plot_spec_t plot_specs_bytes;
 
   for (size_t ds: data_sizes)
   {
@@ -181,30 +272,29 @@ int bench_aead(const BenchmarkSettings & s)
     std::stringstream data_filename;
     data_filename << "bench_aead_" << ds << ".csv";
 
-    data_filenames.push_back(data_filename.str());
     if (plot_specs_cycles.empty())
     {
-      plot_specs_cycles.push_back("using 5:xticlabels(1) title '" + dsstr.str() + " b'");
-      plot_specs_bytes.push_back("using 8:xticlabels(1) title '" + dsstr.str() + " b'");
+      plot_specs_cycles.push_back(std::make_pair(data_filename.str(), "using 5:xticlabels(1) title '" + dsstr.str() + " b'"));
+      plot_specs_bytes.push_back(std::make_pair(data_filename.str(), "using 8:xticlabels(1) title '" + dsstr.str() + " b'"));
     }
     else
     {
-      plot_specs_cycles.push_back("using 5 title '" + dsstr.str() + " b'");
-      plot_specs_bytes.push_back("using 8 title '" + dsstr.str() + " b'");
+      plot_specs_cycles.push_back(std::make_pair(data_filename.str(), "using 5 title '" + dsstr.str() + " b'"));
+      plot_specs_bytes.push_back(std::make_pair(data_filename.str(), "using 8 title '" + dsstr.str() + " b'"));
     }
 
     std::list<Benchmark*> todo = {
-      new EverCryptAEAD<Spec_AEAD_AES128_GCM, 128, 16>(ds),
-      new EverCryptAEAD<Spec_AEAD_AES256_GCM, 256, 16>(ds),
-      new EverCryptAEAD<Spec_AEAD_CHACHA20_POLY1305, 128, 16>(ds),
-      // new EverCryptAEAD<Spec_AEAD_AES128_CCM, 128, 16>(ds), // unsupported?
-      // new EverCryptAEAD<Spec_AEAD_AES256_CCM, 256, 16>(ds), // unsupported?
-      // new EverCryptAEAD<Spec_AEAD_AES128_CCM8, 128, 8>(ds), // unsupported?
-      // new EverCryptAEAD<Spec_AEAD_AES256_CCM8, 256, 8>(ds), // unsupported?
+      new EverCryptAEADEncrypt<Spec_AEAD_AES128_GCM, 128, 16>(ds),
+      new EverCryptAEADEncrypt<Spec_AEAD_AES256_GCM, 256, 16>(ds),
+      // new EverCryptAEADEncrypt<Spec_AEAD_CHACHA20_POLY1305, 128, 16>(ds),
+      // new EverCryptAEADEncrypt<Spec_AEAD_AES128_CCM, 128, 16>(ds), // unsupported?
+      // new EverCryptAEADEncrypt<Spec_AEAD_AES256_CCM, 256, 16>(ds), // unsupported?
+      // new EverCryptAEADEncrypt<Spec_AEAD_AES128_CCM8, 128, 8>(ds), // unsupported?
+      // new EverCryptAEADEncrypt<Spec_AEAD_AES256_CCM8, 256, 8>(ds), // unsupported?
 
       #ifdef HAVE_VALE
-      new Vale<128, 16>(ds),
-      new Vale<256, 16>(ds),
+      new OldValeEncrypt<128, 16>(ds),
+      new OldValeEncrypt<256, 16>(ds),
       #endif
 
       #ifdef HAVE_OPENSSL
@@ -227,18 +317,96 @@ int bench_aead(const BenchmarkSettings & s)
                        "AEAD Encryption Performance",
                        "",
                        "Avg. performance [CPU cycles/encryption]",
-                       data_filenames,
-                       "bench_aead_all_cycles.svg",
-                       extras.str(),
-                       plot_specs_cycles);
+                       plot_specs_cycles,
+                       "bench_aead_all_encrypt_cycles.svg",
+                       extras.str());
 
   Benchmark::make_plot(s,
                        "svg",
                        "AEAD Encryption Performance",
                        "",
                        "Avg. performance [CPU cycles/byte]",
-                       data_filenames,
-                       "bench_aead_all_bytes.svg",
-                       extras.str(),
-                       plot_specs_bytes);
+                       plot_specs_bytes,
+                       "bench_aead_all_encrypt_bytes.svg",
+                       extras.str());
+}
+
+void bench_aead_decrypt(const BenchmarkSettings & s)
+{
+  size_t data_sizes[] = { 1024, 2048, 4096, 8192, 16384, 32768, 65536 };
+
+  Benchmark::plot_spec_t plot_specs_cycles;
+  Benchmark::plot_spec_t plot_specs_bytes;
+
+  for (size_t ds: data_sizes)
+  {
+    std::stringstream dsstr;
+    dsstr << ds;
+
+    std::stringstream data_filename;
+    data_filename << "bench_aead_" << ds << ".csv";
+
+    if (plot_specs_cycles.empty())
+    {
+      plot_specs_cycles.push_back(std::make_pair(data_filename.str(), "using 5:xticlabels(1) title '" + dsstr.str() + " b'"));
+      plot_specs_bytes.push_back(std::make_pair(data_filename.str(), "using 8:xticlabels(1) title '" + dsstr.str() + " b'"));
+    }
+    else
+    {
+      plot_specs_cycles.push_back(std::make_pair(data_filename.str(), "using 5 title '" + dsstr.str() + " b'"));
+      plot_specs_bytes.push_back(std::make_pair(data_filename.str(), "using 8 title '" + dsstr.str() + " b'"));
+    }
+
+    std::list<Benchmark*> todo = {
+      new EverCryptAEADDecrypt<Spec_AEAD_AES128_GCM, 128, 16>(ds),
+      new EverCryptAEADDecrypt<Spec_AEAD_AES256_GCM, 256, 16>(ds),
+      // new EverCryptAEADDecrypt<Spec_AEAD_CHACHA20_POLY1305, 128, 16>(ds),
+      // new EverCryptAEADDecrypt<Spec_AEAD_AES128_CCM, 128, 16>(ds), // unsupported?
+      // new EverCryptAEADDecrypt<Spec_AEAD_AES256_CCM, 256, 16>(ds), // unsupported?
+      // new EverCryptAEADDecrypt<Spec_AEAD_AES128_CCM8, 128, 8>(ds), // unsupported?
+      // new EverCryptAEADDecrypt<Spec_AEAD_AES256_CCM8, 256, 8>(ds), // unsupported?
+
+      #ifdef HAVE_VALE
+      new OldValeDecrypt<128, 16>(ds),
+      new OldValeDecrypt<256, 16>(ds),
+      #endif
+
+      #ifdef HAVE_OPENSSL
+      #endif
+      };
+
+      Benchmark::run_batch(s, AEADBenchmark::header, data_filename.str(), todo);
+  }
+
+  std::stringstream extras;
+  extras << "set boxwidth 0.8\n";
+  extras << "set key top left inside\n";
+  extras << "set style histogram clustered gap 3 title\n";
+  extras << "set style data histograms\n";
+  extras << "set bmargin 5\n";
+  extras << "set xrange [0:]\n";
+
+  Benchmark::make_plot(s,
+                       "svg",
+                       "AEAD Decryption Performance",
+                       "",
+                       "Avg. performance [CPU cycles/decryption]",
+                       plot_specs_cycles,
+                       "bench_aead_all_decrypt_cycles.svg",
+                       extras.str());
+
+  Benchmark::make_plot(s,
+                       "svg",
+                       "AEAD Decryption Performance",
+                       "",
+                       "Avg. performance [CPU cycles/byte]",
+                       plot_specs_bytes,
+                       "bench_aead_all_decrypt_bytes.svg",
+                       extras.str());
+}
+
+void bench_aead(const BenchmarkSettings & s)
+{
+  bench_aead_encrypt(s);
+  bench_aead_decrypt(s);
 }

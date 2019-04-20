@@ -8,6 +8,7 @@
 extern "C" {
 #include <EverCrypt_Hash.h>
 #include <Hacl_Hash.h>
+#include <Hacl_SHA3.h>
 }
 
 #ifdef HAVE_OPENSSL
@@ -31,6 +32,13 @@ class HashBenchmark : public Benchmark
 
       src = new uint8_t[src_sz];
       dst = new uint8_t[N/8];
+
+      if (type >= 2)
+      {
+        std::stringstream ns;
+        ns << prefix << " SHA" << type << "-" << N;
+        set_name(ns.str());
+      }
     }
 
     virtual ~HashBenchmark()
@@ -74,6 +82,11 @@ template<> void (*HaclHash<2, 384>::fun)(uint8_t *input, uint32_t input_len, uin
 template<> void (*HaclHash<2, 512>::fun)(uint8_t *input, uint32_t input_len, uint8_t *dst) = Hacl_Hash_SHA2_hash_512;
 typedef HaclHash<0, 128> HaclMD5;
 typedef HaclHash<1, 160> HaclSHA1;
+
+template<> void (*HaclHash<3, 224>::fun)(uint8_t *input, uint32_t input_len, uint8_t *dst) = [](uint8_t *input, uint32_t input_len, uint8_t *dst) { Hacl_SHA3_sha3_224(input_len, input, dst); };
+template<> void (*HaclHash<3, 256>::fun)(uint8_t *input, uint32_t input_len, uint8_t *dst) = [](uint8_t *input, uint32_t input_len, uint8_t *dst) { Hacl_SHA3_sha3_256(input_len, input, dst); };
+template<> void (*HaclHash<3, 384>::fun)(uint8_t *input, uint32_t input_len, uint8_t *dst) = [](uint8_t *input, uint32_t input_len, uint8_t *dst) { Hacl_SHA3_sha3_384(input_len, input, dst); };
+template<> void (*HaclHash<3, 512>::fun)(uint8_t *input, uint32_t input_len, uint8_t *dst) = [](uint8_t *input, uint32_t input_len, uint8_t *dst) { Hacl_SHA3_sha3_512(input_len, input, dst); };
 
 template<int type, int N>
 class EverCryptHash : public HashBenchmark
@@ -131,10 +144,40 @@ void bench_hash_plots(const BenchmarkSettings & s, const std::string & alg, cons
   extras << "set style data histograms\n";
   extras << "set bmargin 5\n";
 
-  std::vector<std::string> datafiles_by_tool = {
-    "< grep \"HaCl\" bench_hash_MD5.csv", "",
-    "< grep \"EverCrypt\" bench_hash_MD5.csv", "",
-   "< grep \"OpenSSL\" bench_hash_MD5.csv", ""
+  Benchmark::plot_spec_t plot_specs_cycles = {
+    #ifdef HAVE_HACL
+    std::make_pair("< grep \"HaCl\" " + data_filename,  "using 5:xticlabels(2) title \"HaCl\""),
+    std::make_pair("", "using 0:5:xticlabels(2):(sprintf(\"%0.0f\", $5)) with labels font \"Courier,8\" offset char -1.25,1 rotate by 90 notitle"),
+    #endif
+    std::make_pair("< grep \"EverCrypt\" " + data_filename, "using 5 title \"EverCrypt\""),
+    std::make_pair("", "using 0:5:xticlabels(2):(sprintf(\"%0.0f\", $5)) with labels font \"Courier,8\" offset char +0.00,1 rotate by 90 notitle"),
+    #ifdef HAVE_OPENSSL
+    std::make_pair("< grep \"OpenSSL\" " + data_filename, "using 5 title \"OpenSSL\""),
+    std::make_pair("", "using 0:5:xticlabels(2):(sprintf(\"%0.0f\", $5)) with labels font \"Courier,8\" offset char +1.25,1 rotate by 90 notitle")
+    #endif
+   };
+
+  Benchmark::plot_spec_t plot_specs_cycles_candlesticks = {
+    #ifdef HAVE_HACL
+    std::make_pair("< grep \"HaCl\" " + data_filename, "using 0:5:6:7:5:xticlabels(2) title \"HaCl\" with candlesticks whiskerbars .25"),
+    #endif
+    std::make_pair("< grep \"EverCrypt\" " + data_filename, "using 0:5:6:7:5:xticlabels(2) title \"EverCrypt\" with candlesticks whiskerbars .25"),
+    #ifdef HAVE_OPENSSL
+    std::make_pair("< grep \"OpenSSL\" " + data_filename, "using 0:5:6:7:5:xticlabels(2) title \"OpenSSL\" with candlesticks whiskerbars .25")
+    #endif
+   };
+
+  Benchmark::plot_spec_t plot_specs_bytes = {
+    #ifdef HAVE_HACL
+    std::make_pair("< grep \"HaCl\" " + data_filename, "using 8:xticlabels(2) title \"HaCl\""),
+    std::make_pair("", "using 0:8:xticlabels(2):(sprintf(\"%0.0f\", $5)) with labels font \"Courier,8\" offset char -1.25,1 rotate by 90 notitle"),
+    #endif
+    std::make_pair("< grep \"EverCrypt\" " + data_filename, "using 8 title \"EverCrypt\""),
+    std::make_pair("", "using 0:8:xticlabels(2):(sprintf(\"%0.0f\", $5)) with labels font \"Courier,8\" offset char +0.00,1 rotate by 90 notitle"),
+    #ifdef HAVE_OPENSSL
+    std::make_pair("< grep \"OpenSSL\" " + data_filename, "using 8 title \"OpenSSL\""),
+    std::make_pair("", "using 0:8:xticlabels(2):(sprintf(\"%0.0f\", $5)) with labels font \"Courier,8\" offset char +1.25,1 rotate by 90 notitle")
+    #endif
    };
 
   Benchmark::make_plot(s,
@@ -142,16 +185,10 @@ void bench_hash_plots(const BenchmarkSettings & s, const std::string & alg, cons
                        title.str(),
                        "Message length [bytes]",
                        "Avg. performance [CPU cycles/hash]",
-                       datafiles_by_tool,
+                       plot_specs_cycles,
                        plot_filename.str(),
                        extras.str(),
-                       { "using 5:xticlabels(2) title \"HaCl\"",
-                         "using 0:5:xticlabels(2):(sprintf(\"%0.0f\", $5)) with labels font \"Courier,8\" offset char -1.25,1 rotate by 90 notitle",
-                         "using 5 title \"EverCrypt\"",
-                         "using 0:5:xticlabels(2):(sprintf(\"%0.0f\", $5)) with labels font \"Courier,8\" offset char +0.00,1 rotate by 90 notitle",
-                         "using 5 title \"OpenSSL\"",
-                         "using 0:5:xticlabels(2):(sprintf(\"%0.0f\", $5)) with labels font \"Courier,8\" offset char +1.25,1 rotate by 90 notitle" },
-                         true);
+                       true);
 
   plot_filename.str("");
   plot_filename << "bench_hash_" << alg << "_candlesticks.svg";
@@ -161,12 +198,9 @@ void bench_hash_plots(const BenchmarkSettings & s, const std::string & alg, cons
                        title.str(),
                        "Message length [bytes]",
                        "Avg. performance [CPU cycles/hash]",
-                       datafiles_by_tool,
+                       plot_specs_cycles_candlesticks,
                        plot_filename.str(),
                        extras.str(),
-                       { "using 0:5:6:7:5:xticlabels(2) title \"HaCl\" with candlesticks whiskerbars .25", "using 0 notitle",
-                         "using 0:5:6:7:5:xticlabels(2) title \"EverCrypt\" with candlesticks whiskerbars .25", "using 0 notitle",
-                         "using 0:5:6:7:5:xticlabels(2) title \"OpenSSL\" with candlesticks whiskerbars .25", "using 0 notitle" },
                        true);
 
   plot_filename.str("");
@@ -177,19 +211,13 @@ void bench_hash_plots(const BenchmarkSettings & s, const std::string & alg, cons
                        title.str(),
                        "Message length [bytes]",
                        "Avg. performance [CPU cycles/hash]",
-                       datafiles_by_tool,
+                       plot_specs_bytes,
                        plot_filename.str(),
                        extras.str(),
-                       { "using 8:xticlabels(2) title \"HaCl\"",
-                         "using 0:8:xticlabels(2):(sprintf(\"%0.0f\", $5)) with labels font \"Courier,8\" offset char -1.25,1 rotate by 90 notitle",
-                         "using 8 title \"EverCrypt\"",
-                         "using 0:8:xticlabels(2):(sprintf(\"%0.0f\", $5)) with labels font \"Courier,8\" offset char +0.00,1 rotate by 90 notitle",
-                         "using 8 title \"OpenSSL\"",
-                         "using 0:8:xticlabels(2):(sprintf(\"%0.0f\", $5)) with labels font \"Courier,8\" offset char +1.25,1 rotate by 90 notitle" },
-                         true);
+                       true);
 }
 
-int bench_hash_alg(const BenchmarkSettings & s, const std::string & alg, std::list<Benchmark*> & todo)
+void bench_hash_alg(const BenchmarkSettings & s, const std::string & alg, std::list<Benchmark*> & todo)
 {
   std::stringstream data_filename;
   data_filename << "bench_hash_" << alg << ".csv";
@@ -202,7 +230,7 @@ int bench_hash_alg(const BenchmarkSettings & s, const std::string & alg, std::li
   bench_hash_plots(s, alg, num_benchmarks.str(), data_filename.str());
 }
 
-int bench_md5(const BenchmarkSettings & s)
+void bench_md5(const BenchmarkSettings & s)
 {
   size_t data_sizes[] = { 1024, 2048, 4096, 8192, 16384, 32768, 65536 };
 
@@ -222,7 +250,7 @@ int bench_md5(const BenchmarkSettings & s)
   bench_hash_alg(s, "MD5", todo);
 }
 
-int bench_sha1(const BenchmarkSettings & s)
+void bench_sha1(const BenchmarkSettings & s)
 {
   size_t data_sizes[] = { 1024, 2048, 4096, 8192, 16384, 32768, 65536 };
 
@@ -242,7 +270,7 @@ int bench_sha1(const BenchmarkSettings & s)
   bench_hash_alg(s, "SHA1", todo);
 }
 
-int bench_sha2_224(const BenchmarkSettings & s)
+void bench_sha2_224(const BenchmarkSettings & s)
 {
   size_t data_sizes[] = { 1024, 2048, 4096, 8192, 16384, 32768, 65536 };
 
@@ -262,7 +290,7 @@ int bench_sha2_224(const BenchmarkSettings & s)
   bench_hash_alg(s, "SHA2_224", todo);
 }
 
-int bench_sha2_256(const BenchmarkSettings & s)
+void bench_sha2_256(const BenchmarkSettings & s)
 {
   size_t data_sizes[] = { 1024, 2048, 4096, 8192, 16384, 32768, 65536 };
 
@@ -282,7 +310,7 @@ int bench_sha2_256(const BenchmarkSettings & s)
   bench_hash_alg(s, "SHA2_256", todo);
 }
 
-int bench_sha2_384(const BenchmarkSettings & s)
+void bench_sha2_384(const BenchmarkSettings & s)
 {
   size_t data_sizes[] = { 1024, 2048, 4096, 8192, 16384, 32768, 65536 };
 
@@ -302,7 +330,7 @@ int bench_sha2_384(const BenchmarkSettings & s)
   bench_hash_alg(s, "SHA2_384", todo);
 }
 
-int bench_sha2_512(const BenchmarkSettings & s)
+void bench_sha2_512(const BenchmarkSettings & s)
 {
   size_t data_sizes[] = { 1024, 2048, 4096, 8192, 16384, 32768, 65536 };
 
@@ -322,7 +350,7 @@ int bench_sha2_512(const BenchmarkSettings & s)
   bench_hash_alg(s, "SHA2_512", todo);
 }
 
-int bench_sha2(const BenchmarkSettings & s)
+void bench_sha2(const BenchmarkSettings & s)
 {
   bench_sha2_224(s);
   bench_sha2_256(s);
@@ -330,7 +358,79 @@ int bench_sha2(const BenchmarkSettings & s)
   bench_sha2_512(s);
 }
 
-int bench_hash(const BenchmarkSettings & s)
+void bench_sha3_224(const BenchmarkSettings & s)
+{
+  size_t data_sizes[] = { 1024, 2048, 4096, 8192, 16384, 32768, 65536 };
+
+  std::list<Benchmark*> todo;
+
+  for (size_t ds: data_sizes)
+  {
+    #ifdef HAVE_HACL
+    todo.push_back(new HaclHash<3, 224>(ds));
+    #endif
+  }
+
+  bench_hash_alg(s, "SHA3_224", todo);
+}
+
+void bench_sha3_256(const BenchmarkSettings & s)
+{
+  size_t data_sizes[] = { 1024, 2048, 4096, 8192, 16384, 32768, 65536 };
+
+  std::list<Benchmark*> todo;
+
+  for (size_t ds: data_sizes)
+  {
+    #ifdef HAVE_HACL
+    todo.push_back(new HaclHash<3, 256>(ds));
+    #endif
+  }
+
+  bench_hash_alg(s, "SHA3_256", todo);
+}
+
+void bench_sha3_384(const BenchmarkSettings & s)
+{
+  size_t data_sizes[] = { 1024, 2048, 4096, 8192, 16384, 32768, 65536 };
+
+  std::list<Benchmark*> todo;
+
+  for (size_t ds: data_sizes)
+  {
+    #ifdef HAVE_HACL
+    todo.push_back(new HaclHash<3, 384>(ds));
+    #endif
+  }
+
+  bench_hash_alg(s, "SHA3_384", todo);
+}
+
+void bench_sha3_512(const BenchmarkSettings & s)
+{
+  size_t data_sizes[] = { 1024, 2048, 4096, 8192, 16384, 32768, 65536 };
+
+  std::list<Benchmark*> todo;
+
+  for (size_t ds: data_sizes)
+  {
+    #ifdef HAVE_HACL
+    todo.push_back(new HaclHash<3, 512>(ds));
+    #endif
+  }
+
+  bench_hash_alg(s, "SHA3-512", todo);
+}
+
+void bench_sha3(const BenchmarkSettings & s)
+{
+  bench_sha3_224(s);
+  bench_sha3_256(s);
+  bench_sha3_384(s);
+  bench_sha3_512(s);
+}
+
+void bench_hash(const BenchmarkSettings & s)
 {
   size_t data_sizes[] = { 1024, 2048, 4096, 8192, 16384, 32768, 65536 };
 
@@ -338,33 +438,23 @@ int bench_hash(const BenchmarkSettings & s)
   bench_sha1(s);
   bench_sha2(s);
 
-  std::vector<std::string> data_filenames = {
-    "bench_hash_MD5.csv",
-    "bench_hash_SHA1.csv",
-    "bench_hash_SHA2_224.csv",
-    "bench_hash_SHA2_256.csv",
-    "bench_hash_SHA2_384.csv",
-    "bench_hash_SHA2_512.csv"
-    };
-
-  std::vector<std::string> plot_specs_cycles = {
-    "using 5:xticlabels(1) title \"MD5\"",
-    "using 5 title \"SHA1\"",
-    "using 5 title \"SHA2-224\"",
-    "using 5 title \"SHA2-256\"",
-    "using 5 title \"SHA2-384\"",
-    "using 5 title \"SHA2-512\""
+  Benchmark::plot_spec_t plot_specs_cycles = {
+    std::make_pair("bench_hash_MD5.csv",      "using 5:xticlabels(1) title \"MD5\""),
+    std::make_pair("bench_hash_SHA1.csv",     "using 5 title \"SHA1\""),
+    std::make_pair("bench_hash_SHA2_224.csv", "using 5 title \"SHA2-224\""),
+    std::make_pair("bench_hash_SHA2_256.csv", "using 5 title \"SHA2-256\""),
+    std::make_pair("bench_hash_SHA2_384.csv", "using 5 title \"SHA2-384\""),
+    std::make_pair("bench_hash_SHA2_512.csv", "using 5 title \"SHA2-512\"")
   };
 
-  std::vector<std::string> plot_specs_bytes = {
-    "using 8:xticlabels(1) title \"MD5\"",
-    "using 8 title \"SHA1\"",
-    "using 8 title \"SHA2-224\"",
-    "using 8 title \"SHA2-256\"",
-    "using 8 title \"SHA2-384\"",
-    "using 8 title \"SHA2-512\""
+  Benchmark::plot_spec_t plot_specs_bytes = {
+    std::make_pair("bench_hash_MD5.csv",      "using 8:xticlabels(1) title \"MD5\""),
+    std::make_pair("bench_hash_SHA1.csv",     "using 8 title \"SHA1\""),
+    std::make_pair("bench_hash_SHA2_224.csv", "using 8 title \"SHA2-224\""),
+    std::make_pair("bench_hash_SHA2_256.csv", "using 8 title \"SHA2-256\""),
+    std::make_pair("bench_hash_SHA2_384.csv", "using 8 title \"SHA2-384\""),
+    std::make_pair("bench_hash_SHA2_512.csv", "using 8 title \"SHA2-512\"")
   };
-
 
   int i = 0;
   for (size_t ds : data_sizes)
@@ -387,10 +477,9 @@ int bench_hash(const BenchmarkSettings & s)
                          title.str(),
                          "",
                          "Avg. performance [CPU cycles/hash]",
-                         data_filenames,
+                         plot_specs_cycles,
                          plot_filename.str(),
-                         extras.str(),
-                         plot_specs_cycles);
+                         extras.str());
 
     plot_filename.str("");
     plot_filename << "bench_hash_all_" << ds << "_bytes.svg";
@@ -400,11 +489,16 @@ int bench_hash(const BenchmarkSettings & s)
                          title.str(),
                          "",
                          "Avg. performance [CPU cycles/byte]",
-                         data_filenames,
+                         plot_specs_bytes,
                          plot_filename.str(),
-                         extras.str(),
-                         plot_specs_bytes);
+                         extras.str());
 
     i++;
+    #ifdef HAVE_HACL
+    i++;
+    #endif
+    #ifdef HAVE_OPENSSL
+    i++;
+    #endif
   }
 }
